@@ -23,6 +23,8 @@ const Blogs = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [currentUserProfile, setCurrentUserProfile] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [showBlogModal, setShowBlogModal] = useState(false);
   const [blogLoading, setBlogLoading] = useState(false);
@@ -79,6 +81,7 @@ const Blogs = () => {
         setError("");
         const response = await fetchBlogs();
         setBlogs(response.data || []);
+        setFilteredBlogs(response.data || []);
       } catch (error) {
         setError(error.message || "Failed to load blogs");
         console.error("Failed to fetch blogs:", error);
@@ -89,6 +92,23 @@ const Blogs = () => {
 
     loadBlogs();
   }, []);
+
+  // Filter blogs based on search term
+  useEffect(() => {
+    if (!searchTerm) {
+      setFilteredBlogs(blogs);
+    } else {
+      const filtered = blogs.filter(
+        (blog) =>
+          blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          blog.content?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          blog.created_by?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          blog.updated_by?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          blog.id.toString().includes(searchTerm)
+      );
+      setFilteredBlogs(filtered);
+    }
+  }, [searchTerm, blogs]);
 
   const handleLogout = async () => {
     try {
@@ -598,9 +618,16 @@ const Blogs = () => {
             <h1>Blog Management</h1>
             <p>Manage and view all blog posts</p>
           </div>
-          <button onClick={openAddModal} className="add-blog-btn">
-            Add New Blog
-          </button>
+          <div className="header-actions">
+            <div className="blogs-count">
+              <span className="count-badge">
+                {blogs.length} {blogs.length === 1 ? "Blog" : "Blogs"}
+              </span>
+            </div>
+            <button onClick={openAddModal} className="add-blog-btn">
+              Add New Blog
+            </button>
+          </div>
         </div>
 
         {/* Success Message */}
@@ -620,6 +647,33 @@ const Blogs = () => {
           </div>
         )}
 
+        <div className="table-controls">
+          <div className="search-bar">
+            <span className="search-icon">🔍</span>
+            <input
+              type="text"
+              placeholder="Search blogs by title, content, author, or ID..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm("")}
+                className="clear-search"
+                title="Clear search"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+          {searchTerm && (
+            <div className="search-results">
+              Found {filteredBlogs.length} of {blogs.length} blogs
+            </div>
+          )}
+        </div>
+
         {blogs.length === 0 ? (
           <div className="no-blogs-state">
             <div className="no-blogs-icon">📝</div>
@@ -627,38 +681,54 @@ const Blogs = () => {
             <p>There are no blog posts available at the moment.</p>
           </div>
         ) : (
-          <div className="blogs-table-container">
-            <table className="blogs-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Title</th>
-                  <th>Content</th>
-                  <th>Created By</th>
-                  <th>Created Date</th>
-                  <th>Updated By</th>
-                  <th>Updated Date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {blogs.map((blog) => (
-                  <React.Fragment key={blog.id}>
-                    <tr>
-                      <td className="id-cell">{blog.id}</td>
-                      <td className="title-cell">{blog.title}</td>
+          <div className="table-container">
+            <div className="table-wrapper">
+              <table className="blogs-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Created By</th>
+                    <th>Created Date</th>
+                    <th>Updated By</th>
+                    <th>Updated Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredBlogs.map((blog, index) => (
+                    <tr
+                      key={blog.id}
+                      className={index % 2 === 0 ? "even" : "odd"}
+                    >
+                      <td className="id-cell">
+                        <span className="id-number">{blog.id}</span>
+                      </td>
+                      <td className="title-cell">
+                        <span className="blog-title">{blog.title}</span>
+                      </td>
                       <td className="content-cell">
                         {blog.content ? (
-                          blog.content.split(' ').slice(0, 4).join(' ') + 
-                          (blog.content.split(' ').length > 4 ? '...' : '')
+                          blog.content.split(' ').length > 4
+                            ? blog.content.split(' ').slice(0, 4).join(' ') + '...'
+                            : blog.content
                         ) : (
                           "No content"
                         )}
                       </td>
-                      <td className="created-by-cell">{blog.created_by}</td>
-                      <td className="date-cell">{blog.created_at}</td>
-                      <td className="updated-by-cell">{blog.updated_by}</td>
-                      <td className="date-cell">{blog.updated_at}</td>
+                      <td className="created-by-cell">
+                        <span className="created-by-text">{blog.created_by}</span>
+                      </td>
+                      <td className="date-cell">
+                        <span className="date-text">{blog.created_at}</span>
+                      </td>
+                      <td className="updated-by-cell">
+                        <span className="updated-by-text">{blog.updated_by}</span>
+                      </td>
+                      <td className="date-cell">
+                        <span className="date-text">{blog.updated_at}</span>
+                      </td>
                       <td className="actions-cell">
                         <button
                           onClick={() => handleViewBlog(blog.id)}
@@ -677,10 +747,10 @@ const Blogs = () => {
                         </button>
                       </td>
                     </tr>
-                  </React.Fragment>
-                ))}
-              </tbody>
-            </table>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </main>
@@ -714,7 +784,7 @@ const Blogs = () => {
                     <div className="detail-title">
                       <h3>{selectedBlog.title}</h3>
                       <div className="detail-badges">
-                        <span className="detail-badge id-badge">ID: #{selectedBlog.id}</span>
+                        <span className="detail-badge id-badge">ID: {selectedBlog.id}</span>
                         <span className="detail-badge">Blog Post</span>
                       </div>
                     </div>
@@ -845,7 +915,7 @@ const Blogs = () => {
                 <div className="delete-message">
                   <h3>Are you sure you want to delete this blog?</h3>
                   <p>
-                    You are about to permanently delete <strong>{blogToDelete.title}</strong> (ID: #{blogToDelete.id}).
+                    You are about to permanently delete <strong>{blogToDelete.title}</strong> (ID: {blogToDelete.id}).
                   </p>
                   <p>This action cannot be undone.</p>
                 </div>
@@ -1100,7 +1170,7 @@ const Blogs = () => {
               <div className="modal-body">
                 <div className="blog-info">
                   <h4>Blog: {blogToAddImages.title}</h4>
-                  <p>ID: #{blogToAddImages.id}</p>
+                  <p>ID: {blogToAddImages.id}</p>
                 </div>
 
                 {addImagesErrors.general && (

@@ -674,7 +674,7 @@ const Users = () => {
                       className={index % 2 === 0 ? "even" : "odd"}
                     >
                       <td className="id-cell">
-                        <span className="id-badge">#{user.id}</span>
+                        <span className="id-number">{user.id}</span>
                       </td>
                       <td className="name-cell">
                         <span className="user-name">{user.name}</span>
@@ -771,7 +771,7 @@ const Users = () => {
                         <span className="detail-icon">🆔</span>
                         Admin ID
                       </div>
-                      <div className="detail-value">#{selectedUser.id}</div>
+                      <div className="detail-value">{selectedUser.id}</div>
                     </div>
 
                     <div className="detail-item">
@@ -843,7 +843,7 @@ const Users = () => {
                 <div className="delete-message">
                   <h3>Are you sure you want to delete this admin?</h3>
                   <p>
-                    You are about to permanently delete <strong>{userToDelete.name}</strong> (ID: #{userToDelete.id}).
+                    You are about to permanently delete <strong>{userToDelete.name}</strong> (ID: {userToDelete.id}).
                   </p>
                   <p>This action cannot be undone.</p>
                 </div>
