@@ -1,7 +1,25 @@
+// Function to detect local IP and return appropriate base URL
+const getBaseUrl = () => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  
+  // Try to get local IP from various sources
+  const hostname = window.location.hostname;
+  
+  // Check if running on local IP starting with 10.60.34.
+  if (hostname.startsWith('10.60.34.')) {
+    return "http://10.60.34.21";
+  }
+  
+  // Default to external IP
+  return "http://162.84.221.21";
+};
+
 // API Configuration
 export const API_CONFIG = {
-  // Base URL for your API
-  BASE_URL: import.meta.env.VITE_API_URL || "http://162.84.221.21",
+  // Base URL for your API - automatically detected based on local IP
+  BASE_URL: getBaseUrl(),
 
   // API Endpoints
   ENDPOINTS: {

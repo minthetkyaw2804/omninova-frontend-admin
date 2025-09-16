@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "stop": "lsof -ti:5001 | xargs kill -9",
     "build": "vite build",
+    "deploy": "npm run build && rm -rf ../omninova/* && cp -r dist/* ../omninova/ && rm -rf dist/",
     "lint": "eslint .",
     "preview": "vite preview"
   },

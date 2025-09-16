@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   base: '/omninova/',
   server: {
-    port: 3030,     // change to any free port you want
+    port: 5001,     // change to any free port you want
     host: true,     // 👈 allows access from other devices in your LAN
   },
 })
