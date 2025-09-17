@@ -495,7 +495,7 @@ const ProjectTypes = () => {
               <table className="project-types-table">
                 <thead>
                   <tr>
-                    <th>ID</th>
+                    <th className="id-cell">ID</th>
                     <th>Type Name</th>
                     <th>Description</th>
                     <th>Created By</th>

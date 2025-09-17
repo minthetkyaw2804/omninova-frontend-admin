@@ -267,6 +267,9 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 0.875rem;
+  table-layout: fixed !important;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .blogs-table thead {
@@ -306,53 +309,89 @@
   padding: 1.25rem 1.5rem;
   vertical-align: middle;
   border-bottom: 1px solid var(--border-light);
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-/* Table Cell Styles */
+/* Table Cell Styles - FORCE WIDTHS */
 .id-cell {
-  width: 80px;
+  width: 60px !important;
+  max-width: 60px !important;
+  min-width: 60px !important;
+  text-align: center;
+}
+
+.blogs-table th.id-cell {
+  text-align: center;
 }
 
 .id-number {
   color: var(--text-primary);
   font-size: 0.875rem;
   font-weight: 500;
+  display: inline-block;
+  min-width: 20px;
+  text-align: center;
 }
 
 .title-cell {
-  min-width: 200px;
+  width: 200px !important;
+  max-width: 200px !important;
+  min-width: 200px !important;
 }
 
 .blog-title {
   font-weight: 600;
   color: var(--text-primary);
   font-size: 0.875rem;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .content-cell {
-  min-width: 150px;
+  width: 250px !important;
+  max-width: 250px !important;
+  min-width: 250px !important;
 }
 
 .created-by-cell {
-  min-width: 120px;
+  width: 140px !important;
+  max-width: 140px !important;
+  min-width: 140px !important;
 }
 
 .created-by-text {
   color: var(--text-secondary);
   font-weight: 500;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .updated-by-cell {
-  min-width: 120px;
+  width: 140px !important;
+  max-width: 140px !important;
+  min-width: 140px !important;
 }
 
 .updated-by-text {
   color: var(--text-secondary);
   font-weight: 500;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .date-cell {
-  min-width: 140px;
+  width: 120px !important;
+  max-width: 120px !important;
+  min-width: 120px !important;
 }
 
 .date-text {
@@ -365,12 +404,15 @@
 }
 
 .actions-cell {
-  width: 180px;
+  width: 160px !important;
+  max-width: 160px !important;
+  min-width: 160px !important;
   padding: 1rem !important;
   display: flex;
   gap: 0.375rem;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
 }
 
 /* Base action button style */

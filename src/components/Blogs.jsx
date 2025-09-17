@@ -686,7 +686,7 @@ const Blogs = () => {
               <table className="blogs-table">
                 <thead>
                   <tr>
-                    <th>ID</th>
+                    <th className="id-cell">ID</th>
                     <th>Title</th>
                     <th>Content</th>
                     <th>Created By</th>

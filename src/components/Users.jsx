@@ -659,7 +659,7 @@ const Users = () => {
               <table className="users-table">
                 <thead>
                   <tr>
-                    <th>ID</th>
+                    <th className="id-cell">ID</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>

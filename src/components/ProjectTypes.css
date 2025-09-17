@@ -262,6 +262,9 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
+  table-layout: fixed !important;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .project-types-table th {
@@ -278,6 +281,10 @@
   padding: 16px 12px;
   border-bottom: 1px solid #dee2e6;
   vertical-align: top;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .project-types-table tr.even {
@@ -292,9 +299,15 @@
   background-color: #e3f2fd;
 }
 
-/* Table Cell Styles */
+/* Table Cell Styles - FORCE WIDTHS */
 .id-cell {
-  width: 80px;
+  width: 60px !important;
+  max-width: 60px !important;
+  min-width: 60px !important;
+  text-align: center;
+}
+
+.project-types-table th.id-cell {
   text-align: center;
 }
 
@@ -305,49 +318,78 @@
   border-radius: 4px;
   font-size: 12px;
   font-weight: 500;
+  display: inline-block;
+  min-width: 20px;
+  text-align: center;
 }
 
 .name-cell {
-  min-width: 200px;
+  width: 180px !important;
+  max-width: 180px !important;
+  min-width: 180px !important;
 }
 
 .type-name {
   font-weight: 500;
   color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
 }
 
 .description-cell {
-  min-width: 250px;
-  max-width: 300px;
+  width: 250px !important;
+  max-width: 250px !important;
+  min-width: 250px !important;
 }
 
 .description-text {
   color: #666;
   line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
 }
 
 .created-by-cell,
 .updated-by-cell {
-  min-width: 150px;
+  width: 140px !important;
+  max-width: 140px !important;
+  min-width: 140px !important;
 }
 
 .created-by-text,
 .updated-by-text {
   color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
 }
 
 .date-cell {
-  min-width: 120px;
+  width: 100px !important;
+  max-width: 100px !important;
+  min-width: 100px !important;
 }
 
 .date-text {
   color: #666;
   font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
 }
 
 .actions-cell {
-  width: 100px;
+  width: 150px !important;
+  max-width: 150px !important;
+  min-width: 150px !important;
   text-align: center;
+  white-space: nowrap;
 }
 
 .action-btn {
