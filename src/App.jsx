@@ -5,6 +5,7 @@ import AdminProfile from "./components/AdminProfile";
 import Users from "./components/Users";
 import Company from "./components/Company";
 import Blogs from "./components/Blogs";
+import ProjectTypes from "./components/ProjectTypes";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
 import { initializeAuth } from "./utils/auth";
@@ -71,9 +72,21 @@ function App() {
             </ProtectedRoute>
           } 
         />
-        <Route 
-          path="/blogs" 
-          element={<Navigate to="/admin/blogs" replace />} 
+        <Route
+          path="/blogs"
+          element={<Navigate to="/admin/blogs" replace />}
+        />
+        <Route
+          path="/admin/projects"
+          element={
+            <ProtectedRoute>
+              <ProjectTypes />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/projects"
+          element={<Navigate to="/admin/projects" replace />}
         />
       </Routes>
     </div>

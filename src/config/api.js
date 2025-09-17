@@ -3,15 +3,15 @@ const getBaseUrl = () => {
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
-  
+
   // Try to get local IP from various sources
   const hostname = window.location.hostname;
-  
+
   // Check if running on local IP starting with 10.60.34.
-  if (hostname.startsWith('10.60.34.')) {
+  if (hostname.startsWith("10.60.34.")) {
     return "http://10.60.34.21";
   }
-  
+
   // Default to external IP
   return "http://162.84.221.21";
 };
@@ -39,6 +39,7 @@ export const API_CONFIG = {
     BLOG_IMAGE_DELETE: "/api/admin/blog-images",
     EDIT_PROFILE: "/api/admin/edit-profile",
     CHANGE_PASSWORD: "/api/admin/change-password",
+    PROJECT_TYPES: "/api/admin/project-types",
     // Add more endpoints as needed
   },
 
@@ -48,6 +49,7 @@ export const API_CONFIG = {
   // Default headers
   DEFAULT_HEADERS: {
     "Content-Type": "application/json",
+    Accept: "application/json",
   },
 };
 

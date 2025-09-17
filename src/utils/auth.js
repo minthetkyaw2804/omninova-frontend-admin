@@ -964,14 +964,14 @@ export const uploadCompanyLogo = async (logoFile) => {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      
+
       // Handle validation errors
       if (response.status === 422 && errorData.errors) {
         const error = new Error(errorData.message || "Validation failed");
         error.validationErrors = errorData.errors;
         throw error;
       }
-      
+
       throw new Error(
         errorData.message || `Failed to upload logo: ${response.status}`
       );
@@ -984,4 +984,183 @@ export const uploadCompanyLogo = async (logoFile) => {
     throw error;
   }
 };
+
+// Fetch all project types
+export const fetchProjectTypes = async () => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.PROJECT_TYPES), {
+      method: "GET",
+      headers: {
+        ...API_CONFIG.DEFAULT_HEADERS,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(
+        errorData.message || `Failed to fetch project types: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Project types fetch error:", error);
+    throw error;
+  }
+};
+
+// Fetch single project type by ID
+export const fetchProjectTypeById = async (projectTypeId) => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECT_TYPES}/${projectTypeId}`), {
+      method: "GET",
+      headers: {
+        ...API_CONFIG.DEFAULT_HEADERS,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(
+        errorData.message || `Failed to fetch project type: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Project type fetch error:", error);
+    throw error;
+  }
+};
+
+// Create new project type
+export const createProjectType = async (projectTypeData) => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.PROJECT_TYPES), {
+      method: "POST",
+      headers: {
+        ...API_CONFIG.DEFAULT_HEADERS,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(projectTypeData),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+
+      // Handle validation errors
+      if (response.status === 422 && errorData.errors) {
+        const error = new Error(errorData.message || "Validation failed");
+        error.validationErrors = errorData.errors;
+        throw error;
+      }
+
+      throw new Error(
+        errorData.message || `Failed to create project type: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Update project type by ID
+export const updateProjectType = async (projectTypeId, projectTypeData) => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECT_TYPES}/${projectTypeId}`), {
+      method: "PUT",
+      headers: {
+        ...API_CONFIG.DEFAULT_HEADERS,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(projectTypeData),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+
+      // Handle validation errors
+      if (response.status === 422 && errorData.errors) {
+        const error = new Error(errorData.message || "Validation failed");
+        error.validationErrors = errorData.errors;
+        throw error;
+      }
+
+      throw new Error(
+        errorData.message || `Failed to update project type: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Delete project type by ID
+export const deleteProjectType = async (projectTypeId) => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const response = await fetch(
+      buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECT_TYPES}/${projectTypeId}`),
+      {
+        method: "DELETE",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(
+        errorData.message || `Failed to delete project type: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
