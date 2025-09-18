@@ -114,12 +114,12 @@ const Navbar = ({ onLogout, userName }) => {
                 Blogs
               </Link>
               <Link
-                to="/admin/projects"
+                to="/admin/project-types"
                 className={`nav-link ${
-                  location.pathname === "/admin/projects" ? "active" : ""
+                  location.pathname === "/admin/project-types" ? "active" : ""
                 }`}
               >
-                Projects
+                Project Types
               </Link>
             </nav>
           </div>
@@ -212,14 +212,14 @@ const Navbar = ({ onLogout, userName }) => {
               Blogs
             </Link>
             <Link
-              to="/admin/projects"
+              to="/admin/project-types"
               className={`mobile-nav-link ${
-                location.pathname === "/admin/projects" ? "active" : ""
+                location.pathname === "/admin/project-types" ? "active" : ""
               }`}
               onClick={closeMobileMenu}
             >
               <span className="mobile-nav-icon">📁</span>
-              Projects
+              Project Types
             </Link>
           </nav>
 

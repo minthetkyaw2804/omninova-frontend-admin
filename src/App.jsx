@@ -77,7 +77,7 @@ function App() {
           element={<Navigate to="/admin/blogs" replace />}
         />
         <Route
-          path="/admin/projects"
+          path="/admin/project-types"
           element={
             <ProtectedRoute>
               <ProjectTypes />
@@ -85,8 +85,16 @@ function App() {
           }
         />
         <Route
+          path="/project-types"
+          element={<Navigate to="/admin/project-types" replace />}
+        />
+        <Route
+          path="/admin/projects"
+          element={<Navigate to="/admin/project-types" replace />}
+        />
+        <Route
           path="/projects"
-          element={<Navigate to="/admin/projects" replace />}
+          element={<Navigate to="/admin/project-types" replace />}
         />
       </Routes>
     </div>
