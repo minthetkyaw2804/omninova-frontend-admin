@@ -40,6 +40,7 @@ export const API_CONFIG = {
     EDIT_PROFILE: "/api/admin/edit-profile",
     CHANGE_PASSWORD: "/api/admin/change-password",
     PROJECT_TYPES: "/api/admin/project-types",
+    PROJECTS: "/api/admin/projects",
     // Add more endpoints as needed
   },
 

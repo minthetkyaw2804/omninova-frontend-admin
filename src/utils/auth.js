@@ -1163,4 +1163,425 @@ export const deleteProjectType = async (projectTypeId) => {
   }
 };
 
+// Projects API
+
+// Fetch all projects
+export const fetchProjects = async () => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.PROJECTS), {
+      method: "GET",
+      headers: {
+        ...API_CONFIG.DEFAULT_HEADERS,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(
+        errorData.message || `Failed to fetch projects: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Create new project
+export const createProject = async (formData) => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.PROJECTS), {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        // Don't set Content-Type for FormData - browser will set it automatically
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+
+      // Handle validation errors
+      if (response.status === 422 && errorData.errors) {
+        const error = new Error(errorData.message || "Validation failed");
+        error.validationErrors = errorData.errors;
+        throw error;
+      }
+
+      throw new Error(
+        errorData.message || `Failed to create project: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Project creation error:", error);
+    throw error;
+  }
+};
+
+// Fetch single project details
+export const fetchProjectDetails = async (projectId) => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECTS}/${projectId}`), {
+      method: "GET",
+      headers: {
+        ...API_CONFIG.DEFAULT_HEADERS,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(
+        errorData.message || `Failed to fetch project details: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Project details fetch error:", error);
+    throw error;
+  }
+};
+
+// Update project details
+export const updateProjectDetails = async (projectId, projectData) => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECTS}/${projectId}/details`), {
+      method: "PUT",
+      headers: {
+        ...API_CONFIG.DEFAULT_HEADERS,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(projectData),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+
+      // Handle validation errors
+      if (response.status === 422 && errorData.errors) {
+        const error = new Error(errorData.message || "Validation failed");
+        error.validationErrors = errorData.errors;
+        throw error;
+      }
+
+      throw new Error(
+        errorData.message || `Failed to update project: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Project update error:", error);
+    throw error;
+  }
+};
+
+// Update project thumbnail
+export const updateProjectThumbnail = async (projectId, thumbnailFile) => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const formData = new FormData();
+    formData.append('thumbnail', thumbnailFile);
+
+    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECTS}/${projectId}/new-thumbnail`), {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+
+      // Handle validation errors
+      if (response.status === 422 && errorData.errors) {
+        const error = new Error(errorData.message || "Validation failed");
+        error.validationErrors = errorData.errors;
+        throw error;
+      }
+
+      throw new Error(
+        errorData.message || `Failed to update thumbnail: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Thumbnail update error:", error);
+    throw error;
+  }
+};
+
+// Create project feature
+export const createProjectFeature = async (projectId, featureData) => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const formData = new FormData();
+    formData.append('title', featureData.title);
+    formData.append('description', featureData.description);
+
+    // Append multiple images
+    featureData.images.forEach((image, index) => {
+      formData.append('images[]', image);
+    });
+
+    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECTS}/${projectId}/features`), {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+
+      // Handle validation errors
+      if (response.status === 422 && errorData.errors) {
+        const error = new Error(errorData.message || "Validation failed");
+        error.validationErrors = errorData.errors;
+        throw error;
+      }
+
+      throw new Error(
+        errorData.message || `Failed to create feature: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Feature creation error:", error);
+    throw error;
+  }
+};
+
+// Update project feature details
+export const updateProjectFeatureDetails = async (featureId, featureData) => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const response = await fetch(buildApiUrl(`/api/admin/project-features/${featureId}/details`), {
+      method: "PUT",
+      headers: {
+        ...API_CONFIG.DEFAULT_HEADERS,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(featureData),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+
+      // Handle validation errors
+      if (response.status === 422 && errorData.errors) {
+        const error = new Error(errorData.message || "Validation failed");
+        error.validationErrors = errorData.errors;
+        throw error;
+      }
+
+      throw new Error(
+        errorData.message || `Failed to update feature: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Feature update error:", error);
+    throw error;
+  }
+};
+
+// Add images to project feature
+export const addProjectFeatureImages = async (featureId, images) => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const formData = new FormData();
+
+    // Append multiple images
+    images.forEach((image) => {
+      formData.append('images[]', image);
+    });
+
+    const response = await fetch(buildApiUrl(`/api/admin/project-features/${featureId}/images`), {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+
+      // Handle validation errors
+      if (response.status === 422 && errorData.errors) {
+        const error = new Error(errorData.message || "Validation failed");
+        error.validationErrors = errorData.errors;
+        throw error;
+      }
+
+      throw new Error(
+        errorData.message || `Failed to add images: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Feature image addition error:", error);
+    throw error;
+  }
+};
+
+// Delete project feature image
+export const deleteProjectFeatureImage = async (imageId) => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const response = await fetch(buildApiUrl(`/api/admin/project-feature-images/${imageId}`), {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(
+        errorData.message || `Failed to delete image: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Feature image deletion error:", error);
+    throw error;
+  }
+};
+
+// Delete project feature
+export const deleteProjectFeature = async (featureId) => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const response = await fetch(buildApiUrl(`/api/admin/project-features/${featureId}`), {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(
+        errorData.message || `Failed to delete feature: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Feature deletion error:", error);
+    throw error;
+  }
+};
+
+// Delete project by ID
+export const deleteProject = async (projectId) => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+
+  try {
+    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECTS}/${projectId}`), {
+      method: "DELETE",
+      headers: {
+        ...API_CONFIG.DEFAULT_HEADERS,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(
+        errorData.message || `Failed to delete project: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Project deletion error:", error);
+    throw error;
+  }
+};
+
 
