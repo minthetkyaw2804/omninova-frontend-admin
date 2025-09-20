@@ -371,17 +371,17 @@
 
 .users-table th.id-cell {
   text-align: center;
-  width: 60px !important;
-  max-width: 60px !important;
-  min-width: 60px !important;
+  width: 80px !important;
+  max-width: 80px !important;
+  min-width: 80px !important;
 }
 
 /* Header cell widths to match data cells */
 .users-table th:nth-child(1) {
   /* ID */
-  width: 60px !important;
-  max-width: 60px !important;
-  min-width: 60px !important;
+  width: 80px !important;
+  max-width: 80px !important;
+  min-width: 80px !important;
 }
 
 .users-table th:nth-child(2) {
@@ -439,9 +439,9 @@
 
 /* Cell Styles - FORCE WIDTHS FOR USERS TABLE ONLY */
 .users-table .id-cell {
-  width: 60px !important;
-  max-width: 60px !important;
-  min-width: 60px !important;
+  width: 80px !important;
+  max-width: 80px !important;
+  min-width: 80px !important;
   text-align: center;
 }
 
@@ -1035,6 +1035,9 @@
   transition: all 0.2s ease;
   background: var(--background);
   color: var(--text-primary);
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .form-group input:focus {
@@ -1095,6 +1098,29 @@
   .form-row {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+
+  /* Fix form horizontal scrolling on mobile */
+  .form-group {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .form-group input {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .modal-content {
+    margin: 1rem;
+    max-width: calc(100vw - 2rem);
+    width: calc(100vw - 2rem);
+  }
+
+  .modal-body {
+    padding: 20px;
+    overflow-x: hidden;
   }
 
   .add-admin-modal {

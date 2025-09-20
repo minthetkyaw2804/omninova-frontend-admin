@@ -205,6 +205,32 @@ textarea::placeholder {
 }
 
 @media (max-width: 768px) {
+  /* Global mobile form fixes */
+  .modal-content {
+    margin: 1rem;
+    max-width: calc(100vw - 2rem);
+    width: calc(100vw - 2rem);
+    overflow-x: hidden;
+  }
+
+  .modal-body {
+    padding: 20px;
+    overflow-x: hidden;
+  }
+
+  .form-group {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
   h1 {
     font-size: 2rem;
   }

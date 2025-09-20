@@ -340,9 +340,9 @@
 
 /* Table Cell Styles - FORCE WIDTHS */
 .id-cell {
-  width: 60px !important;
-  max-width: 60px !important;
-  min-width: 60px !important;
+  width: 80px !important;
+  max-width: 80px !important;
+  min-width: 80px !important;
   text-align: center;
 }
 
@@ -353,9 +353,9 @@
 /* Header cell widths to match data cells */
 .project-types-table th:nth-child(1) {
   /* ID */
-  width: 60px !important;
-  max-width: 60px !important;
-  min-width: 60px !important;
+  width: 80px !important;
+  max-width: 80px !important;
+  min-width: 80px !important;
 }
 
 .project-types-table th:nth-child(2) {
@@ -756,6 +756,9 @@
   border-radius: 4px;
   font-size: 14px;
   transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .form-group input:focus,
@@ -922,6 +925,30 @@
 @media (max-width: 768px) {
   .project-types-content {
     padding: 15px;
+  }
+
+  /* Fix form horizontal scrolling on mobile */
+  .form-group {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .modal-content {
+    margin: 1rem;
+    max-width: calc(100vw - 2rem);
+    width: calc(100vw - 2rem);
+  }
+
+  .modal-body {
+    padding: 20px;
+    overflow-x: hidden;
   }
 
   .project-types-header {

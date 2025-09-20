@@ -912,6 +912,9 @@
   backdrop-filter: blur(5px);
   color: var(--text-primary);
   font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 /* Rich text field styles moved to RichTextEditor.css */
@@ -1039,6 +1042,30 @@
   .form-row {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+
+  /* Fix form horizontal scrolling on mobile */
+  .form-group {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .modal-content {
+    margin: 1rem;
+    max-width: calc(100vw - 2rem);
+    width: calc(100vw - 2rem);
+  }
+
+  .modal-body {
+    padding: 20px;
+    overflow-x: hidden;
   }
 
   .card-header {
