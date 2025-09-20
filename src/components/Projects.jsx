@@ -73,7 +73,7 @@ const Projects = () => {
   const [featureFormData, setFeatureFormData] = useState({
     title: "",
     description: "",
-    images: []
+    images: [],
   });
   const [featureLoading, setFeatureLoading] = useState(false);
   const [featureErrors, setFeatureErrors] = useState({});
@@ -83,7 +83,7 @@ const Projects = () => {
   const [editingFeature, setEditingFeature] = useState(null);
   const [editFeatureFormData, setEditFeatureFormData] = useState({
     title: "",
-    description: ""
+    description: "",
   });
   const [editFeatureLoading, setEditFeatureLoading] = useState(false);
   const [editFeatureErrors, setEditFeatureErrors] = useState({});
@@ -634,7 +634,7 @@ const Projects = () => {
     setFeatureFormData({
       title: "",
       description: "",
-      images: []
+      images: [],
     });
     setFeatureErrors({});
   };
@@ -644,23 +644,23 @@ const Projects = () => {
     setFeatureFormData({
       title: "",
       description: "",
-      images: []
+      images: [],
     });
     setFeatureErrors({});
   };
 
   const handleFeatureFormChange = (e) => {
     const { name, value } = e.target;
-    setFeatureFormData(prev => ({
+    setFeatureFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
 
     // Clear error for this field when user starts typing
     if (featureErrors[name]) {
-      setFeatureErrors(prev => ({
+      setFeatureErrors((prev) => ({
         ...prev,
-        [name]: null
+        [name]: null,
       }));
     }
   };
@@ -671,13 +671,22 @@ const Projects = () => {
     if (files.length === 0) return;
 
     // Validate file types
-    const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg+xml'];
-    const invalidFiles = files.filter(file => !validTypes.includes(file.type));
+    const validTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/jpg",
+      "image/gif",
+      "image/svg+xml",
+    ];
+    const invalidFiles = files.filter(
+      (file) => !validTypes.includes(file.type)
+    );
 
     if (invalidFiles.length > 0) {
-      setFeatureErrors(prev => ({
+      setFeatureErrors((prev) => ({
         ...prev,
-        images: "Please select only valid image files (JPEG, PNG, JPG, GIF, SVG)"
+        images:
+          "Please select only valid image files (JPEG, PNG, JPG, GIF, SVG)",
       }));
       e.target.value = "";
       return;
@@ -685,27 +694,27 @@ const Projects = () => {
 
     // Validate file sizes
     const maxSize = 5 * 1024 * 1024; // 5MB per file
-    const oversizedFiles = files.filter(file => file.size > maxSize);
+    const oversizedFiles = files.filter((file) => file.size > maxSize);
 
     if (oversizedFiles.length > 0) {
-      setFeatureErrors(prev => ({
+      setFeatureErrors((prev) => ({
         ...prev,
-        images: "Each file must be less than 5MB"
+        images: "Each file must be less than 5MB",
       }));
       e.target.value = "";
       return;
     }
 
-    setFeatureFormData(prev => ({
+    setFeatureFormData((prev) => ({
       ...prev,
-      images: files
+      images: files,
     }));
 
     // Clear error
     if (featureErrors.images) {
-      setFeatureErrors(prev => ({
+      setFeatureErrors((prev) => ({
         ...prev,
-        images: null
+        images: null,
       }));
     }
   };
@@ -740,7 +749,7 @@ const Projects = () => {
 
     if (!viewingProject) {
       setFeatureErrors({
-        general: "No project selected"
+        general: "No project selected",
       });
       return;
     }
@@ -752,13 +761,15 @@ const Projects = () => {
       const featureData = {
         title: featureFormData.title.trim(),
         description: featureFormData.description.trim(),
-        images: featureFormData.images
+        images: featureFormData.images,
       };
 
       await createProjectFeature(viewingProject.id, featureData);
 
       // Show success message
-      setSuccessMessage(`Feature "${featureFormData.title}" has been successfully added!`);
+      setSuccessMessage(
+        `Feature "${featureFormData.title}" has been successfully added!`
+      );
 
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
@@ -775,14 +786,13 @@ const Projects = () => {
 
       // Close modal and reset form
       handleAddFeatureCancel();
-
     } catch (error) {
       // Handle validation errors from API
       if (error.validationErrors) {
         setFeatureErrors(error.validationErrors);
       } else {
         setFeatureErrors({
-          general: error.message || "Failed to add feature"
+          general: error.message || "Failed to add feature",
         });
       }
     } finally {
@@ -800,7 +810,7 @@ const Projects = () => {
     setEditingFeature(feature);
     setEditFeatureFormData({
       title: feature.title || "",
-      description: feature.description || ""
+      description: feature.description || "",
     });
     setEditFeatureErrors({});
     setShowEditFeatureModal(true);
@@ -811,27 +821,26 @@ const Projects = () => {
     setEditingFeature(null);
     setEditFeatureFormData({
       title: "",
-      description: ""
+      description: "",
     });
     setEditFeatureErrors({});
   };
 
   const handleEditFeatureFormChange = (e) => {
     const { name, value } = e.target;
-    setEditFeatureFormData(prev => ({
+    setEditFeatureFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
 
     // Clear error for this field when user starts typing
     if (editFeatureErrors[name]) {
-      setEditFeatureErrors(prev => ({
+      setEditFeatureErrors((prev) => ({
         ...prev,
-        [name]: null
+        [name]: null,
       }));
     }
   };
-
 
   const validateEditFeatureForm = () => {
     const errors = {};
@@ -859,7 +868,7 @@ const Projects = () => {
 
     if (!editingFeature) {
       setEditFeatureErrors({
-        general: "No feature selected"
+        general: "No feature selected",
       });
       return;
     }
@@ -870,14 +879,16 @@ const Projects = () => {
 
       const updateData = {
         title: editFeatureFormData.title.trim(),
-        description: editFeatureFormData.description.trim()
+        description: editFeatureFormData.description.trim(),
       };
 
       // Update feature details
       await updateProjectFeatureDetails(editingFeature.id, updateData);
 
       // Show success message
-      setSuccessMessage(`Feature "${editFeatureFormData.title}" has been successfully updated!`);
+      setSuccessMessage(
+        `Feature "${editFeatureFormData.title}" has been successfully updated!`
+      );
 
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
@@ -890,7 +901,9 @@ const Projects = () => {
       setViewingProject(projectData);
 
       // Update the viewing feature data
-      const updatedFeature = projectData.project_features.find(f => f.id === editingFeature.id);
+      const updatedFeature = projectData.project_features.find(
+        (f) => f.id === editingFeature.id
+      );
       if (updatedFeature) {
         setViewingFeature(updatedFeature);
       }
@@ -900,14 +913,13 @@ const Projects = () => {
 
       // Close edit modal
       handleEditFeatureCancel();
-
     } catch (error) {
       // Handle validation errors from API
       if (error.validationErrors) {
         setEditFeatureErrors(error.validationErrors);
       } else {
         setEditFeatureErrors({
-          general: error.message || "Failed to update feature"
+          general: error.message || "Failed to update feature",
         });
       }
     } finally {
@@ -936,12 +948,21 @@ const Projects = () => {
     if (files.length === 0) return;
 
     // Validate file types
-    const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg+xml'];
-    const invalidFiles = files.filter(file => !validTypes.includes(file.type));
+    const validTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/jpg",
+      "image/gif",
+      "image/svg+xml",
+    ];
+    const invalidFiles = files.filter(
+      (file) => !validTypes.includes(file.type)
+    );
 
     if (invalidFiles.length > 0) {
       setAddImagesErrors({
-        images: "Please select only valid image files (JPEG, PNG, JPG, GIF, SVG)"
+        images:
+          "Please select only valid image files (JPEG, PNG, JPG, GIF, SVG)",
       });
       e.target.value = "";
       return;
@@ -949,11 +970,11 @@ const Projects = () => {
 
     // Validate file sizes
     const maxSize = 5 * 1024 * 1024; // 5MB per file
-    const oversizedFiles = files.filter(file => file.size > maxSize);
+    const oversizedFiles = files.filter((file) => file.size > maxSize);
 
     if (oversizedFiles.length > 0) {
       setAddImagesErrors({
-        images: "Each file must be less than 5MB"
+        images: "Each file must be less than 5MB",
       });
       e.target.value = "";
       return;
@@ -968,14 +989,14 @@ const Projects = () => {
 
     if (!newFeatureImages || newFeatureImages.length === 0) {
       setAddImagesErrors({
-        images: "Please select at least one image"
+        images: "Please select at least one image",
       });
       return;
     }
 
     if (!editingFeature) {
       setAddImagesErrors({
-        general: "No feature selected"
+        general: "No feature selected",
       });
       return;
     }
@@ -987,7 +1008,9 @@ const Projects = () => {
       await addProjectFeatureImages(editingFeature.id, newFeatureImages);
 
       // Show success message
-      setSuccessMessage(`${newFeatureImages.length} image(s) have been successfully added to the feature!`);
+      setSuccessMessage(
+        `${newFeatureImages.length} image(s) have been successfully added to the feature!`
+      );
 
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
@@ -1000,7 +1023,9 @@ const Projects = () => {
       setViewingProject(projectData);
 
       // Update the viewing feature data
-      const updatedFeature = projectData.project_features.find(f => f.id === editingFeature.id);
+      const updatedFeature = projectData.project_features.find(
+        (f) => f.id === editingFeature.id
+      );
       if (updatedFeature) {
         setViewingFeature(updatedFeature);
       }
@@ -1010,14 +1035,13 @@ const Projects = () => {
 
       // Close modal
       handleAddImagesCancel();
-
     } catch (error) {
       // Handle validation errors from API
       if (error.validationErrors) {
         setAddImagesErrors(error.validationErrors);
       } else {
         setAddImagesErrors({
-          general: error.message || "Failed to add images"
+          general: error.message || "Failed to add images",
         });
       }
     } finally {
@@ -1042,7 +1066,9 @@ const Projects = () => {
       setImageToDelete(null);
 
       // Show success message
-      setSuccessMessage(`Image "${imageToDelete.image_name}" has been successfully deleted!`);
+      setSuccessMessage(
+        `Image "${imageToDelete.image_name}" has been successfully deleted!`
+      );
 
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
@@ -1056,7 +1082,9 @@ const Projects = () => {
 
       // Update the viewing feature data if still viewing the same feature
       if (viewingFeature) {
-        const updatedFeature = projectData.project_features.find(f => f.id === viewingFeature.id);
+        const updatedFeature = projectData.project_features.find(
+          (f) => f.id === viewingFeature.id
+        );
         if (updatedFeature) {
           setViewingFeature(updatedFeature);
         }
@@ -1064,7 +1092,6 @@ const Projects = () => {
 
       // Refresh the projects list
       await loadProjects();
-
     } catch (error) {
       console.error("Failed to delete image:", error);
       alert("Failed to delete image: " + error.message);
@@ -1096,7 +1123,9 @@ const Projects = () => {
       setFeatureToDelete(null);
 
       // Show success message
-      setSuccessMessage(`Feature "${featureToDelete.title}" has been successfully deleted!`);
+      setSuccessMessage(
+        `Feature "${featureToDelete.title}" has been successfully deleted!`
+      );
 
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
@@ -1116,7 +1145,6 @@ const Projects = () => {
 
       // Refresh the projects list
       await loadProjects();
-
     } catch (error) {
       console.error("Failed to delete feature:", error);
       alert("Failed to delete feature: " + error.message);
@@ -1143,7 +1171,9 @@ const Projects = () => {
       setProjectToDelete(null);
 
       // Show success message
-      setSuccessMessage(`Project "${projectToDelete.name}" has been successfully deleted!`);
+      setSuccessMessage(
+        `Project "${projectToDelete.name}" has been successfully deleted!`
+      );
 
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
@@ -1158,7 +1188,6 @@ const Projects = () => {
 
       // Refresh the projects list
       await loadProjects();
-
     } catch (error) {
       console.error("Failed to delete project:", error);
       alert("Failed to delete project: " + error.message);
@@ -1311,7 +1340,7 @@ const Projects = () => {
                       className={index % 2 === 0 ? "even" : "odd"}
                     >
                       <td className="id-cell">
-                        <span className="id-number">{project.id}</span>
+                        <span className="id-number">#{project.id}</span>
                       </td>
                       <td className="name-cell">
                         <span className="project-name">{project.name}</span>
@@ -1648,76 +1677,6 @@ const Projects = () => {
                         </span>
                       </div>
                     )}
-
-                    {/* Thumbnail Replacement Form */}
-                    {showThumbnailReplace && (
-                      <div className="thumbnail-replace-form">
-                        <div className="form-section">
-                          <h4>Replace Thumbnail</h4>
-
-                          {thumbnailError && (
-                            <div className="form-error">{thumbnailError}</div>
-                          )}
-
-                          <div className="form-group">
-                            <label htmlFor="new_thumbnail">
-                              New Thumbnail Image *
-                            </label>
-                            <input
-                              type="file"
-                              id="new_thumbnail"
-                              accept="image/jpeg,image/png,image/jpg,image/gif,image/svg+xml"
-                              onChange={handleThumbnailFileChange}
-                              className={thumbnailError ? "error" : ""}
-                            />
-                            <div className="file-info">
-                              <small>
-                                Supported formats: JPEG, PNG, JPG, GIF, SVG
-                                (Max: 5MB)
-                              </small>
-                            </div>
-                          </div>
-
-                          {/* Thumbnail Preview */}
-                          {newThumbnail && (
-                            <div className="form-group">
-                              <label>New Thumbnail Preview</label>
-                              <div className="thumbnail-preview">
-                                <img
-                                  src={URL.createObjectURL(newThumbnail)}
-                                  alt="New thumbnail preview"
-                                  className="preview-image"
-                                />
-                                <p className="preview-name">
-                                  {newThumbnail.name}
-                                </p>
-                              </div>
-                            </div>
-                          )}
-
-                          <div className="form-actions">
-                            <button
-                              onClick={handleThumbnailCancel}
-                              className="cancel-btn"
-                              disabled={thumbnailLoading}
-                              type="button"
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              onClick={handleThumbnailSubmit}
-                              className="confirm-add-btn"
-                              disabled={thumbnailLoading || !newThumbnail}
-                              type="button"
-                            >
-                              {thumbnailLoading
-                                ? "Updating..."
-                                : "Update Thumbnail"}
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    )}
                   </div>
 
                   {/* Project Features */}
@@ -1746,33 +1705,47 @@ const Projects = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {viewingProject.project_features.map((feature, index) => (
-                              <tr key={feature.id} className={index % 2 === 0 ? "even" : "odd"}>
-                                <td>{feature.id}</td>
-                                <td className="feature-title">{feature.title}</td>
-                                <td className="feature-desc">
-                                  {feature.description.length > 50
-                                    ? `${feature.description.substring(0, 50)}...`
-                                    : feature.description}
-                                </td>
-                                <td>
-                                  <button
-                                    onClick={() => handleViewFeatureDetails(feature)}
-                                    className="action-btn view-btn"
-                                    title={`View details for ${feature.title}`}
-                                  >
-                                    ℹ️
-                                  </button>
-                                  <button
-                                    onClick={() => handleDeleteFeatureClick(feature)}
-                                    className="action-btn delete-btn"
-                                    title={`Delete ${feature.title}`}
-                                  >
-                                    🗑️
-                                  </button>
-                                </td>
-                              </tr>
-                            ))}
+                            {viewingProject.project_features.map(
+                              (feature, index) => (
+                                <tr
+                                  key={feature.id}
+                                  className={index % 2 === 0 ? "even" : "odd"}
+                                >
+                                  <td>#{feature.id}</td>
+                                  <td className="feature-title">
+                                    {feature.title}
+                                  </td>
+                                  <td className="feature-desc">
+                                    {feature.description.length > 50
+                                      ? `${feature.description.substring(
+                                          0,
+                                          50
+                                        )}...`
+                                      : feature.description}
+                                  </td>
+                                  <td>
+                                    <button
+                                      onClick={() =>
+                                        handleViewFeatureDetails(feature)
+                                      }
+                                      className="action-btn view-btn"
+                                      title={`View details for ${feature.title}`}
+                                    >
+                                      ℹ️
+                                    </button>
+                                    <button
+                                      onClick={() =>
+                                        handleDeleteFeatureClick(feature)
+                                      }
+                                      className="action-btn delete-btn"
+                                      title={`Delete ${feature.title}`}
+                                    >
+                                      🗑️
+                                    </button>
+                                  </td>
+                                </tr>
+                              )
+                            )}
                           </tbody>
                         </table>
                       </div>
@@ -1972,7 +1945,10 @@ const Projects = () => {
           <div className="modal-content add-feature-modal">
             <div className="modal-header">
               <h2>Add New Feature</h2>
-              <button onClick={handleAddFeatureCancel} className="modal-close-btn">
+              <button
+                onClick={handleAddFeatureCancel}
+                className="modal-close-btn"
+              >
                 ✕
               </button>
             </div>
@@ -1995,10 +1971,13 @@ const Projects = () => {
                       value={featureFormData.title}
                       onChange={handleFeatureFormChange}
                       placeholder="Enter feature title"
-                      className={featureErrors.title ? 'error' : ''}
+                      className={featureErrors.title ? "error" : ""}
                     />
-                    {featureErrors.title && Array.isArray(featureErrors.title) ? (
-                      <span className="form-error">{featureErrors.title[0]}</span>
+                    {featureErrors.title &&
+                    Array.isArray(featureErrors.title) ? (
+                      <span className="form-error">
+                        {featureErrors.title[0]}
+                      </span>
                     ) : featureErrors.title ? (
                       <span className="form-error">{featureErrors.title}</span>
                     ) : null}
@@ -2007,7 +1986,9 @@ const Projects = () => {
 
                 <div className="form-row">
                   <div className="form-group full-width">
-                    <label htmlFor="feature_description">Feature Description *</label>
+                    <label htmlFor="feature_description">
+                      Feature Description *
+                    </label>
                     <textarea
                       id="feature_description"
                       name="description"
@@ -2015,12 +1996,17 @@ const Projects = () => {
                       onChange={handleFeatureFormChange}
                       placeholder="Enter feature description"
                       rows="4"
-                      className={featureErrors.description ? 'error' : ''}
+                      className={featureErrors.description ? "error" : ""}
                     />
-                    {featureErrors.description && Array.isArray(featureErrors.description) ? (
-                      <span className="form-error">{featureErrors.description[0]}</span>
+                    {featureErrors.description &&
+                    Array.isArray(featureErrors.description) ? (
+                      <span className="form-error">
+                        {featureErrors.description[0]}
+                      </span>
                     ) : featureErrors.description ? (
-                      <span className="form-error">{featureErrors.description}</span>
+                      <span className="form-error">
+                        {featureErrors.description}
+                      </span>
                     ) : null}
                   </div>
                 </div>
@@ -2034,13 +2020,19 @@ const Projects = () => {
                       accept="image/jpeg,image/png,image/jpg,image/gif,image/svg+xml"
                       onChange={handleFeatureImagesChange}
                       multiple
-                      className={featureErrors.images ? 'error' : ''}
+                      className={featureErrors.images ? "error" : ""}
                     />
                     <div className="file-info">
-                      <small>Supported formats: JPEG, PNG, JPG, GIF, SVG (Max: 5MB each). You can select multiple images.</small>
+                      <small>
+                        Supported formats: JPEG, PNG, JPG, GIF, SVG (Max: 5MB
+                        each). You can select multiple images.
+                      </small>
                     </div>
-                    {featureErrors.images && Array.isArray(featureErrors.images) ? (
-                      <span className="form-error">{featureErrors.images[0]}</span>
+                    {featureErrors.images &&
+                    Array.isArray(featureErrors.images) ? (
+                      <span className="form-error">
+                        {featureErrors.images[0]}
+                      </span>
                     ) : featureErrors.images ? (
                       <span className="form-error">{featureErrors.images}</span>
                     ) : null}
@@ -2048,25 +2040,31 @@ const Projects = () => {
                 </div>
 
                 {/* Images Preview */}
-                {featureFormData.images && featureFormData.images.length > 0 && (
-                  <div className="form-row">
-                    <div className="form-group full-width">
-                      <label>Images Preview ({featureFormData.images.length} selected)</label>
-                      <div className="images-preview-grid">
-                        {Array.from(featureFormData.images).map((image, index) => (
-                          <div key={index} className="image-preview-item">
-                            <img
-                              src={URL.createObjectURL(image)}
-                              alt={`Preview ${index + 1}`}
-                              className="preview-image"
-                            />
-                            <p className="preview-name">{image.name}</p>
-                          </div>
-                        ))}
+                {featureFormData.images &&
+                  featureFormData.images.length > 0 && (
+                    <div className="form-row">
+                      <div className="form-group full-width">
+                        <label>
+                          Images Preview ({featureFormData.images.length}{" "}
+                          selected)
+                        </label>
+                        <div className="images-preview-grid">
+                          {Array.from(featureFormData.images).map(
+                            (image, index) => (
+                              <div key={index} className="image-preview-item">
+                                <img
+                                  src={URL.createObjectURL(image)}
+                                  alt={`Preview ${index + 1}`}
+                                  className="preview-image"
+                                />
+                                <p className="preview-name">{image.name}</p>
+                              </div>
+                            )
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
+                  )}
               </form>
             </div>
 
@@ -2134,7 +2132,11 @@ const Projects = () => {
                   <div className="detail-item full-width">
                     <label>Description:</label>
                     <div className="description-content">
-                      {viewingFeature.description || <span className="empty-text">No description provided</span>}
+                      {viewingFeature.description || (
+                        <span className="empty-text">
+                          No description provided
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -2173,7 +2175,9 @@ const Projects = () => {
                     </div>
                   ) : (
                     <div className="empty-state-small">
-                      <span className="empty-text">No images for this feature</span>
+                      <span className="empty-text">
+                        No images for this feature
+                      </span>
                     </div>
                   )}
                 </div>
@@ -2198,7 +2202,10 @@ const Projects = () => {
           <div className="modal-content edit-feature-modal">
             <div className="modal-header">
               <h2>Edit Feature</h2>
-              <button onClick={handleEditFeatureCancel} className="modal-close-btn">
+              <button
+                onClick={handleEditFeatureCancel}
+                className="modal-close-btn"
+              >
                 ✕
               </button>
             </div>
@@ -2211,7 +2218,10 @@ const Projects = () => {
               )}
 
               {/* Feature Details Form */}
-              <form onSubmit={handleEditFeatureSubmit} className="edit-feature-form">
+              <form
+                onSubmit={handleEditFeatureSubmit}
+                className="edit-feature-form"
+              >
                 <div className="form-row">
                   <div className="form-group full-width">
                     <label htmlFor="edit_feature_title">Feature Title *</label>
@@ -2222,19 +2232,26 @@ const Projects = () => {
                       value={editFeatureFormData.title}
                       onChange={handleEditFeatureFormChange}
                       placeholder="Enter feature title"
-                      className={editFeatureErrors.title ? 'error' : ''}
+                      className={editFeatureErrors.title ? "error" : ""}
                     />
-                    {editFeatureErrors.title && Array.isArray(editFeatureErrors.title) ? (
-                      <span className="form-error">{editFeatureErrors.title[0]}</span>
+                    {editFeatureErrors.title &&
+                    Array.isArray(editFeatureErrors.title) ? (
+                      <span className="form-error">
+                        {editFeatureErrors.title[0]}
+                      </span>
                     ) : editFeatureErrors.title ? (
-                      <span className="form-error">{editFeatureErrors.title}</span>
+                      <span className="form-error">
+                        {editFeatureErrors.title}
+                      </span>
                     ) : null}
                   </div>
                 </div>
 
                 <div className="form-row">
                   <div className="form-group full-width">
-                    <label htmlFor="edit_feature_description">Feature Description *</label>
+                    <label htmlFor="edit_feature_description">
+                      Feature Description *
+                    </label>
                     <textarea
                       id="edit_feature_description"
                       name="description"
@@ -2242,12 +2259,17 @@ const Projects = () => {
                       onChange={handleEditFeatureFormChange}
                       placeholder="Enter feature description"
                       rows="4"
-                      className={editFeatureErrors.description ? 'error' : ''}
+                      className={editFeatureErrors.description ? "error" : ""}
                     />
-                    {editFeatureErrors.description && Array.isArray(editFeatureErrors.description) ? (
-                      <span className="form-error">{editFeatureErrors.description[0]}</span>
+                    {editFeatureErrors.description &&
+                    Array.isArray(editFeatureErrors.description) ? (
+                      <span className="form-error">
+                        {editFeatureErrors.description[0]}
+                      </span>
                     ) : editFeatureErrors.description ? (
-                      <span className="form-error">{editFeatureErrors.description}</span>
+                      <span className="form-error">
+                        {editFeatureErrors.description}
+                      </span>
                     ) : null}
                   </div>
                 </div>
@@ -2282,7 +2304,10 @@ const Projects = () => {
           <div className="modal-content add-images-modal">
             <div className="modal-header">
               <h2>Add Images to Feature</h2>
-              <button onClick={handleAddImagesCancel} className="modal-close-btn">
+              <button
+                onClick={handleAddImagesCancel}
+                className="modal-close-btn"
+              >
                 ✕
               </button>
             </div>
@@ -2295,10 +2320,15 @@ const Projects = () => {
               )}
 
               <div className="feature-info">
-                <p><strong>Feature:</strong> {editingFeature.title}</p>
+                <p>
+                  <strong>Feature:</strong> {editingFeature.title}
+                </p>
               </div>
 
-              <form onSubmit={handleAddImagesSubmit} className="add-images-form">
+              <form
+                onSubmit={handleAddImagesSubmit}
+                className="add-images-form"
+              >
                 <div className="form-row">
                   <div className="form-group full-width">
                     <label htmlFor="new_images">Select Images *</label>
@@ -2308,15 +2338,23 @@ const Projects = () => {
                       accept="image/jpeg,image/png,image/jpg,image/gif,image/svg+xml"
                       onChange={handleNewImagesChange}
                       multiple
-                      className={addImagesErrors.images ? 'error' : ''}
+                      className={addImagesErrors.images ? "error" : ""}
                     />
                     <div className="file-info">
-                      <small>Supported formats: JPEG, PNG, JPG, GIF, SVG (Max: 5MB each). You can select multiple images.</small>
+                      <small>
+                        Supported formats: JPEG, PNG, JPG, GIF, SVG (Max: 5MB
+                        each). You can select multiple images.
+                      </small>
                     </div>
-                    {addImagesErrors.images && Array.isArray(addImagesErrors.images) ? (
-                      <span className="form-error">{addImagesErrors.images[0]}</span>
+                    {addImagesErrors.images &&
+                    Array.isArray(addImagesErrors.images) ? (
+                      <span className="form-error">
+                        {addImagesErrors.images[0]}
+                      </span>
                     ) : addImagesErrors.images ? (
-                      <span className="form-error">{addImagesErrors.images}</span>
+                      <span className="form-error">
+                        {addImagesErrors.images}
+                      </span>
                     ) : null}
                   </div>
                 </div>
@@ -2325,7 +2363,9 @@ const Projects = () => {
                 {newFeatureImages && newFeatureImages.length > 0 && (
                   <div className="form-row">
                     <div className="form-group full-width">
-                      <label>Images Preview ({newFeatureImages.length} selected)</label>
+                      <label>
+                        Images Preview ({newFeatureImages.length} selected)
+                      </label>
                       <div className="images-preview-grid">
                         {Array.from(newFeatureImages).map((image, index) => (
                           <div key={index} className="image-preview-item">
@@ -2356,7 +2396,11 @@ const Projects = () => {
               <button
                 onClick={handleAddImagesSubmit}
                 className="confirm-add-btn"
-                disabled={addImagesLoading || !newFeatureImages || newFeatureImages.length === 0}
+                disabled={
+                  addImagesLoading ||
+                  !newFeatureImages ||
+                  newFeatureImages.length === 0
+                }
                 type="submit"
               >
                 {addImagesLoading ? "Adding..." : "Add Images"}
@@ -2369,10 +2413,16 @@ const Projects = () => {
       {/* Delete Image Confirmation Modal */}
       {showDeleteImageModal && imageToDelete && (
         <div className="modal-overlay">
-          <div className="modal-content delete-modal" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="modal-content delete-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="modal-header">
               <h2>Confirm Delete Image</h2>
-              <button onClick={handleDeleteImageCancel} className="modal-close-btn">
+              <button
+                onClick={handleDeleteImageCancel}
+                className="modal-close-btn"
+              >
                 ✕
               </button>
             </div>
@@ -2385,7 +2435,8 @@ const Projects = () => {
                 <div className="delete-message">
                   <h3>Are you sure you want to delete this image?</h3>
                   <p>
-                    You are about to permanently delete <strong>{imageToDelete.image_name}</strong>.
+                    You are about to permanently delete{" "}
+                    <strong>{imageToDelete.image_name}</strong>.
                   </p>
                   <p>This action cannot be undone.</p>
                 </div>
@@ -2415,10 +2466,16 @@ const Projects = () => {
       {/* Delete Feature Confirmation Modal */}
       {showDeleteFeatureModal && featureToDelete && (
         <div className="modal-overlay">
-          <div className="modal-content delete-modal" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="modal-content delete-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="modal-header">
               <h2>Confirm Delete Feature</h2>
-              <button onClick={handleDeleteFeatureCancel} className="modal-close-btn">
+              <button
+                onClick={handleDeleteFeatureCancel}
+                className="modal-close-btn"
+              >
                 ✕
               </button>
             </div>
@@ -2431,7 +2488,8 @@ const Projects = () => {
                 <div className="delete-message">
                   <h3>Are you sure you want to delete this feature?</h3>
                   <p>
-                    You are about to permanently delete <strong>{featureToDelete.title}</strong>.
+                    You are about to permanently delete{" "}
+                    <strong>{featureToDelete.title}</strong>.
                   </p>
                   <p>This action cannot be undone.</p>
                 </div>
@@ -2461,10 +2519,16 @@ const Projects = () => {
       {/* Delete Project Confirmation Modal */}
       {showDeleteProjectModal && projectToDelete && (
         <div className="modal-overlay">
-          <div className="modal-content delete-modal" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="modal-content delete-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="modal-header">
               <h2>Confirm Delete Project</h2>
-              <button onClick={handleDeleteProjectCancel} className="modal-close-btn">
+              <button
+                onClick={handleDeleteProjectCancel}
+                className="modal-close-btn"
+              >
                 ✕
               </button>
             </div>
@@ -2477,9 +2541,13 @@ const Projects = () => {
                 <div className="delete-message">
                   <h3>Are you sure you want to delete this project?</h3>
                   <p>
-                    You are about to permanently delete <strong>{projectToDelete.name}</strong>.
+                    You are about to permanently delete{" "}
+                    <strong>{projectToDelete.name}</strong>.
                   </p>
-                  <p>This action cannot be undone and will also delete all associated features and images.</p>
+                  <p>
+                    This action cannot be undone and will also delete all
+                    associated features and images.
+                  </p>
                 </div>
               </div>
             </div>
@@ -2498,6 +2566,76 @@ const Projects = () => {
                 disabled={deleteProjectLoading}
               >
                 {deleteProjectLoading ? "Deleting..." : "Yes, Delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Replace Thumbnail Modal */}
+      {showThumbnailReplace && (
+        <div className="modal-overlay">
+          <div className="modal-content replace-thumbnail-modal">
+            <div className="modal-header">
+              <h2>Replace Thumbnail</h2>
+              <button onClick={handleThumbnailCancel} className="modal-close">
+                ×
+              </button>
+            </div>
+
+            <div className="modal-body">
+              {thumbnailError && (
+                <div className="form-error">{thumbnailError}</div>
+              )}
+
+              <div className="form-group">
+                <label htmlFor="new_thumbnail">New Thumbnail Image *</label>
+                <input
+                  type="file"
+                  id="new_thumbnail"
+                  accept="image/jpeg,image/png,image/jpg,image/gif,image/svg+xml"
+                  onChange={handleThumbnailFileChange}
+                  className={thumbnailError ? "error" : ""}
+                />
+                <div className="file-info">
+                  <small>
+                    Supported formats: JPEG, PNG, JPG, GIF, SVG (Max: 5MB)
+                  </small>
+                </div>
+              </div>
+
+              {/* Thumbnail Preview */}
+              {newThumbnail && (
+                <div className="form-group">
+                  <label>New Thumbnail Preview</label>
+                  <div className="thumbnail-preview">
+                    <img
+                      src={URL.createObjectURL(newThumbnail)}
+                      alt="New thumbnail preview"
+                      className="preview-image"
+                    />
+                    <p className="preview-name">{newThumbnail.name}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="modal-footer">
+              <button
+                onClick={handleThumbnailCancel}
+                className="btn-secondary"
+                disabled={thumbnailLoading}
+                type="button"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleThumbnailSubmit}
+                className="confirm-add-btn"
+                disabled={thumbnailLoading || !newThumbnail}
+                type="button"
+              >
+                {thumbnailLoading ? "Updating..." : "Update Thumbnail"}
               </button>
             </div>
           </div>

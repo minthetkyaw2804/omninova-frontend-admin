@@ -299,12 +299,15 @@
 .projects-table td {
   padding: 16px 12px;
   border-bottom: 1px solid #dee2e6;
-  vertical-align: top;
+  vertical-align: middle !important;
   max-width: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: center;
+  display: table-cell !important;
+  height: 40px !important;
+  line-height: 40px !important;
 }
 
 .projects-table tr.even {
@@ -389,14 +392,12 @@
 }
 
 .id-number {
-  background: #007bff;
-  color: white;
-  padding: 4px 8px;
+  padding: 4px 12px;
   border-radius: 4px;
   font-size: 12px;
   font-weight: 500;
   display: inline-block;
-  min-width: 20px;
+  min-width: 32px;
   text-align: center;
 }
 
@@ -476,17 +477,21 @@
 }
 
 .projects-table .action-btn {
-  display: inline-block !important;
-  margin: 0 2px !important;
-  padding: 4px 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 4px !important;
+  padding: 12px 14px !important;
   background: white !important;
   border: 1px solid #d1d5db !important;
-  border-radius: 4px !important;
+  border-radius: 8px !important;
   cursor: pointer !important;
-  font-size: 13px !important;
+  font-size: 16px !important;
   vertical-align: middle !important;
   text-align: center !important;
   transition: all 0.2s ease !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
 }
 
 /* FORCE FEATURES TABLE ACTIONS COLUMN - ULTRA AGGRESSIVE */
@@ -504,17 +509,21 @@
 }
 
 .features-table .action-btn {
-  display: inline-block !important;
-  margin: 0 2px !important;
-  padding: 4px 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 4px !important;
+  padding: 12px 14px !important;
   background: white !important;
   border: 1px solid #d1d5db !important;
-  border-radius: 4px !important;
+  border-radius: 8px !important;
   cursor: pointer !important;
-  font-size: 13px !important;
+  font-size: 16px !important;
   vertical-align: middle !important;
   text-align: center !important;
   transition: all 0.2s ease !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
 }
 
 .view-btn:hover {
@@ -747,18 +756,21 @@
 }
 
 .confirm-add-btn {
-  background: #ffc107;
-  color: black;
+  background: #10b981;
+  color: white;
   border: none;
-  padding: 12px 24px;
+  padding: 0.75rem 1.5rem;
   border-radius: 8px;
-  cursor: pointer;
   font-weight: 600;
-  transition: all 0.3s ease;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
 }
 
-.confirm-add-btn:hover {
-  background: #ffc107;
+.confirm-add-btn:hover:not(:disabled) {
+  background: #059669;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
 .confirm-add-btn:disabled {

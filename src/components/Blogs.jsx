@@ -32,7 +32,7 @@ const Blogs = () => {
   const [addFormData, setAddFormData] = useState({
     title: "",
     content: "",
-    images: []
+    images: [],
   });
   const [addFormErrors, setAddFormErrors] = useState({});
   const [addLoading, setAddLoading] = useState(false);
@@ -44,7 +44,7 @@ const Blogs = () => {
   const [blogToEdit, setBlogToEdit] = useState(null);
   const [editFormData, setEditFormData] = useState({
     title: "",
-    content: ""
+    content: "",
   });
   const [editLoading, setEditLoading] = useState(false);
   const [editErrors, setEditErrors] = useState({});
@@ -150,18 +150,18 @@ const Blogs = () => {
     try {
       setDeleteLoading(true);
       await deleteBlogById(blogToDelete.id);
-      
+
       // Remove the deleted blog from the local state
-      const updatedBlogs = blogs.filter(b => b.id !== blogToDelete.id);
+      const updatedBlogs = blogs.filter((b) => b.id !== blogToDelete.id);
       setBlogs(updatedBlogs);
-      
+
       // Close the delete modal
       setShowDeleteModal(false);
       setBlogToDelete(null);
-      
+
       // Show success message
       setSuccessMessage("Blog deleted successfully!");
-      
+
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
         setSuccessMessage("");
@@ -194,44 +194,46 @@ const Blogs = () => {
 
   const handleAddFormChange = (e) => {
     const { name, value } = e.target;
-    setAddFormData(prev => ({
+    setAddFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
+
     // Clear error for this field
     if (addFormErrors[name]) {
-      setAddFormErrors(prev => ({
+      setAddFormErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    
+
     // Validate image files
-    const invalidFiles = files.filter(file => !file.type.startsWith('image/'));
+    const invalidFiles = files.filter(
+      (file) => !file.type.startsWith("image/")
+    );
     if (invalidFiles.length > 0) {
-      setAddFormErrors(prev => ({
+      setAddFormErrors((prev) => ({
         ...prev,
-        images: "Please select only image files"
+        images: "Please select only image files",
       }));
       e.target.value = "";
       return;
     }
 
-    setAddFormData(prev => ({
+    setAddFormData((prev) => ({
       ...prev,
-      images: files
+      images: files,
     }));
 
     // Clear error
     if (addFormErrors.images) {
-      setAddFormErrors(prev => ({
+      setAddFormErrors((prev) => ({
         ...prev,
-        images: ""
+        images: "",
       }));
     }
   };
@@ -257,48 +259,47 @@ const Blogs = () => {
 
   const handleAddBlog = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     setAddLoading(true);
-    
+
     try {
       const formData = new FormData();
-      formData.append('title', addFormData.title.trim());
-      formData.append('content', addFormData.content.trim());
-      
+      formData.append("title", addFormData.title.trim());
+      formData.append("content", addFormData.content.trim());
+
       // Add all images
       addFormData.images.forEach((image, index) => {
-        formData.append('images[]', image);
+        formData.append("images[]", image);
       });
 
       await createBlog(formData);
-      
+
       // Close modal
       closeAddModal();
-      
+
       // Show success message
       setSuccessMessage("Blog created successfully!");
-      
+
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
         setSuccessMessage("");
       }, 5000);
-      
+
       // Reload blogs list
       const response = await fetchBlogs();
       setBlogs(response.data || []);
-      
     } catch (error) {
       console.error("Failed to create blog:", error);
-      
+
       if (error.validationErrors) {
         setAddFormErrors(error.validationErrors);
       } else {
         setAddFormErrors({
-          general: error.message || "Failed to create blog. Please try again."
+          general: error.message || "Failed to create blog. Please try again.",
         });
       }
     } finally {
@@ -310,7 +311,7 @@ const Blogs = () => {
     setBlogToEdit(blog);
     setEditFormData({
       title: blog.title || "",
-      content: blog.content || ""
+      content: blog.content || "",
     });
     setEditErrors({});
     setShowEditModal(true);
@@ -319,16 +320,16 @@ const Blogs = () => {
 
   const handleEditFormChange = (e) => {
     const { name, value } = e.target;
-    setEditFormData(prev => ({
+    setEditFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
+
     // Clear error for this field
     if (editErrors[name]) {
-      setEditErrors(prev => ({
+      setEditErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
@@ -350,45 +351,44 @@ const Blogs = () => {
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateEditForm()) {
       return;
     }
 
     setEditLoading(true);
-    
+
     try {
       const data = await updateBlog(blogToEdit.id, {
         title: editFormData.title.trim(),
-        content: editFormData.content.trim()
+        content: editFormData.content.trim(),
       });
-      
+
       // Close modal
       setShowEditModal(false);
       setBlogToEdit(null);
       setEditFormData({ title: "", content: "" });
       setEditErrors({});
-      
+
       // Show success message
       setSuccessMessage(data.message || "Blog updated successfully!");
-      
+
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
         setSuccessMessage("");
       }, 5000);
-      
+
       // Reload blogs list
       const blogsResponse = await fetchBlogs();
       setBlogs(blogsResponse.data || []);
-      
     } catch (error) {
       console.error("Failed to update blog:", error);
-      
+
       if (error.validationErrors) {
         setEditErrors(error.validationErrors);
       } else {
         setEditErrors({
-          general: error.message || "Failed to update blog. Please try again."
+          general: error.message || "Failed to update blog. Please try again.",
         });
       }
     } finally {
@@ -401,6 +401,10 @@ const Blogs = () => {
     setBlogToEdit(null);
     setEditFormData({ title: "", content: "" });
     setEditErrors({});
+    // Go back to blog details instead of main list
+    if (selectedBlog) {
+      setShowBlogModal(true);
+    }
   };
 
   const handleAddImages = (blog) => {
@@ -413,12 +417,14 @@ const Blogs = () => {
 
   const handleAddImagesChange = (e) => {
     const files = Array.from(e.target.files);
-    
+
     // Validate image files
-    const invalidFiles = files.filter(file => !file.type.startsWith('image/'));
+    const invalidFiles = files.filter(
+      (file) => !file.type.startsWith("image/")
+    );
     if (invalidFiles.length > 0) {
       setAddImagesErrors({
-        images: "Please select only image files"
+        images: "Please select only image files",
       });
       e.target.value = "";
       return;
@@ -445,48 +451,47 @@ const Blogs = () => {
 
   const handleAddImagesSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateAddImagesForm()) {
       return;
     }
 
     setAddImagesLoading(true);
-    
+
     try {
       const data = await addBlogImages(blogToAddImages.id, addImagesData);
-      
+
       // Close modal
       setShowAddImagesModal(false);
       setBlogToAddImages(null);
       setAddImagesData([]);
       setAddImagesErrors({});
-      
+
       // Show success message
       setSuccessMessage(data.message || "Images added successfully!");
-      
+
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
         setSuccessMessage("");
       }, 5000);
-      
+
       // Reload blog details if we have a selected blog
       if (selectedBlog && selectedBlog.id === blogToAddImages.id) {
         const updatedBlog = await fetchBlogById(blogToAddImages.id);
         setSelectedBlog(updatedBlog.data);
       }
-      
+
       // Reload blogs list
       const blogsResponse = await fetchBlogs();
       setBlogs(blogsResponse.data || []);
-      
     } catch (error) {
       console.error("Failed to add images:", error);
-      
+
       if (error.validationErrors) {
         setAddImagesErrors(error.validationErrors);
       } else {
         setAddImagesErrors({
-          general: error.message || "Failed to add images. Please try again."
+          general: error.message || "Failed to add images. Please try again.",
         });
       }
     } finally {
@@ -499,6 +504,10 @@ const Blogs = () => {
     setBlogToAddImages(null);
     setAddImagesData([]);
     setAddImagesErrors({});
+    // Go back to blog details instead of main list
+    if (selectedBlog) {
+      setShowBlogModal(true);
+    }
   };
 
   const handleDeleteImageClick = (image) => {
@@ -512,29 +521,28 @@ const Blogs = () => {
     try {
       setDeleteImageLoading(true);
       const data = await deleteBlogImage(imageToDelete.id);
-      
+
       // Close the delete modal
       setShowDeleteImageModal(false);
       setImageToDelete(null);
-      
+
       // Show success message
       setSuccessMessage(data.message || "Image deleted successfully!");
-      
+
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
         setSuccessMessage("");
       }, 5000);
-      
+
       // Reload blog details if we have a selected blog
       if (selectedBlog) {
         const updatedBlog = await fetchBlogById(selectedBlog.id);
         setSelectedBlog(updatedBlog.data);
       }
-      
+
       // Reload blogs list
       const blogsResponse = await fetchBlogs();
       setBlogs(blogsResponse.data || []);
-      
     } catch (error) {
       console.error("Failed to delete image:", error);
       alert("Failed to delete image: " + error.message);
@@ -550,10 +558,10 @@ const Blogs = () => {
 
   const renderContent = (content) => {
     if (!content) return "No content available";
-    
+
     // Basic content rendering - you can enhance this for markdown/HTML
-    const paragraphs = content.split('\n\n').filter(p => p.trim());
-    
+    const paragraphs = content.split("\n\n").filter((p) => p.trim());
+
     return (
       <div className="blog-content">
         {paragraphs.map((paragraph, index) => (
@@ -703,28 +711,31 @@ const Blogs = () => {
                       className={index % 2 === 0 ? "even" : "odd"}
                     >
                       <td className="id-cell">
-                        <span className="id-number">{blog.id}</span>
+                        <span className="id-number">#{blog.id}</span>
                       </td>
                       <td className="title-cell">
                         <span className="blog-title">{blog.title}</span>
                       </td>
                       <td className="content-cell">
-                        {blog.content ? (
-                          blog.content.split(' ').length > 4
-                            ? blog.content.split(' ').slice(0, 4).join(' ') + '...'
+                        {blog.content
+                          ? blog.content.split(" ").length > 4
+                            ? blog.content.split(" ").slice(0, 4).join(" ") +
+                              "..."
                             : blog.content
-                        ) : (
-                          "No content"
-                        )}
+                          : "No content"}
                       </td>
                       <td className="created-by-cell">
-                        <span className="created-by-text">{blog.created_by}</span>
+                        <span className="created-by-text">
+                          {blog.created_by}
+                        </span>
                       </td>
                       <td className="date-cell">
                         <span className="date-text">{blog.created_at}</span>
                       </td>
                       <td className="updated-by-cell">
-                        <span className="updated-by-text">{blog.updated_by}</span>
+                        <span className="updated-by-text">
+                          {blog.updated_by}
+                        </span>
                       </td>
                       <td className="date-cell">
                         <span className="date-text">{blog.updated_at}</span>
@@ -784,7 +795,9 @@ const Blogs = () => {
                     <div className="detail-title">
                       <h3>{selectedBlog.title}</h3>
                       <div className="detail-badges">
-                        <span className="detail-badge id-badge">ID: {selectedBlog.id}</span>
+                        <span className="detail-badge id-badge">
+                          ID: {selectedBlog.id}
+                        </span>
                         <span className="detail-badge">Blog Post</span>
                       </div>
                     </div>
@@ -793,36 +806,40 @@ const Blogs = () => {
                   <div className="detail-grid">
                     {/* Title and Content Combined */}
                     <div className="detail-item full-width title-content-card">
-                      <div className="title-content-header">
-                        <div className="title-content-info">
-                          <div className="title-section">
-                            <span className="content-label">Title:</span>
-                            <div className="title-text">{selectedBlog.title}</div>
-                          </div>
-                          
-                          <div className="content-section">
-                            <span className="content-label">Content:</span>
-                            <div className="content-text">
-                              {selectedBlog.content || "No content available"}
-                            </div>
-                          </div>
-                        </div>
-                        <button 
-                          onClick={() => handleEditBlog(selectedBlog)} 
+                      <div className="card-header">
+                        <h3 className="card-title">Blog Information</h3>
+                        <button
+                          onClick={() => handleEditBlog(selectedBlog)}
                           className="edit-blog-btn"
                           title="Edit Blog"
                         >
                           Edit Details
                         </button>
                       </div>
+                      <div className="title-content-info">
+                        <div className="title-section">
+                          <span className="content-label">Title:</span>
+                          <div className="title-text">{selectedBlog.title}</div>
+                        </div>
+
+                        <div className="content-section">
+                          <span className="content-label">Content:</span>
+                          <div className="content-text">
+                            {selectedBlog.content || "No content available"}
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
                     <div className="detail-item full-width">
                       <div className="detail-label">
                         <span className="detail-icon">🖼️</span>
-                        Images {selectedBlog.images && selectedBlog.images.length > 0 ? `(${selectedBlog.images.length})` : '(0)'}
-                        <button 
-                          onClick={() => handleAddImages(selectedBlog)} 
+                        Images{" "}
+                        {selectedBlog.images && selectedBlog.images.length > 0
+                          ? `(${selectedBlog.images.length})`
+                          : "(0)"}
+                        <button
+                          onClick={() => handleAddImages(selectedBlog)}
                           className="add-images-btn"
                           title="Add Images"
                         >
@@ -830,7 +847,8 @@ const Blogs = () => {
                         </button>
                       </div>
                       <div className="detail-value">
-                        {selectedBlog.images && selectedBlog.images.length > 0 ? (
+                        {selectedBlog.images &&
+                        selectedBlog.images.length > 0 ? (
                           <div className="images-gallery">
                             {selectedBlog.images.map((image) => (
                               <div key={image.id} className="gallery-item">
@@ -841,14 +859,18 @@ const Blogs = () => {
                                     className="gallery-image"
                                   />
                                   <button
-                                    onClick={() => handleDeleteImageClick(image)}
+                                    onClick={() =>
+                                      handleDeleteImageClick(image)
+                                    }
                                     className="delete-image-btn"
                                     title="Delete Image"
                                   >
                                     ✕
                                   </button>
                                 </div>
-                                <p className="gallery-image-name">{image.image_name}</p>
+                                <p className="gallery-image-name">
+                                  {image.image_name}
+                                </p>
                               </div>
                             ))}
                           </div>
@@ -866,18 +888,26 @@ const Blogs = () => {
                             <span className="stat-label">Created</span>
                           </div>
                           <div className="stat-content">
-                            <div className="stat-value">{selectedBlog.created_by}</div>
-                            <div className="stat-meta">{selectedBlog.created_at}</div>
+                            <div className="stat-value">
+                              {selectedBlog.created_by}
+                            </div>
+                            <div className="stat-meta">
+                              {selectedBlog.created_at}
+                            </div>
                           </div>
                         </div>
-                        
+
                         <div className="dashboard-stat">
                           <div className="stat-header">
                             <span className="stat-label">Last Updated</span>
                           </div>
                           <div className="stat-content">
-                            <div className="stat-value">{selectedBlog.updated_by}</div>
-                            <div className="stat-meta">{selectedBlog.updated_at}</div>
+                            <div className="stat-value">
+                              {selectedBlog.updated_by}
+                            </div>
+                            <div className="stat-meta">
+                              {selectedBlog.updated_at}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -899,7 +929,10 @@ const Blogs = () => {
       {/* Delete Confirmation Modal */}
       {showDeleteModal && blogToDelete && (
         <div className="modal-overlay">
-          <div className="modal-content delete-modal" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="modal-content delete-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="modal-header">
               <h2>Confirm Delete</h2>
               <button onClick={handleDeleteCancel} className="modal-close-btn">
@@ -915,7 +948,9 @@ const Blogs = () => {
                 <div className="delete-message">
                   <h3>Are you sure you want to delete this blog?</h3>
                   <p>
-                    You are about to permanently delete <strong>{blogToDelete.title}</strong> (ID: {blogToDelete.id}).
+                    You are about to permanently delete{" "}
+                    <strong>{blogToDelete.title}</strong> (ID: {blogToDelete.id}
+                    ).
                   </p>
                   <p>This action cannot be undone.</p>
                 </div>
@@ -923,15 +958,15 @@ const Blogs = () => {
             </div>
 
             <div className="modal-footer">
-              <button 
-                onClick={handleDeleteCancel} 
+              <button
+                onClick={handleDeleteCancel}
                 className="cancel-btn"
                 disabled={deleteLoading}
               >
                 Cancel
               </button>
-              <button 
-                onClick={handleDeleteConfirm} 
+              <button
+                onClick={handleDeleteConfirm}
                 className="confirm-delete-btn"
                 disabled={deleteLoading}
               >
@@ -965,9 +1000,7 @@ const Blogs = () => {
                 )}
 
                 <div className="form-group">
-                  <label htmlFor="title">
-                    Blog Title
-                  </label>
+                  <label htmlFor="title">Blog Title</label>
                   <input
                     type="text"
                     id="title"
@@ -984,9 +1017,7 @@ const Blogs = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="content">
-                    Blog Content
-                  </label>
+                  <label htmlFor="content">Blog Content</label>
                   <textarea
                     id="content"
                     name="content"
@@ -1002,9 +1033,7 @@ const Blogs = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="images">
-                    Blog Images
-                  </label>
+                  <label htmlFor="images">Blog Images</label>
                   <div className="file-upload-container">
                     <input
                       type="file"
@@ -1019,7 +1048,8 @@ const Blogs = () => {
                       <p>Select multiple image files (JPG, PNG, GIF, etc.)</p>
                       {addFormData.images.length > 0 && (
                         <p className="selected-files">
-                          {addFormData.images.length} file{addFormData.images.length > 1 ? 's' : ''} selected
+                          {addFormData.images.length} file
+                          {addFormData.images.length > 1 ? "s" : ""} selected
                         </p>
                       )}
                     </div>
@@ -1093,9 +1123,7 @@ const Blogs = () => {
                 )}
 
                 <div className="form-group">
-                  <label htmlFor="edit_title">
-                    Blog Title *
-                  </label>
+                  <label htmlFor="edit_title">Blog Title *</label>
                   <input
                     type="text"
                     id="edit_title"
@@ -1112,9 +1140,7 @@ const Blogs = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="edit_content">
-                    Blog Content *
-                  </label>
+                  <label htmlFor="edit_content">Blog Content *</label>
                   <textarea
                     id="edit_content"
                     name="content"
@@ -1180,9 +1206,7 @@ const Blogs = () => {
                 )}
 
                 <div className="form-group">
-                  <label htmlFor="blog_images">
-                    Select Images *
-                  </label>
+                  <label htmlFor="blog_images">Select Images *</label>
                   <div className="file-upload-container">
                     <input
                       type="file"
@@ -1197,7 +1221,8 @@ const Blogs = () => {
                       <p>Select multiple image files (JPG, PNG, GIF, etc.)</p>
                       {addImagesData.length > 0 && (
                         <p className="selected-files">
-                          {addImagesData.length} file{addImagesData.length > 1 ? 's' : ''} selected
+                          {addImagesData.length} file
+                          {addImagesData.length > 1 ? "s" : ""} selected
                         </p>
                       )}
                     </div>
@@ -1251,10 +1276,16 @@ const Blogs = () => {
       {/* Delete Image Confirmation Modal */}
       {showDeleteImageModal && imageToDelete && (
         <div className="modal-overlay">
-          <div className="modal-content delete-modal" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="modal-content delete-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="modal-header">
               <h2>Confirm Delete Image</h2>
-              <button onClick={handleDeleteImageCancel} className="modal-close-btn">
+              <button
+                onClick={handleDeleteImageCancel}
+                className="modal-close-btn"
+              >
                 ✕
               </button>
             </div>
@@ -1267,7 +1298,8 @@ const Blogs = () => {
                 <div className="delete-message">
                   <h3>Are you sure you want to delete this image?</h3>
                   <p>
-                    You are about to permanently delete <strong>{imageToDelete.image_name}</strong>.
+                    You are about to permanently delete{" "}
+                    <strong>{imageToDelete.image_name}</strong>.
                   </p>
                   <p>This action cannot be undone.</p>
                 </div>
@@ -1275,15 +1307,15 @@ const Blogs = () => {
             </div>
 
             <div className="modal-footer">
-              <button 
-                onClick={handleDeleteImageCancel} 
+              <button
+                onClick={handleDeleteImageCancel}
                 className="cancel-btn"
                 disabled={deleteImageLoading}
               >
                 Cancel
               </button>
-              <button 
-                onClick={handleDeleteImageConfirm} 
+              <button
+                onClick={handleDeleteImageConfirm}
                 className="confirm-delete-btn"
                 disabled={deleteImageLoading}
               >

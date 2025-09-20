@@ -682,7 +682,7 @@ const Users = () => {
                       className={index % 2 === 0 ? "even" : "odd"}
                     >
                       <td className="id-cell">
-                        <span className="id-number">{user.id}</span>
+                        <span className="id-number">#{user.id}</span>
                       </td>
                       <td className="name-cell">
                         <span className="user-name">{user.name}</span>

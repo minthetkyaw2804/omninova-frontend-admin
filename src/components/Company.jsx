@@ -104,14 +104,14 @@ const Company = () => {
     vision: "",
     goal: "",
     founded_date: "",
-    address: ""
+    address: "",
   });
   const [editLoading, setEditLoading] = useState(false);
   const [editError, setEditError] = useState("");
   const [showSocialModal, setShowSocialModal] = useState(false);
   const [socialFormData, setSocialFormData] = useState({
     platform_name: "",
-    page_url: ""
+    page_url: "",
   });
   const [socialLoading, setSocialLoading] = useState(false);
   const [socialErrors, setSocialErrors] = useState({});
@@ -122,14 +122,14 @@ const Company = () => {
   const [socialToEdit, setSocialToEdit] = useState(null);
   const [editSocialFormData, setEditSocialFormData] = useState({
     platform_name: "",
-    page_url: ""
+    page_url: "",
   });
   const [editSocialLoading, setEditSocialLoading] = useState(false);
   const [editSocialErrors, setEditSocialErrors] = useState({});
   const [showContactModal, setShowContactModal] = useState(false);
   const [contactFormData, setContactFormData] = useState({
     department: "",
-    phone_number: ""
+    phone_number: "",
   });
   const [contactLoading, setContactLoading] = useState(false);
   const [contactErrors, setContactErrors] = useState({});
@@ -140,7 +140,7 @@ const Company = () => {
   const [contactToEdit, setContactToEdit] = useState(null);
   const [editContactFormData, setEditContactFormData] = useState({
     department: "",
-    phone_number: ""
+    phone_number: "",
   });
   const [editContactLoading, setEditContactLoading] = useState(false);
   const [editContactErrors, setEditContactErrors] = useState({});
@@ -166,13 +166,18 @@ const Company = () => {
   useEffect(() => {
     const getCurrentUserProfile = async () => {
       try {
-        const response = await apiRequest(buildApiUrl(API_CONFIG.ENDPOINTS.ADMIN_PROFILE));
+        const response = await apiRequest(
+          buildApiUrl(API_CONFIG.ENDPOINTS.ADMIN_PROFILE)
+        );
         if (response.ok) {
           const data = await response.json();
           setCurrentUserProfile(data.data);
         } else {
           const errorData = await response.json().catch(() => ({}));
-          console.warn("Failed to fetch profile:", errorData.message || response.status);
+          console.warn(
+            "Failed to fetch profile:",
+            errorData.message || response.status
+          );
         }
       } catch (error) {
         console.warn("Profile fetch error:", error.message);
@@ -254,15 +259,17 @@ const Company = () => {
       // Update logo version to force refresh across all components
       const newVersion = Date.now();
       setLogoVersion(newVersion);
-      
+
       // Dispatch event to update other components
-      window.dispatchEvent(new CustomEvent('logoUpdated', { 
-        detail: { version: newVersion } 
-      }));
+      window.dispatchEvent(
+        new CustomEvent("logoUpdated", {
+          detail: { version: newVersion },
+        })
+      );
 
       // Show success message
       setLogoSuccess("Company logo has been successfully updated!");
-      
+
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
         setLogoSuccess("");
@@ -315,7 +322,7 @@ const Company = () => {
       vision: company.vision || "",
       goal: company.goal || "",
       founded_date: company.founded_date || "",
-      address: company.address || ""
+      address: company.address || "",
     });
     setShowEditModal(true);
     setEditError("");
@@ -329,7 +336,7 @@ const Company = () => {
       vision: "",
       goal: "",
       founded_date: "",
-      address: ""
+      address: "",
     });
     setEditError("");
   };
@@ -338,7 +345,7 @@ const Company = () => {
     setShowSocialModal(true);
     setSocialFormData({
       platform_name: "",
-      page_url: ""
+      page_url: "",
     });
     setSocialErrors({});
   };
@@ -347,77 +354,84 @@ const Company = () => {
     setShowSocialModal(false);
     setSocialFormData({
       platform_name: "",
-      page_url: ""
+      page_url: "",
     });
     setSocialErrors({});
   };
 
   const handleSocialInputChange = (e) => {
     const { name, value } = e.target;
-    setSocialFormData(prev => ({
+    setSocialFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     // Clear error for this field when user starts typing
     if (socialErrors[name]) {
-      setSocialErrors(prev => ({
+      setSocialErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
 
   const validateSocialForm = () => {
     const errors = {};
-    
+
     if (!socialFormData.platform_name.trim()) {
       errors.platform_name = "Platform name is required";
     }
-    
+
     if (!socialFormData.page_url.trim()) {
       errors.page_url = "Page URL is required";
-    } else if (!socialFormData.page_url.startsWith('http://') && !socialFormData.page_url.startsWith('https://')) {
-      errors.page_url = "Please enter a valid URL (must start with http:// or https://)";
+    } else if (
+      !socialFormData.page_url.startsWith("http://") &&
+      !socialFormData.page_url.startsWith("https://")
+    ) {
+      errors.page_url =
+        "Please enter a valid URL (must start with http:// or https://)";
     }
-    
+
     return errors;
   };
 
   const handleSocialSubmit = async (e) => {
     e.preventDefault();
-    
+
     const errors = validateSocialForm();
     if (Object.keys(errors).length > 0) {
       setSocialErrors(errors);
       return;
     }
-    
+
     try {
       setSocialLoading(true);
       setSocialErrors({});
-      
-      const response = await apiRequest(buildApiUrl(API_CONFIG.ENDPOINTS.COMPANY_SOCIAL_MEDIA), {
-        method: "POST",
-        body: JSON.stringify(socialFormData),
-      });
-      
+
+      const response = await apiRequest(
+        buildApiUrl(API_CONFIG.ENDPOINTS.COMPANY_SOCIAL_MEDIA),
+        {
+          method: "POST",
+          body: JSON.stringify(socialFormData),
+        }
+      );
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || "Failed to add social media");
       }
-      
+
       // Show success message
       setSuccessMessage("Social media added successfully!");
       setTimeout(() => setSuccessMessage(""), 5000);
-      
+
       // Close modal and refresh company data
       closeSocialModal();
       loadCompanyData();
-      
     } catch (error) {
       console.error("Failed to add social media:", error);
-      setSocialErrors({ 
-        general: error.message || "Failed to add social media. Please try again." 
+      setSocialErrors({
+        general:
+          error.message || "Failed to add social media. Please try again.",
       });
     } finally {
       setSocialLoading(false);
@@ -436,30 +450,38 @@ const Company = () => {
 
   const handleDeleteSocialConfirm = async () => {
     if (!socialToDelete) return;
-    
+
     try {
       setDeleteSocialLoading(true);
-      
-      const response = await apiRequest(buildApiUrl(`${API_CONFIG.ENDPOINTS.COMPANY_SOCIAL_MEDIA}/${socialToDelete.id}`), {
-        method: "DELETE",
-      });
-      
+
+      const response = await apiRequest(
+        buildApiUrl(
+          `${API_CONFIG.ENDPOINTS.COMPANY_SOCIAL_MEDIA}/${socialToDelete.id}`
+        ),
+        {
+          method: "DELETE",
+        }
+      );
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || "Failed to delete social media");
       }
-      
+
       // Show success message
-      setSuccessMessage(`${socialToDelete.platform_name} social media deleted successfully!`);
+      setSuccessMessage(
+        `${socialToDelete.platform_name} social media deleted successfully!`
+      );
       setTimeout(() => setSuccessMessage(""), 5000);
-      
+
       // Close modal and refresh company data
       handleDeleteSocialCancel();
       loadCompanyData();
-      
     } catch (error) {
       console.error("Failed to delete social media:", error);
-      setSuccessMessage(error.message || "Failed to delete social media. Please try again.");
+      setSuccessMessage(
+        error.message || "Failed to delete social media. Please try again."
+      );
       setTimeout(() => setSuccessMessage(""), 5000);
     } finally {
       setDeleteSocialLoading(false);
@@ -470,7 +492,7 @@ const Company = () => {
     setSocialToEdit(social);
     setEditSocialFormData({
       platform_name: social.platform_name,
-      page_url: social.page_url
+      page_url: social.page_url,
     });
     setShowEditSocialModal(true);
     setEditSocialErrors({});
@@ -481,79 +503,90 @@ const Company = () => {
     setSocialToEdit(null);
     setEditSocialFormData({
       platform_name: "",
-      page_url: ""
+      page_url: "",
     });
     setEditSocialErrors({});
   };
 
   const handleEditSocialInputChange = (e) => {
     const { name, value } = e.target;
-    setEditSocialFormData(prev => ({
+    setEditSocialFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     // Clear error for this field when user starts typing
     if (editSocialErrors[name]) {
-      setEditSocialErrors(prev => ({
+      setEditSocialErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
 
   const validateEditSocialForm = () => {
     const errors = {};
-    
+
     if (!editSocialFormData.platform_name.trim()) {
       errors.platform_name = "Platform name is required";
     }
-    
+
     if (!editSocialFormData.page_url.trim()) {
       errors.page_url = "Page URL is required";
-    } else if (!editSocialFormData.page_url.startsWith('http://') && !editSocialFormData.page_url.startsWith('https://')) {
-      errors.page_url = "Please enter a valid URL (must start with http:// or https://)";
+    } else if (
+      !editSocialFormData.page_url.startsWith("http://") &&
+      !editSocialFormData.page_url.startsWith("https://")
+    ) {
+      errors.page_url =
+        "Please enter a valid URL (must start with http:// or https://)";
     }
-    
+
     return errors;
   };
 
   const handleEditSocialSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!socialToEdit) return;
-    
+
     const errors = validateEditSocialForm();
     if (Object.keys(errors).length > 0) {
       setEditSocialErrors(errors);
       return;
     }
-    
+
     try {
       setEditSocialLoading(true);
       setEditSocialErrors({});
-      
-      const response = await apiRequest(buildApiUrl(`${API_CONFIG.ENDPOINTS.COMPANY_SOCIAL_MEDIA}/${socialToEdit.id}`), {
-        method: "PUT",
-        body: JSON.stringify(editSocialFormData),
-      });
-      
+
+      const response = await apiRequest(
+        buildApiUrl(
+          `${API_CONFIG.ENDPOINTS.COMPANY_SOCIAL_MEDIA}/${socialToEdit.id}`
+        ),
+        {
+          method: "PUT",
+          body: JSON.stringify(editSocialFormData),
+        }
+      );
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || "Failed to update social media");
       }
-      
+
       // Show success message
-      setSuccessMessage(`${editSocialFormData.platform_name} social media updated successfully!`);
+      setSuccessMessage(
+        `${editSocialFormData.platform_name} social media updated successfully!`
+      );
       setTimeout(() => setSuccessMessage(""), 5000);
-      
+
       // Close modal and refresh company data
       handleEditSocialCancel();
       loadCompanyData();
-      
     } catch (error) {
       console.error("Failed to update social media:", error);
-      setEditSocialErrors({ 
-        general: error.message || "Failed to update social media. Please try again." 
+      setEditSocialErrors({
+        general:
+          error.message || "Failed to update social media. Please try again.",
       });
     } finally {
       setEditSocialLoading(false);
@@ -564,7 +597,7 @@ const Company = () => {
     setShowContactModal(true);
     setContactFormData({
       department: "",
-      phone_number: ""
+      phone_number: "",
     });
     setContactErrors({});
   };
@@ -573,77 +606,84 @@ const Company = () => {
     setShowContactModal(false);
     setContactFormData({
       department: "",
-      phone_number: ""
+      phone_number: "",
     });
     setContactErrors({});
   };
 
   const handleContactInputChange = (e) => {
     const { name, value } = e.target;
-    setContactFormData(prev => ({
+    setContactFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     // Clear error for this field when user starts typing
     if (contactErrors[name]) {
-      setContactErrors(prev => ({
+      setContactErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
 
   const validateContactForm = () => {
     const errors = {};
-    
+
     if (!contactFormData.department.trim()) {
       errors.department = "Department is required";
     }
-    
+
     if (!contactFormData.phone_number.trim()) {
       errors.phone_number = "Phone number is required";
-    } else if (!/^[\+]?[1-9][\d\-\(\)\s\.]{7,20}$/.test(contactFormData.phone_number.trim())) {
-      errors.phone_number = "Please enter a valid phone number (e.g., +1 (202) 555-0488)";
+    } else if (
+      !/^[\+]?[1-9][\d\-\(\)\s\.]{7,20}$/.test(
+        contactFormData.phone_number.trim()
+      )
+    ) {
+      errors.phone_number =
+        "Please enter a valid phone number (e.g., +1 (202) 555-0488)";
     }
-    
+
     return errors;
   };
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();
-    
+
     const errors = validateContactForm();
     if (Object.keys(errors).length > 0) {
       setContactErrors(errors);
       return;
     }
-    
+
     try {
       setContactLoading(true);
       setContactErrors({});
-      
-      const response = await apiRequest(buildApiUrl(API_CONFIG.ENDPOINTS.COMPANY_CONTACTS), {
-        method: "POST",
-        body: JSON.stringify(contactFormData),
-      });
-      
+
+      const response = await apiRequest(
+        buildApiUrl(API_CONFIG.ENDPOINTS.COMPANY_CONTACTS),
+        {
+          method: "POST",
+          body: JSON.stringify(contactFormData),
+        }
+      );
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || "Failed to add contact");
       }
-      
+
       // Show success message
       setSuccessMessage("Contact added successfully!");
       setTimeout(() => setSuccessMessage(""), 5000);
-      
+
       // Close modal and refresh company data
       closeContactModal();
       loadCompanyData();
-      
     } catch (error) {
       console.error("Failed to add contact:", error);
-      setContactErrors({ 
-        general: error.message || "Failed to add contact. Please try again." 
+      setContactErrors({
+        general: error.message || "Failed to add contact. Please try again.",
       });
     } finally {
       setContactLoading(false);
@@ -662,30 +702,38 @@ const Company = () => {
 
   const handleDeleteContactConfirm = async () => {
     if (!contactToDelete) return;
-    
+
     try {
       setDeleteContactLoading(true);
-      
-      const response = await apiRequest(buildApiUrl(`${API_CONFIG.ENDPOINTS.COMPANY_CONTACTS}/${contactToDelete.id}`), {
-        method: "DELETE",
-      });
-      
+
+      const response = await apiRequest(
+        buildApiUrl(
+          `${API_CONFIG.ENDPOINTS.COMPANY_CONTACTS}/${contactToDelete.id}`
+        ),
+        {
+          method: "DELETE",
+        }
+      );
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || "Failed to delete contact");
       }
-      
+
       // Show success message
-      setSuccessMessage(`${contactToDelete.department} contact deleted successfully!`);
+      setSuccessMessage(
+        `${contactToDelete.department} contact deleted successfully!`
+      );
       setTimeout(() => setSuccessMessage(""), 5000);
-      
+
       // Close modal and refresh company data
       handleDeleteContactCancel();
       loadCompanyData();
-      
     } catch (error) {
       console.error("Failed to delete contact:", error);
-      setSuccessMessage(error.message || "Failed to delete contact. Please try again.");
+      setSuccessMessage(
+        error.message || "Failed to delete contact. Please try again."
+      );
       setTimeout(() => setSuccessMessage(""), 5000);
     } finally {
       setDeleteContactLoading(false);
@@ -696,7 +744,7 @@ const Company = () => {
     setContactToEdit(contact);
     setEditContactFormData({
       department: contact.department,
-      phone_number: contact.phone_number
+      phone_number: contact.phone_number,
     });
     setShowEditContactModal(true);
     setEditContactErrors({});
@@ -707,79 +755,90 @@ const Company = () => {
     setContactToEdit(null);
     setEditContactFormData({
       department: "",
-      phone_number: ""
+      phone_number: "",
     });
     setEditContactErrors({});
   };
 
   const handleEditContactInputChange = (e) => {
     const { name, value } = e.target;
-    setEditContactFormData(prev => ({
+    setEditContactFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     // Clear error for this field when user starts typing
     if (editContactErrors[name]) {
-      setEditContactErrors(prev => ({
+      setEditContactErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
 
   const validateEditContactForm = () => {
     const errors = {};
-    
+
     if (!editContactFormData.department.trim()) {
       errors.department = "Department is required";
     }
-    
+
     if (!editContactFormData.phone_number.trim()) {
       errors.phone_number = "Phone number is required";
-    } else if (!/^[\+]?[1-9][\d\-\(\)\s\.]{7,20}$/.test(editContactFormData.phone_number.trim())) {
-      errors.phone_number = "Please enter a valid phone number (e.g., +1 (202) 555-0488)";
+    } else if (
+      !/^[\+]?[1-9][\d\-\(\)\s\.]{7,20}$/.test(
+        editContactFormData.phone_number.trim()
+      )
+    ) {
+      errors.phone_number =
+        "Please enter a valid phone number (e.g., +1 (202) 555-0488)";
     }
-    
+
     return errors;
   };
 
   const handleEditContactSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!contactToEdit) return;
-    
+
     const errors = validateEditContactForm();
     if (Object.keys(errors).length > 0) {
       setEditContactErrors(errors);
       return;
     }
-    
+
     try {
       setEditContactLoading(true);
       setEditContactErrors({});
-      
-      const response = await apiRequest(buildApiUrl(`${API_CONFIG.ENDPOINTS.COMPANY_CONTACTS}/${contactToEdit.id}`), {
-        method: "PUT",
-        body: JSON.stringify(editContactFormData),
-      });
-      
+
+      const response = await apiRequest(
+        buildApiUrl(
+          `${API_CONFIG.ENDPOINTS.COMPANY_CONTACTS}/${contactToEdit.id}`
+        ),
+        {
+          method: "PUT",
+          body: JSON.stringify(editContactFormData),
+        }
+      );
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || "Failed to update contact");
       }
-      
+
       // Show success message
-      setSuccessMessage(`${editContactFormData.department} contact updated successfully!`);
+      setSuccessMessage(
+        `${editContactFormData.department} contact updated successfully!`
+      );
       setTimeout(() => setSuccessMessage(""), 5000);
-      
+
       // Close modal and refresh company data
       handleEditContactCancel();
       loadCompanyData();
-      
     } catch (error) {
       console.error("Failed to update contact:", error);
-      setEditContactErrors({ 
-        general: error.message || "Failed to update contact. Please try again." 
+      setEditContactErrors({
+        general: error.message || "Failed to update contact. Please try again.",
       });
     } finally {
       setEditContactLoading(false);
@@ -788,20 +847,27 @@ const Company = () => {
 
   const handleEditInputChange = (e) => {
     const { name, value } = e.target;
-    setEditFormData(prev => ({
+    setEditFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validate all fields are filled
-    const requiredFields = ['name', 'description', 'vision', 'goal', 'founded_date', 'address'];
+    const requiredFields = [
+      "name",
+      "description",
+      "vision",
+      "goal",
+      "founded_date",
+      "address",
+    ];
     for (const field of requiredFields) {
       if (!editFormData[field].trim()) {
-        setEditError(`Please fill in the ${field.replace('_', ' ')} field.`);
+        setEditError(`Please fill in the ${field.replace("_", " ")} field.`);
         return;
       }
     }
@@ -816,7 +882,9 @@ const Company = () => {
       closeEditModal();
 
       // Show success message
-      setSuccessMessage(data.message || "Company details updated successfully!");
+      setSuccessMessage(
+        data.message || "Company details updated successfully!"
+      );
       setTimeout(() => {
         setSuccessMessage("");
       }, 5000);
@@ -934,21 +1002,23 @@ const Company = () => {
                         src={`http://162.84.221.21/images/company/company_logo.png?v=${logoVersion}`}
                         alt="Company Logo"
                         className="company-logo"
-                          onError={(e) => {
-                            e.target.style.display = "none";
-                          }}
-                        />
-                        <button
-                          onClick={openLogoModal}
-                          className="logo-overlay logo-replace-btn"
-                          title="Replace Company Logo"
-                        >
-                          <span className="btn-icon">🔄</span>
-                        </button>
+                        onError={(e) => {
+                          e.target.style.display = "none";
+                        }}
+                      />
+                      <button
+                        onClick={openLogoModal}
+                        className="logo-overlay logo-replace-btn"
+                        title="Replace Company Logo"
+                      >
+                        <span className="btn-icon">🔄</span>
+                      </button>
                     </div>
                   </div>
                   <div className="company-info">
-                    <h3 className="company-name">{company.name || "Company Name"}</h3>
+                    <h3 className="company-name">
+                      {company.name || "Company Name"}
+                    </h3>
                     {company.founded_date && (
                       <div className="company-founded">
                         <span className="label">Founded:</span>
@@ -957,7 +1027,7 @@ const Company = () => {
                     )}
                   </div>
                 </div>
-                
+
                 <div className="company-texts">
                   <div className="text-item">
                     <div className="text-header">
@@ -1139,40 +1209,61 @@ const Company = () => {
           <div
             className="modal-content edit-modal"
             style={{
-              maxWidth: '600px',
-              width: '90%',
-              maxHeight: '90vh',
-              overflow: 'auto'
+              maxWidth: "600px",
+              width: "90%",
+              maxHeight: "90vh",
+              overflow: "auto",
             }}
           >
-            <div className="modal-header" style={{ padding: '20px 24px 16px', borderBottom: '1px solid #eee' }}>
-              <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>Edit Company Details</h3>
-              <button onClick={closeEditModal} className="modal-close" style={{ 
-                background: 'none', 
-                border: 'none', 
-                fontSize: '24px', 
-                cursor: 'pointer',
-                padding: '0',
-                width: '30px',
-                height: '30px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
+            <div
+              className="modal-header"
+              style={{
+                padding: "20px 24px 16px",
+                borderBottom: "1px solid #eee",
+              }}
+            >
+              <h3 style={{ margin: 0, fontSize: "18px", fontWeight: "600" }}>
+                Edit Company Details
+              </h3>
+              <button
+                onClick={closeEditModal}
+                className="modal-close"
+                style={{
+                  background: "none",
+                  border: "none",
+                  fontSize: "24px",
+                  cursor: "pointer",
+                  padding: "0",
+                  width: "30px",
+                  height: "30px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 ×
               </button>
             </div>
 
             <form onSubmit={handleEditSubmit}>
-              <div className="modal-body" style={{ padding: '24px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <label htmlFor="name" style={{ 
-                      marginBottom: '8px', 
-                      fontWeight: '500', 
-                      fontSize: '14px',
-                      color: '#333' 
-                    }}>
+              <div className="modal-body" style={{ padding: "24px" }}>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    gap: "20px",
+                  }}
+                >
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <label
+                      htmlFor="name"
+                      style={{
+                        marginBottom: "8px",
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#333",
+                      }}
+                    >
                       Company Name *
                     </label>
                     <input
@@ -1184,23 +1275,26 @@ const Company = () => {
                       required
                       placeholder="Enter company name"
                       style={{
-                        padding: '12px',
-                        border: '1px solid #ddd',
-                        borderRadius: '6px',
-                        fontSize: '14px',
-                        width: '100%',
-                        boxSizing: 'border-box'
+                        padding: "12px",
+                        border: "1px solid #ddd",
+                        borderRadius: "6px",
+                        fontSize: "14px",
+                        width: "100%",
+                        boxSizing: "border-box",
                       }}
                     />
                   </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <label htmlFor="founded_date" style={{ 
-                      marginBottom: '8px', 
-                      fontWeight: '500', 
-                      fontSize: '14px',
-                      color: '#333' 
-                    }}>
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <label
+                      htmlFor="founded_date"
+                      style={{
+                        marginBottom: "8px",
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#333",
+                      }}
+                    >
                       Founded Date *
                     </label>
                     <input
@@ -1211,23 +1305,32 @@ const Company = () => {
                       onChange={handleEditInputChange}
                       required
                       style={{
-                        padding: '12px',
-                        border: '1px solid #ddd',
-                        borderRadius: '6px',
-                        fontSize: '14px',
-                        width: '100%',
-                        boxSizing: 'border-box'
+                        padding: "12px",
+                        border: "1px solid #ddd",
+                        borderRadius: "6px",
+                        fontSize: "14px",
+                        width: "100%",
+                        boxSizing: "border-box",
                       }}
                     />
                   </div>
 
-                  <div style={{ gridColumn: 'span 2', display: 'flex', flexDirection: 'column' }}>
-                    <label htmlFor="description" style={{ 
-                      marginBottom: '8px', 
-                      fontWeight: '500', 
-                      fontSize: '14px',
-                      color: '#333' 
-                    }}>
+                  <div
+                    style={{
+                      gridColumn: "span 2",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <label
+                      htmlFor="description"
+                      style={{
+                        marginBottom: "8px",
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#333",
+                      }}
+                    >
                       Description *
                     </label>
                     <textarea
@@ -1239,25 +1342,34 @@ const Company = () => {
                       placeholder="Enter company description"
                       rows={3}
                       style={{
-                        padding: '12px',
-                        border: '1px solid #ddd',
-                        borderRadius: '6px',
-                        fontSize: '14px',
-                        width: '100%',
-                        boxSizing: 'border-box',
-                        resize: 'vertical',
-                        fontFamily: 'inherit'
+                        padding: "12px",
+                        border: "1px solid #ddd",
+                        borderRadius: "6px",
+                        fontSize: "14px",
+                        width: "100%",
+                        boxSizing: "border-box",
+                        resize: "vertical",
+                        fontFamily: "inherit",
                       }}
                     />
                   </div>
 
-                  <div style={{ gridColumn: 'span 2', display: 'flex', flexDirection: 'column' }}>
-                    <label htmlFor="vision" style={{ 
-                      marginBottom: '8px', 
-                      fontWeight: '500', 
-                      fontSize: '14px',
-                      color: '#333' 
-                    }}>
+                  <div
+                    style={{
+                      gridColumn: "span 2",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <label
+                      htmlFor="vision"
+                      style={{
+                        marginBottom: "8px",
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#333",
+                      }}
+                    >
                       Vision *
                     </label>
                     <textarea
@@ -1269,25 +1381,34 @@ const Company = () => {
                       placeholder="Enter company vision"
                       rows={3}
                       style={{
-                        padding: '12px',
-                        border: '1px solid #ddd',
-                        borderRadius: '6px',
-                        fontSize: '14px',
-                        width: '100%',
-                        boxSizing: 'border-box',
-                        resize: 'vertical',
-                        fontFamily: 'inherit'
+                        padding: "12px",
+                        border: "1px solid #ddd",
+                        borderRadius: "6px",
+                        fontSize: "14px",
+                        width: "100%",
+                        boxSizing: "border-box",
+                        resize: "vertical",
+                        fontFamily: "inherit",
                       }}
                     />
                   </div>
 
-                  <div style={{ gridColumn: 'span 2', display: 'flex', flexDirection: 'column' }}>
-                    <label htmlFor="goal" style={{ 
-                      marginBottom: '8px', 
-                      fontWeight: '500', 
-                      fontSize: '14px',
-                      color: '#333' 
-                    }}>
+                  <div
+                    style={{
+                      gridColumn: "span 2",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <label
+                      htmlFor="goal"
+                      style={{
+                        marginBottom: "8px",
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#333",
+                      }}
+                    >
                       Goals *
                     </label>
                     <textarea
@@ -1299,25 +1420,34 @@ const Company = () => {
                       placeholder="Enter company goals"
                       rows={3}
                       style={{
-                        padding: '12px',
-                        border: '1px solid #ddd',
-                        borderRadius: '6px',
-                        fontSize: '14px',
-                        width: '100%',
-                        boxSizing: 'border-box',
-                        resize: 'vertical',
-                        fontFamily: 'inherit'
+                        padding: "12px",
+                        border: "1px solid #ddd",
+                        borderRadius: "6px",
+                        fontSize: "14px",
+                        width: "100%",
+                        boxSizing: "border-box",
+                        resize: "vertical",
+                        fontFamily: "inherit",
                       }}
                     />
                   </div>
 
-                  <div style={{ gridColumn: 'span 2', display: 'flex', flexDirection: 'column' }}>
-                    <label htmlFor="address" style={{ 
-                      marginBottom: '8px', 
-                      fontWeight: '500', 
-                      fontSize: '14px',
-                      color: '#333' 
-                    }}>
+                  <div
+                    style={{
+                      gridColumn: "span 2",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <label
+                      htmlFor="address"
+                      style={{
+                        marginBottom: "8px",
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#333",
+                      }}
+                    >
                       Address *
                     </label>
                     <textarea
@@ -1329,55 +1459,60 @@ const Company = () => {
                       placeholder="Enter company address"
                       rows={2}
                       style={{
-                        padding: '12px',
-                        border: '1px solid #ddd',
-                        borderRadius: '6px',
-                        fontSize: '14px',
-                        width: '100%',
-                        boxSizing: 'border-box',
-                        resize: 'vertical',
-                        fontFamily: 'inherit'
+                        padding: "12px",
+                        border: "1px solid #ddd",
+                        borderRadius: "6px",
+                        fontSize: "14px",
+                        width: "100%",
+                        boxSizing: "border-box",
+                        resize: "vertical",
+                        fontFamily: "inherit",
                       }}
                     />
                   </div>
                 </div>
 
                 {editError && (
-                  <div style={{
-                    marginTop: '20px',
-                    padding: '12px',
-                    backgroundColor: '#fee',
-                    border: '1px solid #fcc',
-                    borderRadius: '6px',
-                    color: '#c33',
-                    fontSize: '14px'
-                  }}>
+                  <div
+                    style={{
+                      marginTop: "20px",
+                      padding: "12px",
+                      backgroundColor: "#fee",
+                      border: "1px solid #fcc",
+                      borderRadius: "6px",
+                      color: "#c33",
+                      fontSize: "14px",
+                    }}
+                  >
                     {editError}
                   </div>
                 )}
               </div>
 
-              <div className="modal-footer" style={{ 
-                padding: '16px 24px 24px', 
-                borderTop: '1px solid #eee',
-                display: 'flex',
-                justifyContent: 'flex-end',
-                gap: '12px'
-              }}>
-                <button 
-                  type="button" 
-                  onClick={closeEditModal} 
+              <div
+                className="modal-footer"
+                style={{
+                  padding: "16px 24px 24px",
+                  borderTop: "1px solid #eee",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: "12px",
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={closeEditModal}
                   className="btn-secondary"
                   disabled={editLoading}
                   style={{
-                    padding: '10px 20px',
-                    border: '1px solid #ddd',
-                    backgroundColor: '#f8f9fa',
-                    color: '#6c757d',
-                    borderRadius: '6px',
-                    fontSize: '14px',
-                    fontWeight: '500',
-                    cursor: editLoading ? 'not-allowed' : 'pointer'
+                    padding: "10px 20px",
+                    border: "1px solid #ddd",
+                    backgroundColor: "#f8f9fa",
+                    color: "#6c757d",
+                    borderRadius: "6px",
+                    fontSize: "14px",
+                    fontWeight: "500",
+                    cursor: editLoading ? "not-allowed" : "pointer",
                   }}
                 >
                   Cancel
@@ -1385,19 +1520,11 @@ const Company = () => {
                 <button
                   type="submit"
                   disabled={editLoading}
-                  className="btn-primary"
+                  className="confirm-add-btn"
                   style={{
-                    padding: '10px 20px',
-                    backgroundColor: editLoading ? '#6c757d' : '#007bff',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '6px',
-                    fontSize: '14px',
-                    fontWeight: '500',
-                    cursor: editLoading ? 'not-allowed' : 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
                   }}
                 >
                   {editLoading ? (
@@ -1506,7 +1633,7 @@ const Company = () => {
                   {socialErrors.general}
                 </div>
               )}
-              
+
               <form onSubmit={handleSocialSubmit} className="add-social-form">
                 <div className="form-row">
                   <div className="form-group">
@@ -1518,10 +1645,12 @@ const Company = () => {
                       value={socialFormData.platform_name}
                       onChange={handleSocialInputChange}
                       placeholder="e.g., LinkedIn, Twitter, Facebook"
-                      className={socialErrors.platform_name ? 'error' : ''}
+                      className={socialErrors.platform_name ? "error" : ""}
                     />
                     {socialErrors.platform_name && (
-                      <span className="form-error">{socialErrors.platform_name}</span>
+                      <span className="form-error">
+                        {socialErrors.platform_name}
+                      </span>
                     )}
                   </div>
 
@@ -1534,10 +1663,12 @@ const Company = () => {
                       value={socialFormData.page_url}
                       onChange={handleSocialInputChange}
                       placeholder="https://www.linkedin.com/company/omninov"
-                      className={socialErrors.page_url ? 'error' : ''}
+                      className={socialErrors.page_url ? "error" : ""}
                     />
                     {socialErrors.page_url && (
-                      <span className="form-error">{socialErrors.page_url}</span>
+                      <span className="form-error">
+                        {socialErrors.page_url}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -1545,17 +1676,17 @@ const Company = () => {
             </div>
 
             <div className="modal-footer">
-              <button 
+              <button
                 type="button"
-                onClick={closeSocialModal} 
+                onClick={closeSocialModal}
                 className="cancel-btn"
                 disabled={socialLoading}
               >
                 Cancel
               </button>
-              <button 
+              <button
                 type="submit"
-                onClick={handleSocialSubmit} 
+                onClick={handleSocialSubmit}
                 className="confirm-add-btn"
                 disabled={socialLoading}
               >
@@ -1572,7 +1703,10 @@ const Company = () => {
           <div className="modal-content delete-modal">
             <div className="modal-header">
               <h2>Confirm Delete</h2>
-              <button onClick={handleDeleteSocialCancel} className="modal-close-btn">
+              <button
+                onClick={handleDeleteSocialCancel}
+                className="modal-close-btn"
+              >
                 ✕
               </button>
             </div>
@@ -1585,7 +1719,8 @@ const Company = () => {
                 <div className="delete-message">
                   <h3>Are you sure you want to delete this social media?</h3>
                   <p>
-                    You are about to permanently delete <strong>{socialToDelete.platform_name}</strong>.
+                    You are about to permanently delete{" "}
+                    <strong>{socialToDelete.platform_name}</strong>.
                   </p>
                   <p className="delete-url">{socialToDelete.page_url}</p>
                   <p>This action cannot be undone.</p>
@@ -1594,15 +1729,15 @@ const Company = () => {
             </div>
 
             <div className="modal-footer">
-              <button 
-                onClick={handleDeleteSocialCancel} 
+              <button
+                onClick={handleDeleteSocialCancel}
                 className="cancel-btn"
                 disabled={deleteSocialLoading}
               >
                 Cancel
               </button>
-              <button 
-                onClick={handleDeleteSocialConfirm} 
+              <button
+                onClick={handleDeleteSocialConfirm}
                 className="confirm-delete-btn"
                 disabled={deleteSocialLoading}
               >
@@ -1619,7 +1754,10 @@ const Company = () => {
           <div className="modal-content add-social-modal">
             <div className="modal-header">
               <h2>Edit Social Media</h2>
-              <button onClick={handleEditSocialCancel} className="modal-close-btn">
+              <button
+                onClick={handleEditSocialCancel}
+                className="modal-close-btn"
+              >
                 ✕
               </button>
             </div>
@@ -1630,8 +1768,11 @@ const Company = () => {
                   {editSocialErrors.general}
                 </div>
               )}
-              
-              <form onSubmit={handleEditSocialSubmit} className="add-social-form">
+
+              <form
+                onSubmit={handleEditSocialSubmit}
+                className="add-social-form"
+              >
                 <div className="form-row">
                   <div className="form-group">
                     <label htmlFor="edit_platform_name">Platform Name *</label>
@@ -1642,10 +1783,12 @@ const Company = () => {
                       value={editSocialFormData.platform_name}
                       onChange={handleEditSocialInputChange}
                       placeholder="e.g., LinkedIn, Twitter, Facebook"
-                      className={editSocialErrors.platform_name ? 'error' : ''}
+                      className={editSocialErrors.platform_name ? "error" : ""}
                     />
                     {editSocialErrors.platform_name && (
-                      <span className="form-error">{editSocialErrors.platform_name}</span>
+                      <span className="form-error">
+                        {editSocialErrors.platform_name}
+                      </span>
                     )}
                   </div>
 
@@ -1658,10 +1801,12 @@ const Company = () => {
                       value={editSocialFormData.page_url}
                       onChange={handleEditSocialInputChange}
                       placeholder="https://www.linkedin.com/company/omninov"
-                      className={editSocialErrors.page_url ? 'error' : ''}
+                      className={editSocialErrors.page_url ? "error" : ""}
                     />
                     {editSocialErrors.page_url && (
-                      <span className="form-error">{editSocialErrors.page_url}</span>
+                      <span className="form-error">
+                        {editSocialErrors.page_url}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -1669,17 +1814,17 @@ const Company = () => {
             </div>
 
             <div className="modal-footer">
-              <button 
+              <button
                 type="button"
-                onClick={handleEditSocialCancel} 
+                onClick={handleEditSocialCancel}
                 className="cancel-btn"
                 disabled={editSocialLoading}
               >
                 Cancel
               </button>
-              <button 
+              <button
                 type="submit"
-                onClick={handleEditSocialSubmit} 
+                onClick={handleEditSocialSubmit}
                 className="confirm-add-btn"
                 disabled={editSocialLoading}
               >
@@ -1707,7 +1852,7 @@ const Company = () => {
                   {contactErrors.general}
                 </div>
               )}
-              
+
               <form onSubmit={handleContactSubmit} className="add-social-form">
                 <div className="form-row">
                   <div className="form-group">
@@ -1719,10 +1864,12 @@ const Company = () => {
                       value={contactFormData.department}
                       onChange={handleContactInputChange}
                       placeholder="e.g., Technical Support, Sales, HR"
-                      className={contactErrors.department ? 'error' : ''}
+                      className={contactErrors.department ? "error" : ""}
                     />
                     {contactErrors.department && (
-                      <span className="form-error">{contactErrors.department}</span>
+                      <span className="form-error">
+                        {contactErrors.department}
+                      </span>
                     )}
                   </div>
 
@@ -1735,10 +1882,12 @@ const Company = () => {
                       value={contactFormData.phone_number}
                       onChange={handleContactInputChange}
                       placeholder="+1 (202) 555-0488"
-                      className={contactErrors.phone_number ? 'error' : ''}
+                      className={contactErrors.phone_number ? "error" : ""}
                     />
                     {contactErrors.phone_number && (
-                      <span className="form-error">{contactErrors.phone_number}</span>
+                      <span className="form-error">
+                        {contactErrors.phone_number}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -1746,17 +1895,17 @@ const Company = () => {
             </div>
 
             <div className="modal-footer">
-              <button 
+              <button
                 type="button"
-                onClick={closeContactModal} 
+                onClick={closeContactModal}
                 className="cancel-btn"
                 disabled={contactLoading}
               >
                 Cancel
               </button>
-              <button 
+              <button
                 type="submit"
-                onClick={handleContactSubmit} 
+                onClick={handleContactSubmit}
                 className="confirm-add-btn"
                 disabled={contactLoading}
               >
@@ -1773,7 +1922,10 @@ const Company = () => {
           <div className="modal-content delete-modal">
             <div className="modal-header">
               <h2>Confirm Delete</h2>
-              <button onClick={handleDeleteContactCancel} className="modal-close-btn">
+              <button
+                onClick={handleDeleteContactCancel}
+                className="modal-close-btn"
+              >
                 ✕
               </button>
             </div>
@@ -1786,7 +1938,8 @@ const Company = () => {
                 <div className="delete-message">
                   <h3>Are you sure you want to delete this contact?</h3>
                   <p>
-                    You are about to permanently delete <strong>{contactToDelete.department}</strong> contact.
+                    You are about to permanently delete{" "}
+                    <strong>{contactToDelete.department}</strong> contact.
                   </p>
                   <p className="delete-url">{contactToDelete.phone_number}</p>
                   <p>This action cannot be undone.</p>
@@ -1795,15 +1948,15 @@ const Company = () => {
             </div>
 
             <div className="modal-footer">
-              <button 
-                onClick={handleDeleteContactCancel} 
+              <button
+                onClick={handleDeleteContactCancel}
                 className="cancel-btn"
                 disabled={deleteContactLoading}
               >
                 Cancel
               </button>
-              <button 
-                onClick={handleDeleteContactConfirm} 
+              <button
+                onClick={handleDeleteContactConfirm}
                 className="confirm-delete-btn"
                 disabled={deleteContactLoading}
               >
@@ -1820,7 +1973,10 @@ const Company = () => {
           <div className="modal-content add-social-modal">
             <div className="modal-header">
               <h2>Edit Contact</h2>
-              <button onClick={handleEditContactCancel} className="modal-close-btn">
+              <button
+                onClick={handleEditContactCancel}
+                className="modal-close-btn"
+              >
                 ✕
               </button>
             </div>
@@ -1831,8 +1987,11 @@ const Company = () => {
                   {editContactErrors.general}
                 </div>
               )}
-              
-              <form onSubmit={handleEditContactSubmit} className="add-social-form">
+
+              <form
+                onSubmit={handleEditContactSubmit}
+                className="add-social-form"
+              >
                 <div className="form-row">
                   <div className="form-group">
                     <label htmlFor="edit_department">Department *</label>
@@ -1843,10 +2002,12 @@ const Company = () => {
                       value={editContactFormData.department}
                       onChange={handleEditContactInputChange}
                       placeholder="e.g., Technical Support, Sales, HR"
-                      className={editContactErrors.department ? 'error' : ''}
+                      className={editContactErrors.department ? "error" : ""}
                     />
                     {editContactErrors.department && (
-                      <span className="form-error">{editContactErrors.department}</span>
+                      <span className="form-error">
+                        {editContactErrors.department}
+                      </span>
                     )}
                   </div>
 
@@ -1859,10 +2020,12 @@ const Company = () => {
                       value={editContactFormData.phone_number}
                       onChange={handleEditContactInputChange}
                       placeholder="+1 (202) 555-0488"
-                      className={editContactErrors.phone_number ? 'error' : ''}
+                      className={editContactErrors.phone_number ? "error" : ""}
                     />
                     {editContactErrors.phone_number && (
-                      <span className="form-error">{editContactErrors.phone_number}</span>
+                      <span className="form-error">
+                        {editContactErrors.phone_number}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -1870,17 +2033,17 @@ const Company = () => {
             </div>
 
             <div className="modal-footer">
-              <button 
+              <button
                 type="button"
-                onClick={handleEditContactCancel} 
+                onClick={handleEditContactCancel}
                 className="cancel-btn"
                 disabled={editContactLoading}
               >
                 Cancel
               </button>
-              <button 
+              <button
                 type="submit"
-                onClick={handleEditContactSubmit} 
+                onClick={handleEditContactSubmit}
                 className="confirm-add-btn"
                 disabled={editContactLoading}
               >
@@ -1890,7 +2053,7 @@ const Company = () => {
           </div>
         </div>
       )}
-      
+
       <Footer />
     </div>
   );

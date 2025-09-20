@@ -422,12 +422,15 @@
 .users-table td {
   padding: 12px 16px;
   border-bottom: 1px solid #f3f4f6;
-  vertical-align: middle;
+  vertical-align: middle !important;
   max-width: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: center;
+  display: table-cell !important;
+  height: 40px !important;
+  line-height: 40px !important;
 }
 
 .users-table tr:hover {
@@ -443,14 +446,12 @@
 }
 
 .users-table .id-number {
-  background: #3b82f6;
-  color: white;
-  padding: 4px 8px;
+  padding: 4px 12px;
   border-radius: 4px;
   font-size: 12px;
   font-weight: 600;
   display: inline-block;
-  min-width: 20px;
+  min-width: 32px;
   text-align: center;
 }
 
@@ -538,16 +539,20 @@
 }
 
 .users-table .action-btn {
-  display: inline-block !important;
-  margin: 0 2px !important;
-  padding: 4px 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 4px !important;
+  padding: 12px 14px !important;
   background: white !important;
   border: 1px solid #d1d5db !important;
-  border-radius: 4px !important;
+  border-radius: 8px !important;
   cursor: pointer !important;
-  font-size: 13px !important;
+  font-size: 16px !important;
   vertical-align: middle !important;
   text-align: center !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
 }
 
 /* Modal Styles */

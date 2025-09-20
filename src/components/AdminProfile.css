@@ -38,7 +38,7 @@
 }
 
 .admin-profile-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -56,7 +56,6 @@
   border-bottom: 1px solid var(--border-light);
   position: relative;
 }
-
 
 .profile-title h2 {
   color: var(--text-primary);
@@ -224,7 +223,6 @@
     font-size: 1.875rem;
   }
 
-
   .profile-grid {
     grid-template-columns: 1fr;
   }
@@ -243,7 +241,6 @@
   .profile-title h2 {
     font-size: 1.5rem;
   }
-
 }
 
 /* Success Message */
@@ -475,6 +472,30 @@
   pointer-events: none;
 }
 
+.confirm-add-btn {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.confirm-add-btn:hover:not(:disabled) {
+  background: #059669;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.confirm-add-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .cancel-add-btn {
   background: var(--background);
   color: var(--text-secondary);
@@ -518,19 +539,19 @@
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .profile-actions {
     position: static;
     align-self: flex-start;
     margin-top: 1rem;
   }
-  
+
   .profile-header {
     flex-direction: column;
     text-align: center;
     gap: 1rem;
   }
-  
+
   .form-actions {
     flex-direction: column;
   }
