@@ -1688,7 +1688,7 @@ const Projects = () => {
                         className="add-feature-btn"
                         title="Add new feature"
                       >
-                        ➕ Add Feature
+                        Add Feature
                       </button>
                     </div>
 
@@ -2115,7 +2115,7 @@ const Projects = () => {
                       className="edit-feature-btn"
                       title="Edit feature details"
                     >
-                      ✏️ Edit Feature
+                      Edit Feature
                     </button>
                   </div>
                   <div className="detail-grid">
@@ -2150,7 +2150,7 @@ const Projects = () => {
                       className="add-images-btn"
                       title="Add images to feature"
                     >
-                      🖼️ Add Images
+                      Add Images
                     </button>
                   </div>
                   {viewingFeature.images && viewingFeature.images.length > 0 ? (
