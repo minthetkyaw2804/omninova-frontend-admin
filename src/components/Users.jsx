@@ -39,7 +39,7 @@ const Users = () => {
     password: "",
     password_confirmation: "",
     phone_number: "",
-    address: ""
+    address: "",
   });
   const [addLoading, setAddLoading] = useState(false);
   const [addErrors, setAddErrors] = useState({});
@@ -49,7 +49,7 @@ const Users = () => {
     name: "",
     email: "",
     phone_number: "",
-    address: ""
+    address: "",
   });
   const [editLoading, setEditLoading] = useState(false);
   const [editErrors, setEditErrors] = useState({});
@@ -57,7 +57,7 @@ const Users = () => {
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [passwordFormData, setPasswordFormData] = useState({
     password: "",
-    password_confirmation: ""
+    password_confirmation: "",
   });
   const [passwordLoading, setPasswordLoading] = useState(false);
   const [passwordErrors, setPasswordErrors] = useState({});
@@ -180,12 +180,12 @@ const Users = () => {
     try {
       setDeleteLoading(true);
       await deleteUserById(userToDelete.id);
-      
+
       // Remove the deleted user from the local state
-      const updatedUsers = users.filter(u => u.id !== userToDelete.id);
+      const updatedUsers = users.filter((u) => u.id !== userToDelete.id);
       setUsers(updatedUsers);
       setFilteredUsers(updatedUsers);
-      
+
       // Close the delete modal
       setShowDeleteModal(false);
       setUserToDelete(null);
@@ -217,102 +217,103 @@ const Users = () => {
       password: "",
       password_confirmation: "",
       phone_number: "",
-      address: ""
+      address: "",
     });
     setAddErrors({});
   };
 
   const handleAddFormChange = (e) => {
     const { name, value } = e.target;
-    setAddFormData(prev => ({
+    setAddFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
+
     // Clear error for this field when user starts typing
     if (addErrors[name]) {
-      setAddErrors(prev => ({
+      setAddErrors((prev) => ({
         ...prev,
-        [name]: null
+        [name]: null,
       }));
     }
   };
 
   const validateForm = () => {
     const errors = {};
-    
+
     if (!addFormData.name.trim()) {
       errors.name = "Name is required";
     }
-    
+
     if (!addFormData.email.trim()) {
       errors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(addFormData.email)) {
       errors.email = "Please enter a valid email address";
     }
-    
+
     if (!addFormData.password) {
       errors.password = "Password is required";
     } else if (addFormData.password.length < 8) {
       errors.password = "Password must be at least 8 characters";
     }
-    
+
     if (!addFormData.password_confirmation) {
       errors.password_confirmation = "Password confirmation is required";
     } else if (addFormData.password !== addFormData.password_confirmation) {
       errors.password_confirmation = "Passwords do not match";
     }
-    
+
     if (!addFormData.phone_number.trim()) {
       errors.phone_number = "Phone number is required";
     }
-    
+
     if (!addFormData.address.trim()) {
       errors.address = "Address is required";
     }
-    
+
     return errors;
   };
 
   const handleAddSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validate form
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
       setAddErrors(errors);
       return;
     }
-    
+
     try {
       setAddLoading(true);
       setAddErrors({});
-      
+
       const result = await registerAdmin(addFormData);
-      
+
       // Show success message
-      setSuccessMessage(`Admin "${addFormData.name}" has been successfully created!`);
-      
+      setSuccessMessage(
+        `Admin "${addFormData.name}" has been successfully created!`
+      );
+
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
         setSuccessMessage("");
       }, 5000);
-      
+
       // Refresh the users list
       await loadUsers();
-      
+
       // Close modal and reset form
       handleAddCancel();
-      
     } catch (error) {
       console.error("Failed to add admin:", error);
-      
+
       // Handle validation errors from API
       if (error.validationErrors) {
         setAddErrors(error.validationErrors);
       } else {
         setAddErrors({
-          general: error.message || "Failed to add admin"
+          general: error.message || "Failed to add admin",
         });
       }
     } finally {
@@ -326,7 +327,7 @@ const Users = () => {
       name: user.name,
       email: user.email,
       phone_number: user.phone_number || "",
-      address: user.address || ""
+      address: user.address || "",
     });
     setEditErrors({});
     setSuccessMessage("");
@@ -340,92 +341,93 @@ const Users = () => {
       name: "",
       email: "",
       phone_number: "",
-      address: ""
+      address: "",
     });
     setEditErrors({});
   };
 
   const handleEditFormChange = (e) => {
     const { name, value } = e.target;
-    setEditFormData(prev => ({
+    setEditFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
+
     // Clear error for this field when user starts typing
     if (editErrors[name]) {
-      setEditErrors(prev => ({
+      setEditErrors((prev) => ({
         ...prev,
-        [name]: null
+        [name]: null,
       }));
     }
   };
 
   const validateEditForm = () => {
     const errors = {};
-    
+
     if (!editFormData.name.trim()) {
       errors.name = "Name is required";
     }
-    
+
     if (!editFormData.email.trim()) {
       errors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(editFormData.email)) {
       errors.email = "Please enter a valid email address";
     }
-    
+
     if (!editFormData.phone_number.trim()) {
       errors.phone_number = "Phone number is required";
     }
-    
+
     if (!editFormData.address.trim()) {
       errors.address = "Address is required";
     }
-    
+
     return errors;
   };
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!editingUser) return;
-    
+
     // Validate form
     const errors = validateEditForm();
     if (Object.keys(errors).length > 0) {
       setEditErrors(errors);
       return;
     }
-    
+
     try {
       setEditLoading(true);
       setEditErrors({});
-      
+
       const result = await updateAdmin(editingUser.id, editFormData);
-      
+
       // Show success message
-      setSuccessMessage(`Admin "${editFormData.name}" has been successfully updated!`);
-      
+      setSuccessMessage(
+        `Admin "${editFormData.name}" has been successfully updated!`
+      );
+
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
         setSuccessMessage("");
       }, 5000);
-      
+
       // Refresh the users list
       await loadUsers();
-      
+
       // Close modal and reset form
       handleEditCancel();
-      
     } catch (error) {
       console.error("Failed to update admin:", error);
-      
+
       // Handle validation errors from API
       if (error.validationErrors) {
         setEditErrors(error.validationErrors);
       } else {
         setEditErrors({
-          general: error.message || "Failed to update admin"
+          general: error.message || "Failed to update admin",
         });
       }
     } finally {
@@ -437,7 +439,7 @@ const Users = () => {
     setChangingPasswordUser(user);
     setPasswordFormData({
       password: "",
-      password_confirmation: ""
+      password_confirmation: "",
     });
     setPasswordErrors({});
     setSuccessMessage("");
@@ -449,88 +451,94 @@ const Users = () => {
     setChangingPasswordUser(null);
     setPasswordFormData({
       password: "",
-      password_confirmation: ""
+      password_confirmation: "",
     });
     setPasswordErrors({});
   };
 
   const handlePasswordFormChange = (e) => {
     const { name, value } = e.target;
-    setPasswordFormData(prev => ({
+    setPasswordFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
+
     // Clear error for this field when user starts typing
     if (passwordErrors[name]) {
-      setPasswordErrors(prev => ({
+      setPasswordErrors((prev) => ({
         ...prev,
-        [name]: null
+        [name]: null,
       }));
     }
   };
 
   const validatePasswordForm = () => {
     const errors = {};
-    
+
     if (!passwordFormData.password.trim()) {
       errors.password = "New password is required";
     } else if (passwordFormData.password.length < 8) {
       errors.password = "New password must be at least 8 characters";
     }
-    
+
     if (!passwordFormData.password_confirmation.trim()) {
       errors.password_confirmation = "Please confirm the new password";
-    } else if (passwordFormData.password !== passwordFormData.password_confirmation) {
+    } else if (
+      passwordFormData.password !== passwordFormData.password_confirmation
+    ) {
       errors.password_confirmation = "Passwords do not match";
     }
-    
+
     return errors;
   };
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!changingPasswordUser) return;
-    
+
     // Validate form
     const errors = validatePasswordForm();
     if (Object.keys(errors).length > 0) {
       setPasswordErrors(errors);
       return;
     }
-    
+
     try {
       setPasswordLoading(true);
       setPasswordErrors({});
-      
-      const result = await changeUserPassword(changingPasswordUser.id, passwordFormData);
-      
+
+      const result = await changeUserPassword(
+        changingPasswordUser.id,
+        passwordFormData
+      );
+
       // Show success message
-      setSuccessMessage(`Password for "${changingPasswordUser.name}" has been successfully changed!`);
-      
+      setSuccessMessage(
+        `Password for "${changingPasswordUser.name}" has been successfully changed!`
+      );
+
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
         setSuccessMessage("");
       }, 5000);
-      
+
       // Close modal and reset form
       setShowPasswordModal(false);
       setChangingPasswordUser(null);
       setPasswordFormData({
         password: "",
-        password_confirmation: ""
+        password_confirmation: "",
       });
-      
     } catch (error) {
       console.error("Failed to change user password:", error);
-      
+
       // Handle validation errors from API
       if (error.validationErrors) {
         setPasswordErrors(error.validationErrors);
       } else {
         setPasswordErrors({
-          general: error.message || "Failed to change password"
+          general: error.message || "Failed to change password",
         });
       }
     } finally {
@@ -609,8 +617,8 @@ const Users = () => {
             <div className="success-content">
               <span className="success-icon">✅</span>
               <span className="success-text">{successMessage}</span>
-              <button 
-                onClick={() => setSuccessMessage("")} 
+              <button
+                onClick={() => setSuccessMessage("")}
                 className="success-close-btn"
                 title="Dismiss"
               >
@@ -693,34 +701,36 @@ const Users = () => {
                         </span>
                       </td>
                       <td className="actions-cell">
-                        <button
-                          onClick={() => handleViewDetails(user.id)}
-                          className="action-btn view-btn"
-                          title={`View details for ${user.name}`}
-                        >
-                          ℹ️
-                        </button>
-                        <button
-                          onClick={() => handleEditAdmin(user)}
-                          className="action-btn edit-btn"
-                          title={`Edit ${user.name}`}
-                        >
-                          ✏️
-                        </button>
-                        <button
-                          onClick={() => handleChangeUserPassword(user)}
-                          className="action-btn password-btn"
-                          title={`Change password for ${user.name}`}
-                        >
-                          🔑
-                        </button>
-                        <button
-                          onClick={() => handleDeleteClick(user)}
-                          className="action-btn delete-btn"
-                          title={`Delete ${user.name}`}
-                        >
-                          🗑️
-                        </button>
+                        <span className="action-buttons-group">
+                          <button
+                            onClick={() => handleViewDetails(user.id)}
+                            className="action-btn view-btn"
+                            title={`View details for ${user.name}`}
+                          >
+                            ℹ️
+                          </button>
+                          <button
+                            onClick={() => handleEditAdmin(user)}
+                            className="action-btn edit-btn"
+                            title={`Edit ${user.name}`}
+                          >
+                            ✏️
+                          </button>
+                          <button
+                            onClick={() => handleChangeUserPassword(user)}
+                            className="action-btn password-btn"
+                            title={`Change password for ${user.name}`}
+                          >
+                            🔑
+                          </button>
+                          <button
+                            onClick={() => handleDeleteClick(user)}
+                            className="action-btn delete-btn"
+                            title={`Delete ${user.name}`}
+                          >
+                            🗑️
+                          </button>
+                        </span>
                       </td>
                     </tr>
                   ))}
@@ -775,9 +785,7 @@ const Users = () => {
                     </div>
 
                     <div className="detail-item">
-                      <div className="detail-label">
-                        Full Name
-                      </div>
+                      <div className="detail-label">Full Name</div>
                       <div className="detail-value">{selectedUser.name}</div>
                     </div>
 
@@ -827,7 +835,10 @@ const Users = () => {
       {/* Delete Confirmation Modal */}
       {showDeleteModal && userToDelete && (
         <div className="modal-overlay">
-          <div className="modal-content delete-modal" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="modal-content delete-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="modal-header">
               <h2>Confirm Delete</h2>
               <button onClick={handleDeleteCancel} className="modal-close-btn">
@@ -843,7 +854,9 @@ const Users = () => {
                 <div className="delete-message">
                   <h3>Are you sure you want to delete this admin?</h3>
                   <p>
-                    You are about to permanently delete <strong>{userToDelete.name}</strong> (ID: {userToDelete.id}).
+                    You are about to permanently delete{" "}
+                    <strong>{userToDelete.name}</strong> (ID: {userToDelete.id}
+                    ).
                   </p>
                   <p>This action cannot be undone.</p>
                 </div>
@@ -851,15 +864,15 @@ const Users = () => {
             </div>
 
             <div className="modal-footer">
-              <button 
-                onClick={handleDeleteCancel} 
+              <button
+                onClick={handleDeleteCancel}
                 className="cancel-btn"
                 disabled={deleteLoading}
               >
                 Cancel
               </button>
-              <button 
-                onClick={handleDeleteConfirm} 
+              <button
+                onClick={handleDeleteConfirm}
                 className="confirm-delete-btn"
                 disabled={deleteLoading}
               >
@@ -887,7 +900,7 @@ const Users = () => {
                   {addErrors.general}
                 </div>
               )}
-              
+
               <form onSubmit={handleAddSubmit} className="add-admin-form">
                 <div className="form-row">
                   <div className="form-group">
@@ -899,7 +912,7 @@ const Users = () => {
                       value={addFormData.name}
                       onChange={handleAddFormChange}
                       placeholder="Enter full name"
-                      className={addErrors.name ? 'error' : ''}
+                      className={addErrors.name ? "error" : ""}
                     />
                     {addErrors.name && Array.isArray(addErrors.name) ? (
                       <span className="form-error">{addErrors.name[0]}</span>
@@ -917,7 +930,7 @@ const Users = () => {
                       value={addFormData.email}
                       onChange={handleAddFormChange}
                       placeholder="Enter email address"
-                      className={addErrors.email ? 'error' : ''}
+                      className={addErrors.email ? "error" : ""}
                     />
                     {addErrors.email && Array.isArray(addErrors.email) ? (
                       <span className="form-error">{addErrors.email[0]}</span>
@@ -937,17 +950,21 @@ const Users = () => {
                       value={addFormData.password}
                       onChange={handleAddFormChange}
                       placeholder="Enter password"
-                      className={addErrors.password ? 'error' : ''}
+                      className={addErrors.password ? "error" : ""}
                     />
                     {addErrors.password && Array.isArray(addErrors.password) ? (
-                      <span className="form-error">{addErrors.password[0]}</span>
+                      <span className="form-error">
+                        {addErrors.password[0]}
+                      </span>
                     ) : addErrors.password ? (
                       <span className="form-error">{addErrors.password}</span>
                     ) : null}
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="password_confirmation">Confirm Password *</label>
+                    <label htmlFor="password_confirmation">
+                      Confirm Password *
+                    </label>
                     <input
                       type="password"
                       id="password_confirmation"
@@ -955,12 +972,17 @@ const Users = () => {
                       value={addFormData.password_confirmation}
                       onChange={handleAddFormChange}
                       placeholder="Confirm password"
-                      className={addErrors.password_confirmation ? 'error' : ''}
+                      className={addErrors.password_confirmation ? "error" : ""}
                     />
-                    {addErrors.password_confirmation && Array.isArray(addErrors.password_confirmation) ? (
-                      <span className="form-error">{addErrors.password_confirmation[0]}</span>
+                    {addErrors.password_confirmation &&
+                    Array.isArray(addErrors.password_confirmation) ? (
+                      <span className="form-error">
+                        {addErrors.password_confirmation[0]}
+                      </span>
                     ) : addErrors.password_confirmation ? (
-                      <span className="form-error">{addErrors.password_confirmation}</span>
+                      <span className="form-error">
+                        {addErrors.password_confirmation}
+                      </span>
                     ) : null}
                   </div>
                 </div>
@@ -975,12 +997,17 @@ const Users = () => {
                       value={addFormData.phone_number}
                       onChange={handleAddFormChange}
                       placeholder="Enter phone number"
-                      className={addErrors.phone_number ? 'error' : ''}
+                      className={addErrors.phone_number ? "error" : ""}
                     />
-                    {addErrors.phone_number && Array.isArray(addErrors.phone_number) ? (
-                      <span className="form-error">{addErrors.phone_number[0]}</span>
+                    {addErrors.phone_number &&
+                    Array.isArray(addErrors.phone_number) ? (
+                      <span className="form-error">
+                        {addErrors.phone_number[0]}
+                      </span>
                     ) : addErrors.phone_number ? (
-                      <span className="form-error">{addErrors.phone_number}</span>
+                      <span className="form-error">
+                        {addErrors.phone_number}
+                      </span>
                     ) : null}
                   </div>
 
@@ -993,7 +1020,7 @@ const Users = () => {
                       value={addFormData.address}
                       onChange={handleAddFormChange}
                       placeholder="Enter address"
-                      className={addErrors.address ? 'error' : ''}
+                      className={addErrors.address ? "error" : ""}
                     />
                     {addErrors.address && Array.isArray(addErrors.address) ? (
                       <span className="form-error">{addErrors.address[0]}</span>
@@ -1006,16 +1033,16 @@ const Users = () => {
             </div>
 
             <div className="modal-footer">
-              <button 
-                onClick={handleAddCancel} 
+              <button
+                onClick={handleAddCancel}
                 className="cancel-btn"
                 disabled={addLoading}
                 type="button"
               >
                 Cancel
               </button>
-              <button 
-                onClick={handleAddSubmit} 
+              <button
+                onClick={handleAddSubmit}
                 className="confirm-add-btn"
                 disabled={addLoading}
                 type="submit"
@@ -1044,7 +1071,7 @@ const Users = () => {
                   {editErrors.general}
                 </div>
               )}
-              
+
               <form onSubmit={handleEditSubmit} className="add-admin-form">
                 <div className="form-row">
                   <div className="form-group">
@@ -1056,7 +1083,7 @@ const Users = () => {
                       value={editFormData.name}
                       onChange={handleEditFormChange}
                       placeholder="Enter full name"
-                      className={editErrors.name ? 'error' : ''}
+                      className={editErrors.name ? "error" : ""}
                     />
                     {editErrors.name && Array.isArray(editErrors.name) ? (
                       <span className="form-error">{editErrors.name[0]}</span>
@@ -1074,7 +1101,7 @@ const Users = () => {
                       value={editFormData.email}
                       onChange={handleEditFormChange}
                       placeholder="Enter email address"
-                      className={editErrors.email ? 'error' : ''}
+                      className={editErrors.email ? "error" : ""}
                     />
                     {editErrors.email && Array.isArray(editErrors.email) ? (
                       <span className="form-error">{editErrors.email[0]}</span>
@@ -1094,12 +1121,17 @@ const Users = () => {
                       value={editFormData.phone_number}
                       onChange={handleEditFormChange}
                       placeholder="Enter phone number"
-                      className={editErrors.phone_number ? 'error' : ''}
+                      className={editErrors.phone_number ? "error" : ""}
                     />
-                    {editErrors.phone_number && Array.isArray(editErrors.phone_number) ? (
-                      <span className="form-error">{editErrors.phone_number[0]}</span>
+                    {editErrors.phone_number &&
+                    Array.isArray(editErrors.phone_number) ? (
+                      <span className="form-error">
+                        {editErrors.phone_number[0]}
+                      </span>
                     ) : editErrors.phone_number ? (
-                      <span className="form-error">{editErrors.phone_number}</span>
+                      <span className="form-error">
+                        {editErrors.phone_number}
+                      </span>
                     ) : null}
                   </div>
 
@@ -1112,10 +1144,12 @@ const Users = () => {
                       value={editFormData.address}
                       onChange={handleEditFormChange}
                       placeholder="Enter address"
-                      className={editErrors.address ? 'error' : ''}
+                      className={editErrors.address ? "error" : ""}
                     />
                     {editErrors.address && Array.isArray(editErrors.address) ? (
-                      <span className="form-error">{editErrors.address[0]}</span>
+                      <span className="form-error">
+                        {editErrors.address[0]}
+                      </span>
                     ) : editErrors.address ? (
                       <span className="form-error">{editErrors.address}</span>
                     ) : null}
@@ -1125,16 +1159,16 @@ const Users = () => {
             </div>
 
             <div className="modal-footer">
-              <button 
-                onClick={handleEditCancel} 
+              <button
+                onClick={handleEditCancel}
                 className="cancel-btn"
                 disabled={editLoading}
                 type="button"
               >
                 Cancel
               </button>
-              <button 
-                onClick={handleEditSubmit} 
+              <button
+                onClick={handleEditSubmit}
                 className="confirm-add-btn"
                 disabled={editLoading}
                 type="submit"
@@ -1152,7 +1186,10 @@ const Users = () => {
           <div className="modal-content password-modal">
             <div className="modal-header">
               <h2>Change Password for {changingPasswordUser.name}</h2>
-              <button onClick={handleCancelPasswordChange} className="modal-close-btn">
+              <button
+                onClick={handleCancelPasswordChange}
+                className="modal-close-btn"
+              >
                 ✕
               </button>
             </div>
@@ -1163,8 +1200,11 @@ const Users = () => {
                   {passwordErrors.general}
                 </div>
               )}
-              
-              <form onSubmit={handlePasswordSubmit} className="change-password-form">
+
+              <form
+                onSubmit={handlePasswordSubmit}
+                className="change-password-form"
+              >
                 <div className="form-row">
                   <div className="form-group">
                     <label htmlFor="user-password">New Password *</label>
@@ -1175,17 +1215,24 @@ const Users = () => {
                       value={passwordFormData.password}
                       onChange={handlePasswordFormChange}
                       placeholder="Enter new password (min 8 characters)"
-                      className={passwordErrors.password ? 'error' : ''}
+                      className={passwordErrors.password ? "error" : ""}
                     />
-                    {passwordErrors.password && Array.isArray(passwordErrors.password) ? (
-                      <span className="form-error">{passwordErrors.password[0]}</span>
+                    {passwordErrors.password &&
+                    Array.isArray(passwordErrors.password) ? (
+                      <span className="form-error">
+                        {passwordErrors.password[0]}
+                      </span>
                     ) : passwordErrors.password ? (
-                      <span className="form-error">{passwordErrors.password}</span>
+                      <span className="form-error">
+                        {passwordErrors.password}
+                      </span>
                     ) : null}
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="user-password-confirmation">Confirm New Password *</label>
+                    <label htmlFor="user-password-confirmation">
+                      Confirm New Password *
+                    </label>
                     <input
                       type="password"
                       id="user-password-confirmation"
@@ -1193,12 +1240,19 @@ const Users = () => {
                       value={passwordFormData.password_confirmation}
                       onChange={handlePasswordFormChange}
                       placeholder="Confirm new password"
-                      className={passwordErrors.password_confirmation ? 'error' : ''}
+                      className={
+                        passwordErrors.password_confirmation ? "error" : ""
+                      }
                     />
-                    {passwordErrors.password_confirmation && Array.isArray(passwordErrors.password_confirmation) ? (
-                      <span className="form-error">{passwordErrors.password_confirmation[0]}</span>
+                    {passwordErrors.password_confirmation &&
+                    Array.isArray(passwordErrors.password_confirmation) ? (
+                      <span className="form-error">
+                        {passwordErrors.password_confirmation[0]}
+                      </span>
                     ) : passwordErrors.password_confirmation ? (
-                      <span className="form-error">{passwordErrors.password_confirmation}</span>
+                      <span className="form-error">
+                        {passwordErrors.password_confirmation}
+                      </span>
                     ) : null}
                   </div>
                 </div>
@@ -1206,17 +1260,17 @@ const Users = () => {
             </div>
 
             <div className="modal-footer">
-              <button 
+              <button
                 type="button"
-                onClick={handleCancelPasswordChange} 
+                onClick={handleCancelPasswordChange}
                 className="cancel-btn"
                 disabled={passwordLoading}
               >
                 Cancel
               </button>
-              <button 
+              <button
                 type="submit"
-                onClick={handlePasswordSubmit} 
+                onClick={handlePasswordSubmit}
                 className="confirm-add-btn"
                 disabled={passwordLoading}
               >
