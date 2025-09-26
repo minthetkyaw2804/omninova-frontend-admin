@@ -1,17 +1,16 @@
 import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./components/Login";
-import AdminProfile from "./components/AdminProfile";
-import Users from "./components/Users";
-import Company from "./components/Company";
-import Blogs from "./components/Blogs";
-import ProjectTypes from "./components/ProjectTypes";
-import Projects from "./components/Projects";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Footer from "./components/Footer";
-import { initializeAuth } from "./utils/auth";
+import Login from "./admin/components/Login";
+import AdminProfile from "./admin/components/AdminProfile";
+import Users from "./admin/components/Users";
+import Company from "./admin/components/Company";
+import Blogs from "./admin/components/Blogs";
+import ProjectTypes from "./admin/components/ProjectTypes";
+import Projects from "./admin/components/Projects";
+import ProtectedRoute from "./admin/components/ProtectedRoute";
+import Footer from "./admin/components/Footer";
+import { initializeAuth } from "./admin/utils/auth";
 import "./App.css";
-
 
 function App() {
   useEffect(() => {
@@ -22,61 +21,63 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<><div>Welcome</div><Footer /></>} />
+        <Route
+          path="/"
+          element={
+            <>
+              <div>Welcome</div>
+              <Footer />
+            </>
+          }
+        />
         <Route path="/admin/login" element={<Login />} />
-        <Route 
-          path="/admin/admin-profile" 
+        <Route
+          path="/admin/admin-profile"
           element={
             <ProtectedRoute>
               <AdminProfile />
             </ProtectedRoute>
-          } 
+          }
         />
         {/* Redirect old routes to new admin routes */}
-        <Route 
-          path="/admin-profile" 
-          element={<Navigate to="/admin/admin-profile" replace />} 
+        <Route
+          path="/admin-profile"
+          element={<Navigate to="/admin/admin-profile" replace />}
         />
-        <Route 
-          path="/dashboard" 
-          element={<Navigate to="/admin/admin-profile" replace />} 
+        <Route
+          path="/dashboard"
+          element={<Navigate to="/admin/admin-profile" replace />}
         />
-        <Route 
-          path="/admin/users" 
+        <Route
+          path="/admin/users"
           element={
             <ProtectedRoute>
               <Users />
             </ProtectedRoute>
-          } 
+          }
         />
-        <Route 
-          path="/users" 
-          element={<Navigate to="/admin/users" replace />} 
-        />
-        <Route 
-          path="/admin/company" 
+        <Route path="/users" element={<Navigate to="/admin/users" replace />} />
+        <Route
+          path="/admin/company"
           element={
             <ProtectedRoute>
               <Company />
             </ProtectedRoute>
-          } 
+          }
         />
-        <Route 
-          path="/company" 
-          element={<Navigate to="/admin/company" replace />} 
+        <Route
+          path="/company"
+          element={<Navigate to="/admin/company" replace />}
         />
-        <Route 
-          path="/admin/blogs" 
+        <Route
+          path="/admin/blogs"
           element={
             <ProtectedRoute>
               <Blogs />
             </ProtectedRoute>
-          } 
+          }
         />
-        <Route
-          path="/blogs"
-          element={<Navigate to="/admin/blogs" replace />}
-        />
+        <Route path="/blogs" element={<Navigate to="/admin/blogs" replace />} />
         <Route
           path="/admin/project-types"
           element={
