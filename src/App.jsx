@@ -1,12 +1,17 @@
 import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import Layout from "./customer/components/Layout";
+import Home from "./customer/components/Home";
+import About from "./customer/components/About";
+import Blogs from "./customer/components/Blogs";
+import Projects from "./customer/components/Projects";
 import Login from "./admin/components/Login";
 import AdminProfile from "./admin/components/AdminProfile";
 import Users from "./admin/components/Users";
 import Company from "./admin/components/Company";
-import Blogs from "./admin/components/Blogs";
+import AdminBlogs from "./admin/components/Blogs";
 import ProjectTypes from "./admin/components/ProjectTypes";
-import Projects from "./admin/components/Projects";
+import AdminProjects from "./admin/components/Projects";
 import ProtectedRoute from "./admin/components/ProtectedRoute";
 import Footer from "./admin/components/Footer";
 import { initializeAuth } from "./admin/utils/auth";
@@ -21,15 +26,41 @@ function App() {
   return (
     <div className="App">
       <Routes>
+        {/* Customer Routes - Root Level */}
         <Route
-          path="/"
+          path="/home"
           element={
-            <>
-              <div>Welcome</div>
-              <Footer />
-            </>
+            <Layout>
+              <Home />
+            </Layout>
           }
         />
+        <Route
+          path="/about"
+          element={
+            <Layout>
+              <About />
+            </Layout>
+          }
+        />
+        <Route
+          path="/blogs"
+          element={
+            <Layout>
+              <Blogs />
+            </Layout>
+          }
+        />
+        <Route
+          path="/projects"
+          element={
+            <Layout>
+              <Projects />
+            </Layout>
+          }
+        />
+
+        {/* Admin Routes - Under /admin/ */}
         <Route path="/admin/login" element={<Login />} />
         <Route
           path="/admin/admin-profile"
@@ -56,7 +87,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/users" element={<Navigate to="/admin/users" replace />} />
         <Route
           path="/admin/company"
           element={
@@ -66,18 +96,13 @@ function App() {
           }
         />
         <Route
-          path="/company"
-          element={<Navigate to="/admin/company" replace />}
-        />
-        <Route
           path="/admin/blogs"
           element={
             <ProtectedRoute>
-              <Blogs />
+              <AdminBlogs />
             </ProtectedRoute>
           }
         />
-        <Route path="/blogs" element={<Navigate to="/admin/blogs" replace />} />
         <Route
           path="/admin/project-types"
           element={
@@ -87,20 +112,12 @@ function App() {
           }
         />
         <Route
-          path="/project-types"
-          element={<Navigate to="/admin/project-types" replace />}
-        />
-        <Route
           path="/admin/projects"
           element={
             <ProtectedRoute>
-              <Projects />
+              <AdminProjects />
             </ProtectedRoute>
           }
-        />
-        <Route
-          path="/projects"
-          element={<Navigate to="/admin/projects" replace />}
         />
       </Routes>
     </div>

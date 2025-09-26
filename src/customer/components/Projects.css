@@ -1,0 +1,25 @@
+/* Projects Page Styles */
+.projects-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+}
+
+.coming-soon-container {
+  text-align: center;
+  padding: 40px;
+}
+
+.coming-soon-container h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 20px;
+}
+
+.coming-soon-container p {
+  font-size: 1.25rem;
+  color: #4a5568;
+}
