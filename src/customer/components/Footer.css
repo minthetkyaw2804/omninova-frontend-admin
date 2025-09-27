@@ -7,21 +7,29 @@
   padding-bottom: 0;
   position: relative;
   overflow: hidden;
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, sans-serif;
   border-top: 4px solid transparent;
-  border-image: linear-gradient(90deg, #0094FF, #7A00FF, #FF2D95, #FF5E00) 1;
+  border-image: linear-gradient(90deg, #0094ff, #7a00ff, #ff2d95, #ff5e00) 1;
   width: 100%;
 }
 
 /* Decorative top border */
 .customer-footer::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #0094FF, #7A00FF, #FF2D95, #FF5E00, transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #0094ff,
+    #7a00ff,
+    #ff2d95,
+    #ff5e00,
+    transparent
+  );
 }
 
 .customer-footer-container {
@@ -35,18 +43,28 @@
   position: relative;
 }
 
-
 .customer-footer-container::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background:
-    radial-gradient(circle at 20% 80%, rgba(0, 148, 255, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 45, 149, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(122, 0, 255, 0.02) 0%, transparent 50%);
+  background: radial-gradient(
+      circle at 20% 80%,
+      rgba(0, 148, 255, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 45, 149, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(122, 0, 255, 0.02) 0%,
+      transparent 50%
+    );
   pointer-events: none;
   z-index: 0;
 }
@@ -69,13 +87,13 @@
 }
 
 .customer-footer-section h3::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   width: 48px;
   height: 3px;
-  background: linear-gradient(90deg, #0094FF, #7A00FF, #FF2D95, #FF5E00);
+  background: linear-gradient(90deg, #0094ff, #7a00ff, #ff2d95, #ff5e00);
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
 }
@@ -263,14 +281,22 @@
 }
 
 .customer-footer-bottom::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 120px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #0094FF, #7A00FF, #FF2D95, #FF5E00, transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #0094ff,
+    #7a00ff,
+    #ff2d95,
+    #ff5e00,
+    transparent
+  );
 }
 
 .customer-footer-bottom p {

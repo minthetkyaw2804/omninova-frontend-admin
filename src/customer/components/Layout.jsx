@@ -113,8 +113,8 @@ const Layout = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
+      <div className="customer-loading-container">
+        <div className="customer-loading-spinner"></div>
         <p>Loading company information...</p>
       </div>
     );
@@ -122,7 +122,7 @@ const Layout = ({ children }) => {
 
   if (error && !companyData) {
     return (
-      <div className="error-container">
+      <div className="customer-error-container">
         <p>Error: {error}</p>
         <p>Please try again later or contact support.</p>
       </div>

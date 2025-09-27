@@ -6,8 +6,8 @@ const Projects = () => {
 
   if (!companyData) {
     return (
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
+      <div className="customer-loading-container">
+        <div className="customer-loading-spinner"></div>
         <p>Loading company information...</p>
       </div>
     );
@@ -15,7 +15,7 @@ const Projects = () => {
 
   return (
     <div className="projects-page">
-      <div className="coming-soon-container">
+      <div className="customer-coming-soon-container">
         <h1>Projects</h1>
         <p>This page is coming soon...</p>
       </div>

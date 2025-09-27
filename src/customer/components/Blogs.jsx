@@ -6,8 +6,8 @@ const Blogs = () => {
 
   if (!companyData) {
     return (
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
+      <div className="customer-loading-container">
+        <div className="customer-loading-spinner"></div>
         <p>Loading company information...</p>
       </div>
     );
@@ -15,7 +15,7 @@ const Blogs = () => {
 
   return (
     <div className="blogs-page">
-      <div className="coming-soon-container">
+      <div className="customer-coming-soon-container">
         <h1>Blogs</h1>
         <p>This page is coming soon...</p>
       </div>

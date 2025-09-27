@@ -84,7 +84,7 @@ const Footer = () => {
         <div className="customer-footer-section">
           <h3>Quick Links</h3>
           <div className="customer-nav-links">
-            <Link to="/" className="customer-nav-link">
+            <Link to="/home" className="customer-nav-link">
               Home
             </Link>
             <Link to="/about" className="customer-nav-link">

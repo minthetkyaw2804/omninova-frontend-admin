@@ -57,6 +57,7 @@ body {
   background: var(--gradient-bg);
   color: var(--text-primary);
   font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
 }
 
 #root {

@@ -7,19 +7,19 @@
   background: #f8fafc;
 }
 
-.coming-soon-container {
+.customer-coming-soon-container {
   text-align: center;
   padding: 40px;
 }
 
-.coming-soon-container h1 {
+.customer-coming-soon-container h1 {
   font-size: 3rem;
   font-weight: 700;
   color: #2d3748;
   margin-bottom: 20px;
 }
 
-.coming-soon-container p {
+.customer-coming-soon-container p {
   font-size: 1.25rem;
   color: #4a5568;
 }
