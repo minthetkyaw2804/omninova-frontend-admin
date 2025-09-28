@@ -1097,11 +1097,12 @@
   }
 
   .brand-meaning {
-    margin-bottom: 40px;
+    margin-bottom: 32px;
   }
 
   .hero-title {
-    margin-bottom: 20px;
+    font-size: 3rem;
+    margin-bottom: 16px;
   }
 
   .tech-terminal {
@@ -1120,19 +1121,27 @@
     font-size: 0.8rem;
   }
 
-  .hero-title {
-    font-size: 3rem;
+  .section-title {
+    font-size: 3.2rem;
+    margin-bottom: 24px;
   }
 
-  .section-title {
-    font-size: 3.5rem;
-    margin-bottom: 32px;
+  /* Reduce section padding on tablets */
+  .services-section,
+  .tech-section,
+  .cta-section {
+    padding: 80px 0;
+  }
+
+  .stats-section {
+    padding: 60px 0;
   }
 }
 
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2.5rem;
+    margin-bottom: 12px;
   }
 
   .hero-subtitle {
@@ -1140,8 +1149,8 @@
   }
 
   .section-title {
-    font-size: 3rem;
-    margin-bottom: 28px;
+    font-size: 2.8rem;
+    margin-bottom: 20px;
   }
 
   .about-description {
@@ -1183,11 +1192,7 @@
   }
 
   .brand-meaning {
-    margin-bottom: 32px;
-  }
-
-  .hero-title {
-    margin-bottom: 16px;
+    margin-bottom: 24px;
   }
 
   .tech-terminal {
@@ -1226,6 +1231,17 @@
   .stat-number {
     font-size: 2.5rem;
   }
+
+  /* Further reduce section padding on mobile */
+  .services-section,
+  .tech-section,
+  .cta-section {
+    padding: 60px 0;
+  }
+
+  .stats-section {
+    padding: 40px 0;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1240,6 +1256,7 @@
 
   .hero-title {
     font-size: 2rem;
+    margin-bottom: 8px;
   }
 
   .hero-subtitle {
@@ -1247,8 +1264,8 @@
   }
 
   .section-title {
-    font-size: 2.5rem;
-    margin-bottom: 24px;
+    font-size: 2.2rem;
+    margin-bottom: 16px;
     letter-spacing: -0.01em;
   }
 
@@ -1281,11 +1298,7 @@
   }
 
   .brand-meaning {
-    margin-bottom: 24px;
-  }
-
-  .hero-title {
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
 
   .tech-terminal {
@@ -1337,6 +1350,21 @@
 
   .floating-element {
     display: none;
+  }
+
+  /* Most aggressive padding reduction for small screens */
+  .services-section,
+  .tech-section,
+  .cta-section {
+    padding: 40px 0;
+  }
+
+  .stats-section {
+    padding: 32px 0;
+  }
+
+  .hero-section {
+    padding: 20px 0;
   }
 }
 

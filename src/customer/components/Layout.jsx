@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { fetchCompanyData } from "../utils/customerApi";
 import "./Layout.css";
 
 // Create context for company data
@@ -21,21 +22,11 @@ const Layout = ({ children }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchCompanyData = async () => {
+    const loadCompanyData = async () => {
       try {
         setLoading(true);
-        console.log("🚀 Fetching company data from API...");
 
-        const response = await fetch(
-          "http://162.84.221.21/api/customer/company-details"
-        );
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch company data: ${response.status}`);
-        }
-
-        const result = await response.json();
-        console.log("✅ Company data fetched successfully:", result);
+        const result = await fetchCompanyData();
 
         // Extract data from the API response - handle the nested structure
         const data = result.data || result;
@@ -108,7 +99,7 @@ const Layout = ({ children }) => {
       }
     };
 
-    fetchCompanyData();
+    loadCompanyData();
   }, []);
 
   if (loading) {
