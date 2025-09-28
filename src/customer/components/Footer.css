@@ -350,8 +350,10 @@
 
 @media (max-width: 480px) {
   .customer-footer-container {
-    padding: 40px 12px 0;
+    padding: 40px 16px 0;
     gap: 40px;
+    max-width: 100%;
+    margin: 0 auto;
   }
 
   .customer-footer-section h3 {
@@ -368,25 +370,77 @@
   }
 
   .customer-address-info {
-    padding: 24px;
+    padding: 20px 16px;
+    margin: 0;
   }
 
   .customer-footer-bottom {
     margin-top: 32px;
     margin-bottom: 0;
-    padding: 16px 12px 16px;
+    padding: 16px 16px 16px;
+  }
+
+  /* Fix contact cards positioning and layout */
+  .customer-contact-list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   .customer-contact-item {
-    padding: 16px 0;
+    padding: 16px 16px;
+    margin-bottom: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: relative;
+    left: 0;
+    right: 0;
+  }
+
+  .customer-contact-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .customer-contact-department {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 8px;
+    font-size: 10px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  .customer-contact-number {
+    width: 100%;
+    text-align: left;
+    font-size: 15px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
 
   .customer-social-link {
-    padding: 14px 16px;
+    padding: 12px 16px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: flex-start;
   }
 
   .customer-nav-link {
-    padding: 10px 12px;
+    padding: 10px 16px;
     font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+  }
+
+  /* Ensure footer section has proper spacing */
+  .customer-footer-section {
+    width: 100%;
+    padding: 0;
+    margin: 0;
   }
 }

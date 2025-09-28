@@ -1,32 +1,91 @@
 import { useCompany } from "./Layout";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import "./About.css";
 
 const About = () => {
   const { companyData } = useCompany();
   const [isVisible, setIsVisible] = useState(false);
+  const observerRef = useRef(null);
+
+  // Throttle function to limit scroll handler calls
+  const throttle = useCallback((func, delay) => {
+    let timeoutId;
+    let lastExecTime = 0;
+    return function (...args) {
+      const currentTime = Date.now();
+
+      if (currentTime - lastExecTime > delay) {
+        func.apply(this, args);
+        lastExecTime = currentTime;
+      } else {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          func.apply(this, args);
+          lastExecTime = Date.now();
+        }, delay - (currentTime - lastExecTime));
+      }
+    };
+  }, []);
+
+  // Check if device is mobile for performance optimization
+  const isMobile = useCallback(() => {
+    return window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
+    // Use Intersection Observer for better performance
+    if ('IntersectionObserver' in window && !isMobile()) {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      observerRef.current = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("about-animated");
+            // Stop observing once animated
+            observerRef.current?.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      // Observe all animate elements
       const elements = document.querySelectorAll(".about-animate");
-      elements.forEach((element) => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
-
-        if (elementTop < window.innerHeight - elementVisible) {
-          element.classList.add("about-animated");
-        }
+      elements.forEach(element => {
+        observerRef.current?.observe(element);
       });
-    };
+    } else {
+      // Fallback for older browsers or mobile with throttled scroll
+      const handleScroll = throttle(() => {
+        const elements = document.querySelectorAll(".about-animate");
+        elements.forEach((element) => {
+          if (!element.classList.contains("about-animated")) {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Check on initial load
+            if (elementTop < window.innerHeight - elementVisible) {
+              element.classList.add("about-animated");
+            }
+          }
+        });
+      }, isMobile() ? 100 : 50); // Higher throttle delay on mobile
+
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      handleScroll(); // Check on initial load
+
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
 
     // Trigger hero animation
     setTimeout(() => setIsVisible(true), 100);
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [throttle, isMobile]);
 
   if (!companyData) {
     return (

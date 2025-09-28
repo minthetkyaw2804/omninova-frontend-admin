@@ -14,6 +14,7 @@ import ProjectTypes from "./admin/components/ProjectTypes";
 import AdminProjects from "./admin/components/Projects";
 import ProtectedRoute from "./admin/components/ProtectedRoute";
 import Footer from "./admin/components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 import { initializeAuth } from "./admin/utils/auth";
 import "./App.css";
 
@@ -25,6 +26,7 @@ function App() {
 
   return (
     <div className="App">
+      <ScrollToTop />
       <Routes>
         {/* Customer Routes - Root Level */}
         <Route
@@ -119,6 +121,10 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* Default redirect to home page */}
+        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
     </div>
   );
