@@ -270,11 +270,11 @@ const Projects = () => {
       }
 
       // Validate file size (optional - you can set a limit)
-      const maxSize = 5 * 1024 * 1024; // 5MB
+      const maxSize = 2 * 1024 * 1024; // 2MB (2048KB)
       if (file.size > maxSize) {
         setAddErrors((prev) => ({
           ...prev,
-          thumbnail: "File size must be less than 5MB",
+          thumbnail: "File size must be less than 2MB",
         }));
         e.target.value = "";
         return;
@@ -572,9 +572,9 @@ const Projects = () => {
       }
 
       // Validate file size
-      const maxSize = 5 * 1024 * 1024; // 5MB
+      const maxSize = 2 * 1024 * 1024; // 2MB (2048KB)
       if (file.size > maxSize) {
-        setThumbnailError("File size must be less than 5MB");
+        setThumbnailError("File size must be less than 2MB");
         e.target.value = "";
         return;
       }
@@ -693,13 +693,13 @@ const Projects = () => {
     }
 
     // Validate file sizes
-    const maxSize = 5 * 1024 * 1024; // 5MB per file
+    const maxSize = 2 * 1024 * 1024; // 2MB per file (2048KB)
     const oversizedFiles = files.filter((file) => file.size > maxSize);
 
     if (oversizedFiles.length > 0) {
       setFeatureErrors((prev) => ({
         ...prev,
-        images: "Each file must be less than 5MB",
+        images: "Each file must be less than 2MB",
       }));
       e.target.value = "";
       return;
@@ -969,12 +969,12 @@ const Projects = () => {
     }
 
     // Validate file sizes
-    const maxSize = 5 * 1024 * 1024; // 5MB per file
+    const maxSize = 2 * 1024 * 1024; // 2MB per file (2048KB)
     const oversizedFiles = files.filter((file) => file.size > maxSize);
 
     if (oversizedFiles.length > 0) {
       setAddImagesErrors({
-        images: "Each file must be less than 5MB",
+        images: "Each file must be less than 2MB",
       });
       e.target.value = "";
       return;
@@ -1516,7 +1516,7 @@ const Projects = () => {
                     />
                     <div className="file-info">
                       <small>
-                        Supported formats: JPEG, PNG, JPG, GIF, SVG (Max: 5MB)
+                        Supported formats: JPEG, PNG, JPG, GIF, SVG (Max: 2MB)
                       </small>
                     </div>
                     {addErrors.thumbnail &&
@@ -2024,7 +2024,7 @@ const Projects = () => {
                     />
                     <div className="file-info">
                       <small>
-                        Supported formats: JPEG, PNG, JPG, GIF, SVG (Max: 5MB
+                        Supported formats: JPEG, PNG, JPG, GIF, SVG (Max: 2MB
                         each). You can select multiple images.
                       </small>
                     </div>
@@ -2342,7 +2342,7 @@ const Projects = () => {
                     />
                     <div className="file-info">
                       <small>
-                        Supported formats: JPEG, PNG, JPG, GIF, SVG (Max: 5MB
+                        Supported formats: JPEG, PNG, JPG, GIF, SVG (Max: 2MB
                         each). You can select multiple images.
                       </small>
                     </div>
@@ -2599,7 +2599,7 @@ const Projects = () => {
                 />
                 <div className="file-info">
                   <small>
-                    Supported formats: JPEG, PNG, JPG, GIF, SVG (Max: 5MB)
+                    Supported formats: JPEG, PNG, JPG, GIF, SVG (Max: 2MB)
                   </small>
                 </div>
               </div>

@@ -211,14 +211,37 @@ const Blogs = () => {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
 
-    // Validate image files
-    const invalidFiles = files.filter(
-      (file) => !file.type.startsWith("image/")
-    );
-    if (invalidFiles.length > 0) {
+    // Validate image files - only allow JPEG, PNG, JPG, GIF, SVG (Laravel rule: image|mimes:jpeg,png,jpg,gif,svg|max:2048)
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/svg+xml'];
+    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.svg'];
+    const maxSize = 2 * 1024 * 1024; // 2MB per file (2048KB)
+
+    // Check file types and extensions
+    const invalidTypeFiles = files.filter((file) => {
+      const fileType = file.type.toLowerCase();
+      const fileName = file.name.toLowerCase();
+      const fileExtension = fileName.substring(fileName.lastIndexOf('.'));
+
+      return !allowedTypes.includes(fileType) || !allowedExtensions.includes(fileExtension);
+    });
+
+    if (invalidTypeFiles.length > 0) {
+      const invalidFileNames = invalidTypeFiles.map(file => file.name).join(', ');
       setAddFormErrors((prev) => ({
         ...prev,
-        images: "Please select only image files",
+        images: `Unacceptable image format. Only JPEG, PNG, JPG, GIF, and SVG files are allowed. Invalid files: ${invalidFileNames}`,
+      }));
+      e.target.value = "";
+      return;
+    }
+
+    // Check file sizes
+    const oversizedFiles = files.filter(file => file.size > maxSize);
+    if (oversizedFiles.length > 0) {
+      const oversizedFileNames = oversizedFiles.map(file => file.name).join(', ');
+      setAddFormErrors((prev) => ({
+        ...prev,
+        images: `File size too large. Maximum allowed size is 2MB per file. Large files: ${oversizedFileNames}`,
       }));
       e.target.value = "";
       return;
@@ -418,13 +441,35 @@ const Blogs = () => {
   const handleAddImagesChange = (e) => {
     const files = Array.from(e.target.files);
 
-    // Validate image files
-    const invalidFiles = files.filter(
-      (file) => !file.type.startsWith("image/")
-    );
-    if (invalidFiles.length > 0) {
+    // Validate image files - only allow JPEG, PNG, JPG, GIF, SVG (Laravel rule: image|mimes:jpeg,png,jpg,gif,svg|max:2048)
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/svg+xml'];
+    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.svg'];
+    const maxSize = 2 * 1024 * 1024; // 2MB per file (2048KB)
+
+    // Check file types and extensions
+    const invalidTypeFiles = files.filter((file) => {
+      const fileType = file.type.toLowerCase();
+      const fileName = file.name.toLowerCase();
+      const fileExtension = fileName.substring(fileName.lastIndexOf('.'));
+
+      return !allowedTypes.includes(fileType) || !allowedExtensions.includes(fileExtension);
+    });
+
+    if (invalidTypeFiles.length > 0) {
+      const invalidFileNames = invalidTypeFiles.map(file => file.name).join(', ');
       setAddImagesErrors({
-        images: "Please select only image files",
+        images: `Unacceptable image format. Only JPEG, PNG, JPG, GIF, and SVG files are allowed. Invalid files: ${invalidFileNames}`,
+      });
+      e.target.value = "";
+      return;
+    }
+
+    // Check file sizes
+    const oversizedFiles = files.filter(file => file.size > maxSize);
+    if (oversizedFiles.length > 0) {
+      const oversizedFileNames = oversizedFiles.map(file => file.name).join(', ');
+      setAddImagesErrors({
+        images: `File size too large. Maximum allowed size is 2MB per file. Large files: ${oversizedFileNames}`,
       });
       e.target.value = "";
       return;
@@ -1040,12 +1085,12 @@ const Blogs = () => {
                       id="images"
                       name="images"
                       multiple
-                      accept="image/*"
+                      accept=".jpg,.jpeg,.png,.gif,.svg"
                       onChange={handleImageChange}
                       className={addFormErrors.images ? "error" : ""}
                     />
                     <div className="file-upload-info">
-                      <p>Select multiple image files (JPG, PNG, GIF, etc.)</p>
+                      <p>Select multiple image files (JPEG, PNG, JPG, GIF, SVG only - Max 2MB each)</p>
                       {addFormData.images.length > 0 && (
                         <p className="selected-files">
                           {addFormData.images.length} file
@@ -1213,12 +1258,12 @@ const Blogs = () => {
                       id="blog_images"
                       name="images"
                       multiple
-                      accept="image/*"
+                      accept=".jpg,.jpeg,.png,.gif,.svg"
                       onChange={handleAddImagesChange}
                       className={addImagesErrors.images ? "error" : ""}
                     />
                     <div className="file-upload-info">
-                      <p>Select multiple image files (JPG, PNG, GIF, etc.)</p>
+                      <p>Select multiple image files (JPEG, PNG, JPG, GIF, SVG only - Max 2MB each)</p>
                       {addImagesData.length > 0 && (
                         <p className="selected-files">
                           {addImagesData.length} file

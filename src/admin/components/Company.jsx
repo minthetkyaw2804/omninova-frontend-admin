@@ -216,16 +216,22 @@ const Company = () => {
       return;
     }
 
-    // Validate file type
-    if (!file.type.startsWith("image/")) {
-      setLogoError("Please select an image file only.");
+    // Validate file type - only allow JPEG, PNG, JPG, GIF, SVG (Laravel rule: image|mimes:jpeg,png,jpg,gif,svg|max:2048)
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/svg+xml'];
+    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.svg'];
+    const fileType = file.type.toLowerCase();
+    const fileName = file.name.toLowerCase();
+    const fileExtension = fileName.substring(fileName.lastIndexOf('.'));
+
+    if (!allowedTypes.includes(fileType) || !allowedExtensions.includes(fileExtension)) {
+      setLogoError("Unacceptable image format. Only JPEG, PNG, JPG, GIF, and SVG files are allowed.");
       e.target.value = "";
       return;
     }
 
-    // Validate file size (optional - 5MB limit)
-    if (file.size > 5 * 1024 * 1024) {
-      setLogoError("Image file size should be less than 5MB.");
+    // Validate file size - 2MB limit (2048KB)
+    if (file.size > 2 * 1024 * 1024) {
+      setLogoError("Image file size should be less than 2MB.");
       e.target.value = "";
       return;
     }
@@ -1580,7 +1586,7 @@ const Company = () => {
                 <input
                   id="logo-upload"
                   type="file"
-                  accept="image/*"
+                  accept=".jpg,.jpeg,.png,.gif,.svg"
                   onChange={handleLogoFileChange}
                   style={{ display: "none" }}
                 />

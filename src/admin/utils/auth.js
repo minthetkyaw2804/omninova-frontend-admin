@@ -174,7 +174,7 @@ export const apiRequest = async (url, options = {}) => {
 
   // Check if body is FormData to handle file uploads properly
   const isFormData = options.body instanceof FormData;
-  
+
   const defaultHeaders = {
     // Don't set Content-Type for FormData - let browser set it with boundary
     ...(isFormData ? {} : API_CONFIG.DEFAULT_HEADERS),
@@ -392,13 +392,16 @@ export const fetchBlogById = async (blogId) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.BLOGS}/${blogId}`), {
-      method: "GET",
-      headers: {
-        ...API_CONFIG.DEFAULT_HEADERS,
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      buildApiUrl(`${API_CONFIG.ENDPOINTS.BLOGS}/${blogId}`),
+      {
+        method: "GET",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -428,6 +431,7 @@ export const createBlog = async (formData) => {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
+        Accept: "application/json",
         // Don't set Content-Type for FormData - browser will set it automatically
       },
       body: formData,
@@ -435,14 +439,14 @@ export const createBlog = async (formData) => {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      
+
       // Handle validation errors
       if (response.status === 422 && errorData.errors) {
         const error = new Error(errorData.message || "Validation failed");
         error.validationErrors = errorData.errors;
         throw error;
       }
-      
+
       throw new Error(
         errorData.message || `Failed to create blog: ${response.status}`
       );
@@ -465,25 +469,28 @@ export const updateBlog = async (blogId, blogData) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.BLOGS}/${blogId}`), {
-      method: "PUT",
-      headers: {
-        ...API_CONFIG.DEFAULT_HEADERS,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(blogData),
-    });
+    const response = await fetch(
+      buildApiUrl(`${API_CONFIG.ENDPOINTS.BLOGS}/${blogId}`),
+      {
+        method: "PUT",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(blogData),
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      
+
       // Handle validation errors
       if (response.status === 422 && errorData.errors) {
         const error = new Error(errorData.message || "Validation failed");
         error.validationErrors = errorData.errors;
         throw error;
       }
-      
+
       throw new Error(
         errorData.message || `Failed to update blog: ${response.status}`
       );
@@ -507,31 +514,34 @@ export const addBlogImages = async (blogId, images) => {
 
   try {
     const formData = new FormData();
-    
+
     // Add all images to FormData
     images.forEach((image) => {
-      formData.append('images[]', image);
+      formData.append("images[]", image);
     });
 
-    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.BLOG_IMAGES}/${blogId}/images`), {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        // Don't set Content-Type for FormData - browser will set it automatically
-      },
-      body: formData,
-    });
+    const response = await fetch(
+      buildApiUrl(`${API_CONFIG.ENDPOINTS.BLOG_IMAGES}/${blogId}/images`),
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // Don't set Content-Type for FormData - browser will set it automatically
+        },
+        body: formData,
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      
+
       // Handle validation errors
       if (response.status === 422 && errorData.errors) {
         const error = new Error(errorData.message || "Validation failed");
         error.validationErrors = errorData.errors;
         throw error;
       }
-      
+
       throw new Error(
         errorData.message || `Failed to add blog images: ${response.status}`
       );
@@ -554,24 +564,27 @@ export const deleteBlogImage = async (imageId) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.BLOG_IMAGE_DELETE}/${imageId}`), {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      buildApiUrl(`${API_CONFIG.ENDPOINTS.BLOG_IMAGE_DELETE}/${imageId}`),
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      
+
       // Handle validation errors
       if (response.status === 422 && errorData.errors) {
         const error = new Error(errorData.message || "Validation failed");
         error.validationErrors = errorData.errors;
         throw error;
       }
-      
+
       throw new Error(
         errorData.message || `Failed to delete blog image: ${response.status}`
       );
@@ -594,13 +607,16 @@ export const deleteBlogById = async (blogId) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.BLOGS}/${blogId}`), {
-      method: "DELETE",
-      headers: {
-        ...API_CONFIG.DEFAULT_HEADERS,
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      buildApiUrl(`${API_CONFIG.ENDPOINTS.BLOGS}/${blogId}`),
+      {
+        method: "DELETE",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -707,14 +723,14 @@ export const registerAdmin = async (adminData) => {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      
+
       // Handle validation errors
       if (response.status === 422 && errorData.errors) {
         const error = new Error(errorData.message || "Validation failed");
         error.validationErrors = errorData.errors;
         throw error;
       }
-      
+
       throw new Error(
         errorData.message || `Failed to register admin: ${response.status}`
       );
@@ -737,25 +753,28 @@ export const updateAdmin = async (userId, adminData) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.USERS}/${userId}`), {
-      method: "PUT",
-      headers: {
-        ...API_CONFIG.DEFAULT_HEADERS,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(adminData),
-    });
+    const response = await fetch(
+      buildApiUrl(`${API_CONFIG.ENDPOINTS.USERS}/${userId}`),
+      {
+        method: "PUT",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(adminData),
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      
+
       // Handle validation errors
       if (response.status === 422 && errorData.errors) {
         const error = new Error(errorData.message || "Validation failed");
         error.validationErrors = errorData.errors;
         throw error;
       }
-      
+
       throw new Error(
         errorData.message || `Failed to update admin: ${response.status}`
       );
@@ -778,25 +797,28 @@ export const updateProfile = async (profileData) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.EDIT_PROFILE), {
-      method: "PUT",
-      headers: {
-        ...API_CONFIG.DEFAULT_HEADERS,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(profileData),
-    });
+    const response = await fetch(
+      buildApiUrl(API_CONFIG.ENDPOINTS.EDIT_PROFILE),
+      {
+        method: "PUT",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(profileData),
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      
+
       // Handle validation errors
       if (response.status === 422 && errorData.errors) {
         const error = new Error(errorData.message || "Validation failed");
         error.validationErrors = errorData.errors;
         throw error;
       }
-      
+
       throw new Error(
         errorData.message || `Failed to update profile: ${response.status}`
       );
@@ -820,20 +842,26 @@ export const changePassword = async (passwordData) => {
 
   try {
     // Use fetch directly to handle 401 without automatic logout for incorrect password
-    const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.CHANGE_PASSWORD), {
-      method: "POST",
-      headers: {
-        ...API_CONFIG.DEFAULT_HEADERS,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(passwordData),
-    });
+    const response = await fetch(
+      buildApiUrl(API_CONFIG.ENDPOINTS.CHANGE_PASSWORD),
+      {
+        method: "POST",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(passwordData),
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      
+
       // Handle specific error for incorrect password
-      if (response.status === 401 && errorData.message === "Incorrect Password!") {
+      if (
+        response.status === 401 &&
+        errorData.message === "Incorrect Password!"
+      ) {
         const error = new Error("Incorrect Password!");
         error.isIncorrectPassword = true;
         throw error;
@@ -868,27 +896,31 @@ export const changeUserPassword = async (userId, passwordData) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.USERS}/${userId}/change-password`), {
-      method: "POST",
-      headers: {
-        ...API_CONFIG.DEFAULT_HEADERS,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(passwordData),
-    });
+    const response = await fetch(
+      buildApiUrl(`${API_CONFIG.ENDPOINTS.USERS}/${userId}/change-password`),
+      {
+        method: "POST",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(passwordData),
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      
+
       // Handle validation errors
       if (response.status === 422 && errorData.errors) {
         const error = new Error(errorData.message || "Validation failed");
         error.validationErrors = errorData.errors;
         throw error;
       }
-      
+
       throw new Error(
-        errorData.message || `Failed to change user password: ${response.status}`
+        errorData.message ||
+          `Failed to change user password: ${response.status}`
       );
     }
 
@@ -921,14 +953,14 @@ export const updateCompanyData = async (companyData) => {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      
+
       // Handle validation errors
       if (response.status === 422 && errorData.errors) {
         const error = new Error(errorData.message || "Validation failed");
         error.validationErrors = errorData.errors;
         throw error;
       }
-      
+
       throw new Error(
         errorData.message || `Failed to update company: ${response.status}`
       );
@@ -951,16 +983,19 @@ export const uploadCompanyLogo = async (logoFile) => {
 
   try {
     const formData = new FormData();
-    formData.append('logo', logoFile);
+    formData.append("logo", logoFile);
 
-    const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.COMPANY_LOGO), {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        // Don't set Content-Type for FormData - browser will set it automatically
-      },
-      body: formData,
-    });
+    const response = await fetch(
+      buildApiUrl(API_CONFIG.ENDPOINTS.COMPANY_LOGO),
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // Don't set Content-Type for FormData - browser will set it automatically
+        },
+        body: formData,
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -994,13 +1029,16 @@ export const fetchProjectTypes = async () => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.PROJECT_TYPES), {
-      method: "GET",
-      headers: {
-        ...API_CONFIG.DEFAULT_HEADERS,
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      buildApiUrl(API_CONFIG.ENDPOINTS.PROJECT_TYPES),
+      {
+        method: "GET",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -1026,13 +1064,16 @@ export const fetchProjectTypeById = async (projectTypeId) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECT_TYPES}/${projectTypeId}`), {
-      method: "GET",
-      headers: {
-        ...API_CONFIG.DEFAULT_HEADERS,
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECT_TYPES}/${projectTypeId}`),
+      {
+        method: "GET",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -1058,14 +1099,17 @@ export const createProjectType = async (projectTypeData) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.PROJECT_TYPES), {
-      method: "POST",
-      headers: {
-        ...API_CONFIG.DEFAULT_HEADERS,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(projectTypeData),
-    });
+    const response = await fetch(
+      buildApiUrl(API_CONFIG.ENDPOINTS.PROJECT_TYPES),
+      {
+        method: "POST",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(projectTypeData),
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -1098,14 +1142,17 @@ export const updateProjectType = async (projectTypeId, projectTypeData) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECT_TYPES}/${projectTypeId}`), {
-      method: "PUT",
-      headers: {
-        ...API_CONFIG.DEFAULT_HEADERS,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(projectTypeData),
-    });
+    const response = await fetch(
+      buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECT_TYPES}/${projectTypeId}`),
+      {
+        method: "PUT",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(projectTypeData),
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -1246,18 +1293,22 @@ export const fetchProjectDetails = async (projectId) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECTS}/${projectId}`), {
-      method: "GET",
-      headers: {
-        ...API_CONFIG.DEFAULT_HEADERS,
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECTS}/${projectId}`),
+      {
+        method: "GET",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       throw new Error(
-        errorData.message || `Failed to fetch project details: ${response.status}`
+        errorData.message ||
+          `Failed to fetch project details: ${response.status}`
       );
     }
 
@@ -1278,14 +1329,17 @@ export const updateProjectDetails = async (projectId, projectData) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECTS}/${projectId}/details`), {
-      method: "PUT",
-      headers: {
-        ...API_CONFIG.DEFAULT_HEADERS,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(projectData),
-    });
+    const response = await fetch(
+      buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECTS}/${projectId}/details`),
+      {
+        method: "PUT",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(projectData),
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -1320,15 +1374,20 @@ export const updateProjectThumbnail = async (projectId, thumbnailFile) => {
 
   try {
     const formData = new FormData();
-    formData.append('thumbnail', thumbnailFile);
+    formData.append("thumbnail", thumbnailFile);
 
-    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECTS}/${projectId}/new-thumbnail`), {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    });
+    const response = await fetch(
+      buildApiUrl(
+        `${API_CONFIG.ENDPOINTS.PROJECTS}/${projectId}/new-thumbnail`
+      ),
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -1363,21 +1422,24 @@ export const createProjectFeature = async (projectId, featureData) => {
 
   try {
     const formData = new FormData();
-    formData.append('title', featureData.title);
-    formData.append('description', featureData.description);
+    formData.append("title", featureData.title);
+    formData.append("description", featureData.description);
 
     // Append multiple images
     featureData.images.forEach((image, index) => {
-      formData.append('images[]', image);
+      formData.append("images[]", image);
     });
 
-    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECTS}/${projectId}/features`), {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    });
+    const response = await fetch(
+      buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECTS}/${projectId}/features`),
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -1411,14 +1473,17 @@ export const updateProjectFeatureDetails = async (featureId, featureData) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(`/api/admin/project-features/${featureId}/details`), {
-      method: "PUT",
-      headers: {
-        ...API_CONFIG.DEFAULT_HEADERS,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(featureData),
-    });
+    const response = await fetch(
+      buildApiUrl(`/api/admin/project-features/${featureId}/details`),
+      {
+        method: "PUT",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(featureData),
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -1456,16 +1521,19 @@ export const addProjectFeatureImages = async (featureId, images) => {
 
     // Append multiple images
     images.forEach((image) => {
-      formData.append('images[]', image);
+      formData.append("images[]", image);
     });
 
-    const response = await fetch(buildApiUrl(`/api/admin/project-features/${featureId}/images`), {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    });
+    const response = await fetch(
+      buildApiUrl(`/api/admin/project-features/${featureId}/images`),
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -1499,12 +1567,15 @@ export const deleteProjectFeatureImage = async (imageId) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(`/api/admin/project-feature-images/${imageId}`), {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      buildApiUrl(`/api/admin/project-feature-images/${imageId}`),
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -1530,12 +1601,15 @@ export const deleteProjectFeature = async (featureId) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(`/api/admin/project-features/${featureId}`), {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      buildApiUrl(`/api/admin/project-features/${featureId}`),
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -1561,13 +1635,16 @@ export const deleteProject = async (projectId) => {
   }
 
   try {
-    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECTS}/${projectId}`), {
-      method: "DELETE",
-      headers: {
-        ...API_CONFIG.DEFAULT_HEADERS,
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECTS}/${projectId}`),
+      {
+        method: "DELETE",
+        headers: {
+          ...API_CONFIG.DEFAULT_HEADERS,
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -1583,5 +1660,3 @@ export const deleteProject = async (projectId) => {
     throw error;
   }
 };
-
-

@@ -109,7 +109,6 @@ const About = () => {
         </div>
         <div className="about-hero-container">
           <div className={`about-hero-content ${isVisible ? 'visible' : ''}`}>
-            <span className="about-badge">About Us</span>
             <h1 className="about-hero-title">
               Transforming Ideas Into <br />
               <span className="gradient-text">Digital Reality</span>
