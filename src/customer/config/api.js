@@ -21,9 +21,11 @@ export const API_CONFIG = {
   // Base URL for your API - automatically detected based on local IP
   BASE_URL: getBaseUrl(),
 
-  // Customer API Endpoints (only existing ones)
+  // Customer API Endpoints
   ENDPOINTS: {
     COMPANY_DETAILS: "/api/customer/company-details",
+    BLOGS: "/api/customer/blogs",
+    BLOG_DETAILS: "/api/customer/blogs",
   },
 
   // Request timeout in milliseconds

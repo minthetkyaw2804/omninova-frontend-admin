@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCompany } from "./Layout";
+import { fetchBlogs } from "../utils/customerApi";
 import "./Blogs.css";
 
 const Blogs = () => {
@@ -14,16 +15,10 @@ const Blogs = () => {
 
   // Fetch blogs from API
   useEffect(() => {
-    const fetchBlogs = async () => {
+    const loadBlogs = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://162.84.221.21/api/customer/blogs");
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result = await response.json();
+        const result = await fetchBlogs();
 
         if (result.data) {
           setBlogs(result.data);
@@ -39,7 +34,7 @@ const Blogs = () => {
       }
     };
 
-    fetchBlogs();
+    loadBlogs();
   }, []);
 
   // Filter blogs based on search term

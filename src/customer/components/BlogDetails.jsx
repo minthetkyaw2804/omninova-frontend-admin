@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCompany } from "./Layout";
+import { fetchBlogDetails } from "../utils/customerApi";
 import "./BlogDetails.css";
 
 const BlogDetails = () => {
@@ -15,16 +16,10 @@ const BlogDetails = () => {
 
   // Fetch blog details from API
   useEffect(() => {
-    const fetchBlogDetails = async () => {
+    const loadBlogDetails = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://162.84.221.21/api/customer/blogs/${id}`);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result = await response.json();
+        const result = await fetchBlogDetails(id);
 
         if (result.data) {
           setBlog(result.data);
@@ -40,7 +35,7 @@ const BlogDetails = () => {
     };
 
     if (id) {
-      fetchBlogDetails();
+      loadBlogDetails();
     }
   }, [id]);
 
@@ -82,11 +77,54 @@ const BlogDetails = () => {
 
   const copyPageLink = async () => {
     try {
-      await navigator.clipboard.writeText(window.location.href);
-      setShowCopyMessage(true);
-      setTimeout(() => setShowCopyMessage(false), 2000);
+      // Check if the modern Clipboard API is available and works
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(window.location.href);
+        setShowCopyMessage(true);
+        setTimeout(() => setShowCopyMessage(false), 2000);
+      } else {
+        // Fallback for older browsers or non-HTTPS environments
+        const textArea = document.createElement('textarea');
+        textArea.value = window.location.href;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+          document.execCommand('copy');
+          setShowCopyMessage(true);
+          setTimeout(() => setShowCopyMessage(false), 2000);
+        } catch (fallbackErr) {
+          console.error('Fallback copy failed:', fallbackErr);
+          // Show error message to user
+          alert('Copy failed. Please manually copy the URL from your browser address bar.');
+        } finally {
+          document.body.removeChild(textArea);
+        }
+      }
     } catch (err) {
       console.error('Failed to copy link:', err);
+      // Try fallback method if modern API fails
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = window.location.href;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        setShowCopyMessage(true);
+        setTimeout(() => setShowCopyMessage(false), 2000);
+      } catch (fallbackErr) {
+        console.error('Fallback copy also failed:', fallbackErr);
+        alert('Copy failed. Please manually copy the URL from your browser address bar.');
+      }
     }
   };
 
