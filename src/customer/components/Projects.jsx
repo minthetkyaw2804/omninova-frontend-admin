@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCompany } from "./Layout";
 import { fetchProjects, fetchProjectTypes } from "../utils/customerApi";
 import "./Projects.css";
 
 const Projects = () => {
+  const navigate = useNavigate();
   const { companyData } = useCompany();
   const [projects, setProjects] = useState([]);
   const [projectTypes, setProjectTypes] = useState([]);
@@ -82,6 +84,10 @@ const Projects = () => {
   const clearFilters = () => {
     setSearchTerm("");
     setSelectedType("");
+  };
+
+  const handleProjectExplore = (projectId) => {
+    navigate(`/projects/${projectId}`);
   };
 
   if (!companyData) {
@@ -333,11 +339,14 @@ const Projects = () => {
                     </div>
 
                     <div className="customer-project-description">
-                      <p>{project.description}</p>
+                      <div dangerouslySetInnerHTML={{ __html: project.description }} />
                     </div>
 
                     <div className="customer-project-actions">
-                      <button className="customer-project-explore-btn">
+                      <button
+                        className="customer-project-explore-btn"
+                        onClick={() => handleProjectExplore(project.id)}
+                      >
                         <div className="customer-btn-inner">
                           <div className="customer-btn-icon">
                             <svg viewBox="0 0 24 24" fill="none">

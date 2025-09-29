@@ -999,14 +999,60 @@ html:has(.customer-projects-page) {
 
 .customer-project-description {
   margin: 30px 0;
+  color: #ffffff;
+}
+
+.customer-project-description div {
+  color: #ffffff !important;
+}
+
+.customer-project-description div * {
+  color: #ffffff !important;
 }
 
 .customer-project-description p {
-  color: #cbd5e0;
+  color: #ffffff;
   font-size: 1.1rem;
   line-height: 1.8;
   font-weight: 500;
-  margin: 0;
+  margin: 0 0 16px 0;
+}
+
+.customer-project-description p:last-child {
+  margin-bottom: 0;
+}
+
+/* Style HTML content in project descriptions */
+.customer-project-description div > p {
+  color: #ffffff;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  font-weight: 500;
+  margin: 0 0 16px 0;
+}
+
+.customer-project-description div > p:last-child {
+  margin-bottom: 0;
+}
+
+.customer-project-description div > ul,
+.customer-project-description div > ol {
+  color: #ffffff;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin: 16px 0;
+  padding-left: 20px;
+}
+
+.customer-project-description div > ul li,
+.customer-project-description div > ol li {
+  margin-bottom: 8px;
+}
+
+.customer-project-description div > br {
+  display: block;
+  margin: 8px 0;
+  content: "";
 }
 
 /* Customer Project Actions */
@@ -1409,6 +1455,23 @@ html:has(.customer-projects-page) {
     animation: none;
   }
 
+  /* Optimize project items for mobile scrolling - less aggressive */
+  .customer-project-bg-effects,
+  .customer-project-particles,
+  .customer-project-glow-effect,
+  .customer-project-scan-line {
+    display: none;
+  }
+
+  /* Reduce animation complexity but don't disable everything */
+  .customer-project-item {
+    transition: transform 0.3s ease;
+  }
+
+  .customer-project-item:hover {
+    transform: translateY(-5px);
+  }
+
   .customer-projects-container {
     padding: 0 20px;
   }
@@ -1478,23 +1541,23 @@ html:has(.customer-projects-page) {
   }
 
   .customer-hero-stats {
-    flex-direction: column;
-    gap: 20px;
+    gap: 16px;
     margin-top: 30px;
+    justify-content: center;
   }
 
   .customer-stat-item {
     text-align: center;
-    min-width: 100px;
-    padding: 16px;
+    min-width: 80px;
+    padding: 12px;
   }
 
   .customer-stat-number {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 
   .customer-stat-label {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .customer-projects-filters {
@@ -1527,6 +1590,22 @@ html:has(.customer-projects-page) {
     gap: 16px;
   }
 
+  /* Additional mobile performance optimizations - be specific to avoid breaking loading states */
+  .customer-project-bg-effects,
+  .customer-project-particles,
+  .customer-project-glow-effect,
+  .customer-type-dot,
+  .customer-title-underline {
+    animation: none !important;
+  }
+
+  /* Allow project items to slide in but simplify other animations */
+  .customer-project-item .customer-project-bg-effects,
+  .customer-project-item .customer-project-particles,
+  .customer-project-item .customer-project-glow-effect {
+    display: none !important;
+  }
+
   .customer-project-image-wrapper {
     width: 100%;
     max-width: 250px;
@@ -1542,18 +1621,15 @@ html:has(.customer-projects-page) {
   }
 
   .customer-project-description p {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    margin: 10px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 12px 0;
+    color: #ffffff;
+    font-weight: 400;
   }
 
   .customer-code-element {
     display: none;
-  }
-
-  .customer-project-description p {
-    font-size: 0.95rem;
-    line-height: 1.6;
   }
 
   .customer-project-number {
@@ -1689,6 +1765,24 @@ html:has(.customer-projects-page) {
     gap: 14px;
   }
 
+  /* Maximum performance optimizations for smallest screens */
+  .customer-project-item .customer-p-particle,
+  .customer-project-item .customer-project-glow-effect,
+  .customer-project-item .customer-project-scan-line,
+  .customer-project-item .customer-type-dot {
+    display: none !important;
+  }
+
+  /* Remove all hover effects for better touch performance */
+  .customer-project-item:hover {
+    transform: none !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  .customer-project-item:hover .customer-project-image {
+    transform: none !important;
+  }
+
   .customer-project-image-wrapper {
     width: 100%;
     max-width: 220px;
@@ -1727,7 +1821,10 @@ html:has(.customer-projects-page) {
 
   .customer-project-description p {
     font-size: 0.9rem;
-    line-height: 1.5;
+    line-height: 1.65;
+    margin: 10px 0;
+    color: #ffffff;
+    font-weight: 400;
   }
 
   .customer-project-number {

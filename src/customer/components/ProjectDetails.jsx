@@ -159,7 +159,7 @@ const ProjectDetails = () => {
             <span>Back to Projects</span>
           </button>
 
-          <div className="customer-project-details-nav-actions">
+          <div className="customer-project-details-nav-actions customer-nav-desktop">
             <button className="customer-project-details-copy-btn" onClick={copyPageLink}>
               <svg className="customer-copy-icon" viewBox="0 0 24 24" fill="none">
                 <path d="M8 4V16C8 17.1046 8.89543 18 10 18H18C19.1046 18 20 17.1046 20 16V7.24264C20 6.97713 19.8946 6.72249 19.7071 6.53553L16.4645 3.29289C16.2775 3.10536 16.0229 3 15.7574 3H10C8.89543 3 8 3.89543 8 5Z" stroke="currentColor" strokeWidth="2"/>
@@ -221,10 +221,6 @@ const ProjectDetails = () => {
               <div className="customer-title-underline"></div>
             </h1>
 
-            <p className="customer-project-details-description">
-              {project.description}
-            </p>
-
             <div className="customer-project-details-stats">
               <div className="customer-stat-item">
                 <div className="customer-stat-icon">
@@ -260,6 +256,24 @@ const ProjectDetails = () => {
         </div>
       </section>
 
+      {/* Project Description Section */}
+      <section className="customer-project-details-description-section">
+        <div className="customer-project-details-description-container">
+          <div className="customer-description-header">
+            <h2 className="customer-description-title">
+              <span className="customer-description-title-text">Project Overview</span>
+              <div className="customer-description-title-line"></div>
+            </h2>
+          </div>
+          <div className="customer-description-content">
+            <div
+              className="customer-project-description-text"
+              dangerouslySetInnerHTML={{ __html: project.description }}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       {project.highlight_features && project.highlight_features.length > 0 && (
         <section className="customer-project-details-features">
@@ -269,93 +283,148 @@ const ProjectDetails = () => {
                 <span className="customer-features-title-text">Highlight Features</span>
                 <div className="customer-features-title-line"></div>
               </h2>
-
-              {project.highlight_features.length > 1 && (
-                <div className="customer-features-tabs">
-                  {project.highlight_features.map((feature, index) => (
-                    <button
-                      key={feature.id}
-                      className={`customer-feature-tab ${index === currentFeatureIndex ? 'customer-active' : ''}`}
-                      onClick={() => selectFeature(index)}
-                    >
-                      <div className="customer-tab-bg"></div>
-                      <span>Feature {index + 1}</span>
-                      {index === currentFeatureIndex && <div className="customer-tab-indicator"></div>}
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
 
-            {currentFeature && (
-              <div className="customer-feature-showcase">
-                <div className="customer-feature-content">
-                  <div className="customer-feature-info">
-                    <h3 className="customer-feature-title">{currentFeature.title}</h3>
-                    <p className="customer-feature-description">{currentFeature.description}</p>
-                  </div>
-
-                  {currentFeature.images && currentFeature.images.length > 0 && (
-                    <div className="customer-feature-gallery">
-                      <div className="customer-gallery-container">
-                        <div className="customer-gallery-main">
-                          <div className="customer-image-wrapper">
-                            <img
-                              src={currentImage?.image_url}
-                              alt={currentImage?.image_name}
-                              className="customer-feature-image"
-                              onError={(e) => {
-                                e.target.style.display = 'none';
-                                e.target.nextSibling.style.display = 'flex';
-                              }}
-                            />
-                            <div className="customer-image-placeholder" style={{ display: 'none' }}>
-                              <div className="customer-placeholder-icon">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                  <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
-                                </svg>
+            <div className="customer-features-blog-style">
+              {project.highlight_features.map((feature, featureIndex) => (
+                <section key={feature.id} className="customer-feature-blog-section">
+                  {/* Feature Images Section */}
+                  {feature.images && feature.images.length > 0 && (
+                    <div className="customer-feature-blog-images-section">
+                      <div className="customer-feature-blog-swiper-container">
+                        <div className="customer-feature-blog-swiper-wrapper">
+                          <div
+                            className="customer-feature-blog-swiper-slide"
+                            style={{
+                              transform: `translateX(-${(featureIndex === currentFeatureIndex ? currentImageIndex : 0) * 100}%)`,
+                            }}
+                          >
+                            {feature.images.map((image, imageIndex) => (
+                              <div key={imageIndex} className="customer-feature-blog-image-container">
+                                <img
+                                  src={image.image_url}
+                                  alt={image.image_name}
+                                  className="customer-feature-blog-image"
+                                  onError={(e) => {
+                                    e.target.style.display = 'none';
+                                    e.target.nextSibling.style.display = 'flex';
+                                  }}
+                                />
+                                <div className="customer-feature-blog-image-placeholder" style={{ display: 'none' }}>
+                                  <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                                  </svg>
+                                  <span>Image unavailable</span>
+                                </div>
                               </div>
-                            </div>
-                            <div className="customer-image-overlay">
-                              <div className="customer-overlay-grid"></div>
-                            </div>
-                          </div>
-
-                          {currentFeature.images.length > 1 && (
-                            <>
-                              <button className="customer-gallery-btn customer-prev-btn" onClick={prevImage}>
-                                <svg viewBox="0 0 24 24" fill="none">
-                                  <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                </svg>
-                              </button>
-                              <button className="customer-gallery-btn customer-next-btn" onClick={nextImage}>
-                                <svg viewBox="0 0 24 24" fill="none">
-                                  <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                </svg>
-                              </button>
-                            </>
-                          )}
-                        </div>
-
-                        {currentFeature.images.length > 1 && (
-                          <div className="customer-gallery-indicators">
-                            {currentFeature.images.map((_, index) => (
-                              <button
-                                key={index}
-                                className={`customer-indicator ${index === currentImageIndex ? 'customer-active' : ''}`}
-                                onClick={() => setCurrentImageIndex(index)}
-                              >
-                                <div className="customer-indicator-dot"></div>
-                              </button>
                             ))}
                           </div>
+                        </div>
+
+                        {/* Navigation arrows - only show if more than 1 image */}
+                        {feature.images.length > 1 && (
+                          <>
+                            <button
+                              className="customer-feature-blog-swiper-button customer-feature-blog-swiper-button-prev"
+                              onClick={() => {
+                                setCurrentFeatureIndex(featureIndex);
+                                prevImage();
+                              }}
+                              aria-label="Previous image"
+                            >
+                              <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                              </svg>
+                            </button>
+                            <button
+                              className="customer-feature-blog-swiper-button customer-feature-blog-swiper-button-next"
+                              onClick={() => {
+                                setCurrentFeatureIndex(featureIndex);
+                                nextImage();
+                              }}
+                              aria-label="Next image"
+                            >
+                              <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                              </svg>
+                            </button>
+
+                            {/* Dots indicator */}
+                            <div className="customer-feature-blog-swiper-pagination">
+                              {feature.images.map((_, imageIndex) => (
+                                <button
+                                  key={imageIndex}
+                                  className={`customer-feature-blog-swiper-dot ${
+                                    featureIndex === currentFeatureIndex && imageIndex === currentImageIndex ? 'active' : ''
+                                  }`}
+                                  onClick={() => {
+                                    setCurrentFeatureIndex(featureIndex);
+                                    setCurrentImageIndex(imageIndex);
+                                  }}
+                                  aria-label={`Go to image ${imageIndex + 1}`}
+                                />
+                              ))}
+                            </div>
+                          </>
                         )}
                       </div>
                     </div>
                   )}
-                </div>
+
+                  {/* Feature Title - Moved below images */}
+                  <div className="customer-feature-blog-title-section">
+                    <h3 className="customer-feature-blog-title">{feature.title}</h3>
+                  </div>
+
+                  {/* Feature Content Section */}
+                  <div className="customer-feature-blog-content-section">
+                    <div className="customer-feature-blog-content">
+                      <div
+                        className="customer-feature-blog-description"
+                        dangerouslySetInnerHTML={{ __html: feature.description }}
+                      />
+                    </div>
+                  </div>
+                </section>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+
+      {/* Demo Link Section - Moved to Bottom */}
+      {project.demo_url && (
+        <section className="customer-project-demo-section">
+          <div className="customer-project-demo-container">
+            <div className="customer-demo-content">
+              <div className="customer-demo-header">
+                <h3 className="customer-demo-title">See It In Action</h3>
+                <p className="customer-demo-subtitle">Experience the live project and explore its features</p>
               </div>
-            )}
+              <a
+                href={project.demo_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="customer-demo-live-btn"
+              >
+                <div className="customer-demo-btn-content">
+                  <div className="customer-demo-btn-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M10 6H6C4.89543 6 4 6.89543 4 8V18C4 19.1046 4.89543 20 6 20H16C17.1046 20 18 19.1046 18 18V14M14 4H20M20 4V10M20 4L10 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <span>Visit Live Demo</span>
+                  <div className="customer-demo-btn-arrow">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M7 17l10-10M17 7H7m10 0v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+                <div className="customer-demo-btn-glow"></div>
+                <div className="customer-demo-btn-ripple"></div>
+              </a>
+            </div>
           </div>
         </section>
       )}

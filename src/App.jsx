@@ -6,6 +6,7 @@ import About from "./customer/components/About";
 import Blogs from "./customer/components/Blogs";
 import BlogDetails from "./customer/components/BlogDetails";
 import Projects from "./customer/components/Projects";
+import ProjectDetails from "./customer/components/ProjectDetails";
 import Login from "./admin/components/Login";
 import AdminProfile from "./admin/components/AdminProfile";
 import Users from "./admin/components/Users";
@@ -67,6 +68,14 @@ function App() {
           element={
             <Layout>
               <Projects />
+            </Layout>
+          }
+        />
+        <Route
+          path="/projects/:id"
+          element={
+            <Layout>
+              <ProjectDetails />
             </Layout>
           }
         />
