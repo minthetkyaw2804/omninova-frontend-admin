@@ -77,3 +77,81 @@ export const fetchBlogDetails = async (blogId) => {
     throw error;
   }
 };
+
+// Fetch all projects
+export const fetchProjects = async () => {
+  try {
+    console.log("🚀 Fetching projects from API...");
+
+    const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.PROJECTS), {
+      method: "GET",
+      headers: {
+        ...API_CONFIG.DEFAULT_HEADERS,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch projects: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log("✅ Projects fetched successfully:", result);
+
+    return result;
+  } catch (error) {
+    console.error("❌ Error fetching projects:", error);
+    throw error;
+  }
+};
+
+// Fetch all project types
+export const fetchProjectTypes = async () => {
+  try {
+    console.log("🚀 Fetching project types from API...");
+
+    const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.PROJECT_TYPES), {
+      method: "GET",
+      headers: {
+        ...API_CONFIG.DEFAULT_HEADERS,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch project types: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log("✅ Project types fetched successfully:", result);
+
+    return result;
+  } catch (error) {
+    console.error("❌ Error fetching project types:", error);
+    throw error;
+  }
+};
+
+// Fetch project details by ID
+export const fetchProjectDetails = async (projectId) => {
+  try {
+    console.log(`🚀 Fetching project details for ID: ${projectId}`);
+
+    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.PROJECT_DETAILS}/${projectId}`), {
+      method: "GET",
+      headers: {
+        ...API_CONFIG.DEFAULT_HEADERS,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch project details: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log("✅ Project details fetched successfully:", result);
+
+    return result;
+  } catch (error) {
+    console.error("❌ Error fetching project details:", error);
+    throw error;
+  }
+};

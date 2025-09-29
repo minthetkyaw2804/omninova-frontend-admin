@@ -26,6 +26,9 @@ export const API_CONFIG = {
     COMPANY_DETAILS: "/api/customer/company-details",
     BLOGS: "/api/customer/blogs",
     BLOG_DETAILS: "/api/customer/blogs",
+    PROJECTS: "/api/customer/projects",
+    PROJECT_DETAILS: "/api/customer/projects",
+    PROJECT_TYPES: "/api/customer/project-types",
   },
 
   // Request timeout in milliseconds
