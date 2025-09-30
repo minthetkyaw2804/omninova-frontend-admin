@@ -68,7 +68,7 @@ const Projects = () => {
     setFilteredProjects(filtered);
   }, [searchTerm, selectedType, projects]);
 
-  // Trigger animation
+  // Trigger animation - SAME for ALL devices
   useEffect(() => {
     setTimeout(() => setIsVisible(true), 100);
   }, []);
@@ -88,6 +88,24 @@ const Projects = () => {
 
   const handleProjectExplore = (projectId) => {
     navigate(`/projects/${projectId}`);
+  };
+
+  // Function to extract first sentence from HTML description
+  const getFirstSentence = (htmlDescription) => {
+    if (!htmlDescription) return '';
+
+    // Remove HTML tags
+    const textOnly = htmlDescription.replace(/<[^>]*>/g, '');
+
+    // Find first sentence (ending with . ! or ?)
+    const sentences = textOnly.match(/[^\.!?]*[\.!?]/);
+
+    if (sentences && sentences[0]) {
+      return sentences[0].trim();
+    }
+
+    // If no sentence ending found, return first 100 characters
+    return textOnly.length > 100 ? textOnly.substring(0, 100) + '...' : textOnly;
   };
 
   if (!companyData) {
@@ -339,7 +357,7 @@ const Projects = () => {
                     </div>
 
                     <div className="customer-project-description">
-                      <div dangerouslySetInnerHTML={{ __html: project.description }} />
+                      <p>{getFirstSentence(project.description)}</p>
                     </div>
 
                     <div className="customer-project-actions">

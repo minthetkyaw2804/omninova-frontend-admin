@@ -37,7 +37,7 @@
   margin: 0 auto;
   padding: 80px 20px 0;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  grid-template-columns: 1.2fr 1fr 1fr 1.2fr;
   gap: 64px;
   align-items: start;
   position: relative;
@@ -169,14 +169,13 @@
   box-shadow: 0 8px 25px rgba(99, 102, 241, 0.1);
 }
 
-.customer-social-link svg {
-  width: 24px;
-  height: 24px;
+.customer-social-link i {
+  font-size: 24px;
   transition: all 0.3s ease;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
-.customer-social-link:hover svg {
+.customer-social-link:hover i {
   transform: scale(1.1);
   filter: drop-shadow(0 4px 8px rgba(255, 255, 255, 0.3));
 }

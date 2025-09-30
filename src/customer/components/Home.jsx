@@ -1,11 +1,14 @@
 import { useCompany } from "./Layout";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { fetchProjectTypes } from "../utils/customerApi";
 import "./Home.css";
 
 const Home = () => {
   const { companyData } = useCompany();
   const [statsVisible, setStatsVisible] = useState(false);
+  const [projectTypes, setProjectTypes] = useState([]);
+  const [currentTypeIndex, setCurrentTypeIndex] = useState(0);
 
   // Animated counters
   const [projectCount, setProjectCount] = useState(0);
@@ -19,14 +22,14 @@ const Home = () => {
         const rect = statsSection.getBoundingClientRect();
         if (rect.top < window.innerHeight && rect.bottom > 0 && !statsVisible) {
           setStatsVisible(true);
-          // Animate counters
+          // Animate counters - SAME behavior for ALL devices
           animateCounter(setProjectCount, 20, 2000);
           animateCounter(setClientCount, 50, 2000);
           animateCounter(setExperienceCount, 3, 2000);
         }
       }
 
-      // Add scroll animations for other sections
+      // Add scroll animations for other sections - SAME behavior for ALL devices
       const animateElements = document.querySelectorAll(".animate-on-scroll");
       animateElements.forEach((element) => {
         const elementRect = element.getBoundingClientRect();
@@ -44,6 +47,33 @@ const Home = () => {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, [statsVisible]);
+
+  // Fetch project types
+  useEffect(() => {
+    const loadProjectTypes = async () => {
+      try {
+        const result = await fetchProjectTypes();
+        if (result.data && Array.isArray(result.data)) {
+          setProjectTypes(result.data);
+        }
+      } catch (error) {
+        console.error("Error loading project types:", error);
+      }
+    };
+
+    loadProjectTypes();
+  }, []);
+
+  // Auto-rotate project types
+  useEffect(() => {
+    if (projectTypes.length === 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentTypeIndex((prev) => (prev + 1) % projectTypes.length);
+    }, 4000); // Change every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [projectTypes.length]);
 
   const animateCounter = (setter, target, duration) => {
     let start = 0;
@@ -206,6 +236,63 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Project Types Section */}
+      {projectTypes.length > 0 && (
+        <section className="types-dark-section animate-on-scroll">
+          <div className="types-wrapper">
+            <h2 className="types-heading">Project Categories</h2>
+            <p className="types-subheading">
+              Explore the diverse range of solutions we deliver
+            </p>
+
+            <div className="types-carousel-wrapper">
+              <button
+                className="types-nav-btn types-prev"
+                onClick={() =>
+                  setCurrentTypeIndex(
+                    (prev) => (prev - 1 + projectTypes.length) % projectTypes.length
+                  )
+                }
+                aria-label="Previous"
+              >
+                <i className="fas fa-chevron-left"></i>
+              </button>
+
+              <div className="types-card-container">
+                <div className="types-card">
+                  <div className="types-icon-box">
+                    <i className="fas fa-code"></i>
+                  </div>
+                  <h3 className="types-card-title">{projectTypes[currentTypeIndex].type_name}</h3>
+                  <p className="types-card-desc">{projectTypes[currentTypeIndex].description}</p>
+                </div>
+              </div>
+
+              <button
+                className="types-nav-btn types-next"
+                onClick={() =>
+                  setCurrentTypeIndex((prev) => (prev + 1) % projectTypes.length)
+                }
+                aria-label="Next"
+              >
+                <i className="fas fa-chevron-right"></i>
+              </button>
+            </div>
+
+            <div className="types-indicators">
+              {projectTypes.map((_, index) => (
+                <button
+                  key={index}
+                  className={`types-dot ${index === currentTypeIndex ? 'active' : ''}`}
+                  onClick={() => setCurrentTypeIndex(index)}
+                  aria-label={`Slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Tech Stack Section */}
       <section className="tech-section animate-on-scroll">

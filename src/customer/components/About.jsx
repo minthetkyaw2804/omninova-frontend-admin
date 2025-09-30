@@ -33,7 +33,10 @@ const About = () => {
   }, []);
 
   useEffect(() => {
-    // Use Intersection Observer for better performance
+    // Only set up animations if companyData is available
+    if (!companyData) return;
+
+    // Use Intersection Observer for better performance - SAME for ALL devices
     if ('IntersectionObserver' in window && !isMobile()) {
       const observerOptions = {
         threshold: 0.1,
@@ -56,7 +59,7 @@ const About = () => {
         observerRef.current?.observe(element);
       });
     } else {
-      // Fallback for older browsers or mobile with throttled scroll
+      // Fallback for older browsers or mobile with throttled scroll - SAME behavior as before
       const handleScroll = throttle(() => {
         const elements = document.querySelectorAll(".about-animate");
         elements.forEach((element) => {
@@ -69,7 +72,7 @@ const About = () => {
             }
           }
         });
-      }, isMobile() ? 100 : 50); // Higher throttle delay on mobile
+      }, isMobile() ? 100 : 50); // Same throttle delay as before
 
       window.addEventListener("scroll", handleScroll, { passive: true });
       handleScroll(); // Check on initial load
@@ -77,7 +80,8 @@ const About = () => {
       return () => window.removeEventListener("scroll", handleScroll);
     }
 
-    // Trigger hero animation
+    // Trigger hero animation - SAME timing for ALL devices
+    // Only trigger after companyData is loaded
     setTimeout(() => setIsVisible(true), 100);
 
     return () => {
@@ -85,7 +89,7 @@ const About = () => {
         observerRef.current.disconnect();
       }
     };
-  }, [throttle, isMobile]);
+  }, [throttle, isMobile, companyData]);
 
   if (!companyData) {
     return (

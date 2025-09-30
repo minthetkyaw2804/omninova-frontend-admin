@@ -121,11 +121,25 @@
   opacity: 0;
   transform: translateY(50px);
   transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Fallback animation if .visible class isn't added */
+  animation: heroContentFadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
 }
 
 .about-hero-content.visible {
   opacity: 1;
   transform: translateY(0);
+  animation: none; /* Disable fallback animation when visible class is applied */
+}
+
+@keyframes heroContentFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .about-badge {
@@ -324,11 +338,17 @@
   color: #475569;
   font-weight: 400;
   margin: 0;
-  text-align: left;
+  text-align: justify;
+  text-align-last: left;
   position: relative;
   padding-left: 40px;
   max-width: 100%;
   overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  text-justify: inter-character;
 }
 
 /* ========== VISION SECTION ========== */
@@ -592,11 +612,17 @@
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.9);
   margin: 0;
-  text-align: center;
+  text-align: justify;
+  text-align-last: left;
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
   overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  text-justify: inter-character;
 }
 
 /* ========== GOAL SECTION ========== */
@@ -737,8 +763,14 @@
   line-height: 1.7;
   color: #475569;
   margin: 0 0 24px 0;
-  text-align: left;
+  text-align: justify;
+  text-align-last: left;
   overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  text-justify: inter-character;
 }
 
 .goal-highlight-bar {
@@ -1040,52 +1072,9 @@
   transform: translateY(0);
 }
 
-/* ========== MOBILE PERFORMANCE OPTIMIZATIONS ========== */
+/* ========== MOBILE RESPONSIVE ADJUSTMENTS ========== */
 @media (max-width: 768px) {
-  /* Force hardware acceleration for key elements */
-  .about-hero,
-  .about-section,
-  .vision-section,
-  .goal-section,
-  .about-cta-section {
-    transform: translate3d(0, 0, 0);
-    will-change: auto;
-  }
-
-  /* Disable heavy animations on mobile for better performance */
-  .about-hero::after,
-  .hero-grid-bg,
-  .hero-grid-bg::before,
-  .floating-cubes,
-  .vision-bg-elements,
-  .floating-shapes::before,
-  .goal-bg-pattern,
-  .about-cta-section::before,
-  .about-cta-section::after {
-    animation: none !important;
-  }
-
-  /* Simplify complex backgrounds but keep essential styling */
-  .about-hero::after {
-    display: none;
-  }
-
-  .hero-grid-bg::before {
-    display: none;
-  }
-
-  /* Keep hero-grid-bg visible but disable animation */
-  .hero-grid-bg {
-    background-image:
-      linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-    mask: radial-gradient(ellipse at center, black 20%, transparent 70%);
-    animation: none !important;
-    opacity: 0.3;
-  }
-
-  /* Ensure hero section and content are visible */
+  /* Keep all animations but ensure proper display */
   .about-hero {
     display: flex !important;
     min-height: 100vh;
@@ -1100,122 +1089,9 @@
 
   .about-hero-content {
     display: block !important;
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Disable 3D effects on mobile */
-  .tilt-3d:hover {
-    transform: none;
-  }
-
-  /* Reduce backdrop-filter usage */
-  .about-badge,
-  .about-content-card,
-  .vision-content,
-  .goal-content,
-  .customer-btn-secondary {
-    backdrop-filter: none;
-  }
-
-  /* Simplify floating elements */
-  .cube {
-    animation: none;
-    opacity: 0.1;
-  }
-
-  .liquid-shape {
-    animation: none;
-    opacity: 0.1;
-  }
-
-  .shape {
-    animation: none;
-    opacity: 0.1;
-  }
-
-  /* Disable complex gradient animations */
-  .gradient-text {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7, #f59e0b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: none;
-  }
-
-  /* Simplify scan animations */
-  .about-badge::before,
-  .vision-icon-large::after {
-    animation: none;
-    display: none;
-  }
-
-  /* Reduce glow effects */
-  .vision-icon-large {
-    animation: none;
-    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
-  }
-
-  .goal-icon-main {
-    animation: none;
-    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2);
-  }
-
-  /* Disable orbit animations */
-  .orbit-ring {
-    animation: none;
-    opacity: 0.3;
-  }
-
-  /* Simplify tech stats */
-  .stat-number {
-    animation: none;
-    text-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
-  }
-
-  /* Disable professional tech effects */
-  .tech-grid-overlay {
-    animation: none;
-  }
-
-  .accent-line {
-    animation: none;
-    opacity: 0.3;
-  }
-
-  .data-point {
-    animation: none;
-    opacity: 0.3;
-  }
-
-  /* Disable holographic effects */
-  .vision-content::after {
-    animation: none;
-    display: none;
-  }
-
-  /* Simplify data stream */
-  .goal-content::before {
-    animation: none;
-    opacity: 0.1;
   }
 }
 
-/* Respect user's motion preferences */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-
-  .about-animate {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
 
 /* ========== RESPONSIVE DESIGN ========== */
 @media (max-width: 1024px) {
@@ -1273,10 +1149,12 @@
   }
 
   .about-description {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     padding-left: 20px;
     line-height: 1.6;
-    text-align: left;
+    text-align: justify;
+    text-align-last: left;
+    text-indent: 2em;
   }
 
   .quote-mark {
@@ -1291,13 +1169,11 @@
 
   .vision-text,
   .goal-text {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     line-height: 1.6;
-    text-align: left;
-  }
-
-  .vision-text {
-    text-align: center;
+    text-align: justify;
+    text-align-last: left;
+    text-indent: 2em;
   }
 
   .goal-visual-container {
@@ -1373,11 +1249,13 @@
   }
 
   .about-description {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     padding-left: 16px;
-    text-align: left;
+    text-align: justify;
+    text-align-last: left;
     line-height: 1.5;
     margin-bottom: 16px;
+    text-indent: 2em;
   }
 
   .quote-mark {
@@ -1404,13 +1282,11 @@
 
   .vision-text,
   .goal-text {
-    font-size: 0.9rem;
-    text-align: left;
+    font-size: 0.8rem;
+    text-align: justify;
+    text-align-last: left;
     line-height: 1.5;
-  }
-
-  .vision-text {
-    text-align: center;
+    text-indent: 2em;
   }
 
   .goal-visual-container {

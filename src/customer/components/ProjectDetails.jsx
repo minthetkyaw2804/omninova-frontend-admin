@@ -222,22 +222,22 @@ const ProjectDetails = () => {
             </h1>
 
             <div className="customer-project-details-stats">
-              <div className="customer-stat-item">
-                <div className="customer-stat-icon">
+              <div className="customer-project-details-stat-item">
+                <div className="customer-project-details-stat-icon">
                   <svg viewBox="0 0 24 24" fill="none">
                     <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <div className="customer-stat-info">
-                  <span className="customer-stat-number">{project.highlight_features?.length || 0}</span>
-                  <span className="customer-stat-label">Features</span>
+                <div className="customer-project-details-stat-info">
+                  <span className="customer-project-details-stat-number">{project.highlight_features?.length || 0}</span>
+                  <span className="customer-project-details-stat-label">Features</span>
                 </div>
               </div>
 
-              <div className="customer-stat-item">
-                <div className="customer-stat-icon">
+              <div className="customer-project-details-stat-item">
+                <div className="customer-project-details-stat-icon">
                   <svg viewBox="0 0 24 24" fill="none">
                     <path d="M21 16V8C20.9996 7.64928 20.9071 7.30481 20.7315 7.00116C20.556 6.69751 20.3037 6.44536 20 6.27L13 2.27C12.696 2.09446 12.3511 2.00205 12 2.00205C11.6489 2.00205 11.304 2.09446 11 2.27L4 6.27C3.69626 6.44536 3.44398 6.69751 3.26846 7.00116C3.09294 7.30481 3.00036 7.64928 3 8V16C3.00036 16.3507 3.09294 16.6952 3.26846 16.9988C3.44398 17.3025 3.69626 17.5546 4 17.73L11 21.73C11.304 21.9055 11.6489 21.9979 12 21.9979C12.3511 21.9979 12.696 21.9055 13 21.73L20 17.73C20.3037 17.5546 20.556 17.3025 20.7315 16.9988C20.9071 16.6952 20.9996 16.3507 21 16Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M7.5 4.21L12 6.81L16.5 4.21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -246,9 +246,9 @@ const ProjectDetails = () => {
                     <path d="M12 13.01V21.8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <div className="customer-stat-info">
-                  <span className="customer-stat-number">Live</span>
-                  <span className="customer-stat-label">Status</span>
+                <div className="customer-project-details-stat-info">
+                  <span className="customer-project-details-stat-number">Live</span>
+                  <span className="customer-project-details-stat-label">Status</span>
                 </div>
               </div>
             </div>
@@ -285,32 +285,32 @@ const ProjectDetails = () => {
               </h2>
             </div>
 
-            <div className="customer-features-blog-style">
+            <div className="customer-project-details-features-list">
               {project.highlight_features.map((feature, featureIndex) => (
-                <section key={feature.id} className="customer-feature-blog-section">
+                <section key={feature.id} className="customer-project-details-feature-section">
                   {/* Feature Images Section */}
                   {feature.images && feature.images.length > 0 && (
-                    <div className="customer-feature-blog-images-section">
-                      <div className="customer-feature-blog-swiper-container">
-                        <div className="customer-feature-blog-swiper-wrapper">
+                    <div className="customer-project-details-feature-images">
+                      <div className="customer-project-details-image-carousel">
+                        <div className="customer-project-details-carousel-wrapper">
                           <div
-                            className="customer-feature-blog-swiper-slide"
+                            className="customer-project-details-carousel-slide"
                             style={{
                               transform: `translateX(-${(featureIndex === currentFeatureIndex ? currentImageIndex : 0) * 100}%)`,
                             }}
                           >
                             {feature.images.map((image, imageIndex) => (
-                              <div key={imageIndex} className="customer-feature-blog-image-container">
+                              <div key={imageIndex} className="customer-project-details-feature-image-container">
                                 <img
                                   src={image.image_url}
                                   alt={image.image_name}
-                                  className="customer-feature-blog-image"
+                                  className="customer-project-details-feature-image"
                                   onError={(e) => {
                                     e.target.style.display = 'none';
                                     e.target.nextSibling.style.display = 'flex';
                                   }}
                                 />
-                                <div className="customer-feature-blog-image-placeholder" style={{ display: 'none' }}>
+                                <div className="customer-project-details-feature-image-placeholder" style={{ display: 'none' }}>
                                   <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
                                   </svg>
@@ -325,7 +325,7 @@ const ProjectDetails = () => {
                         {feature.images.length > 1 && (
                           <>
                             <button
-                              className="customer-feature-blog-swiper-button customer-feature-blog-swiper-button-prev"
+                              className="customer-project-details-carousel-button customer-project-details-carousel-prev"
                               onClick={() => {
                                 setCurrentFeatureIndex(featureIndex);
                                 prevImage();
@@ -337,7 +337,7 @@ const ProjectDetails = () => {
                               </svg>
                             </button>
                             <button
-                              className="customer-feature-blog-swiper-button customer-feature-blog-swiper-button-next"
+                              className="customer-project-details-carousel-button customer-project-details-carousel-next"
                               onClick={() => {
                                 setCurrentFeatureIndex(featureIndex);
                                 nextImage();
@@ -350,11 +350,11 @@ const ProjectDetails = () => {
                             </button>
 
                             {/* Dots indicator */}
-                            <div className="customer-feature-blog-swiper-pagination">
+                            <div className="customer-project-details-carousel-pagination">
                               {feature.images.map((_, imageIndex) => (
                                 <button
                                   key={imageIndex}
-                                  className={`customer-feature-blog-swiper-dot ${
+                                  className={`customer-project-details-carousel-dot ${
                                     featureIndex === currentFeatureIndex && imageIndex === currentImageIndex ? 'active' : ''
                                   }`}
                                   onClick={() => {
@@ -371,19 +371,17 @@ const ProjectDetails = () => {
                     </div>
                   )}
 
-                  {/* Feature Title - Moved below images */}
-                  <div className="customer-feature-blog-title-section">
-                    <h3 className="customer-feature-blog-title">{feature.title}</h3>
+                  {/* Feature Title */}
+                  <div className="customer-project-details-feature-header">
+                    <h3 className="customer-project-details-feature-title">{feature.title}</h3>
                   </div>
 
                   {/* Feature Content Section */}
-                  <div className="customer-feature-blog-content-section">
-                    <div className="customer-feature-blog-content">
-                      <div
-                        className="customer-feature-blog-description"
-                        dangerouslySetInnerHTML={{ __html: feature.description }}
-                      />
-                    </div>
+                  <div className="customer-project-details-feature-content">
+                    <div
+                      className="customer-project-details-feature-text"
+                      dangerouslySetInnerHTML={{ __html: feature.description }}
+                    />
                   </div>
                 </section>
               ))}

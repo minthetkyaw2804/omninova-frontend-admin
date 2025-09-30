@@ -1,28 +1,19 @@
 /* CUSTOMER PROJECTS PAGE - COMPLETELY INDEPENDENT CSS */
 
-/* Ensure no double scrollbars */
-.customer-projects-page * {
-  box-sizing: border-box;
-}
-
+/* Ensure no double scrollbars - Reset nested height conflicts */
 .customer-projects-page {
-  /* Reset any inherited overflow */
-  overflow: visible;
-}
-
-body:has(.customer-projects-page) {
-  overflow-x: hidden;
-}
-
-html:has(.customer-projects-page) {
-  overflow-x: hidden;
-}
-.customer-projects-page {
-  min-height: 100vh;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   width: 100%;
   background: linear-gradient(135deg, #0f0f23 0%, #1a1a3a 50%, #2d2d5f 100%);
   position: relative;
+  /* Remove all height constraints that could conflict with parent Layout */
+  height: auto;
+  min-height: unset;
+  overflow: visible; /* Let the Layout handle scrolling */
+}
+
+.customer-projects-page * {
+  box-sizing: border-box;
 }
 
 /* ========== CUSTOMER PROJECTS HERO SECTION ========== */
@@ -872,10 +863,6 @@ html:has(.customer-projects-page) {
 .customer-bl { bottom: 0; left: 0; border-right: none; border-top: none; }
 .customer-br { bottom: 0; right: 0; border-left: none; border-top: none; }
 
-.customer-border-corner {
-  animation: none;
-}
-
 @keyframes customerCornerGlow {
   0%, 100% { opacity: 0.6; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.05); }
@@ -1002,57 +989,22 @@ html:has(.customer-projects-page) {
   color: #ffffff;
 }
 
-.customer-project-description div {
-  color: #ffffff !important;
-}
-
-.customer-project-description div * {
-  color: #ffffff !important;
-}
-
 .customer-project-description p {
   color: #ffffff;
   font-size: 1.1rem;
   line-height: 1.8;
   font-weight: 500;
-  margin: 0 0 16px 0;
-}
-
-.customer-project-description p:last-child {
-  margin-bottom: 0;
-}
-
-/* Style HTML content in project descriptions */
-.customer-project-description div > p {
-  color: #ffffff;
-  font-size: 1.1rem;
-  line-height: 1.8;
-  font-weight: 500;
-  margin: 0 0 16px 0;
-}
-
-.customer-project-description div > p:last-child {
-  margin-bottom: 0;
-}
-
-.customer-project-description div > ul,
-.customer-project-description div > ol {
-  color: #ffffff;
-  font-size: 1.1rem;
-  line-height: 1.8;
-  margin: 16px 0;
-  padding-left: 20px;
-}
-
-.customer-project-description div > ul li,
-.customer-project-description div > ol li {
-  margin-bottom: 8px;
-}
-
-.customer-project-description div > br {
-  display: block;
-  margin: 8px 0;
-  content: "";
+  margin: 0;
+  /* Justified text with proper hyphenation to avoid ugly gaps */
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  word-spacing: normal;
+  text-justify: inter-character;
 }
 
 /* Customer Project Actions */
@@ -1416,13 +1368,9 @@ html:has(.customer-projects-page) {
 
 /* Mobile Large - 768px and below */
 @media (max-width: 768px) {
-  /* Optimize hero for mobile like About page */
   .customer-projects-hero {
     padding: 60px 0;
     min-height: 70vh;
-    /* Force hardware acceleration for better performance */
-    transform: translate3d(0, 0, 0);
-    will-change: auto;
   }
 
   .customer-projects-hero-container {
@@ -1445,32 +1393,7 @@ html:has(.customer-projects-page) {
     margin-top: 40px;
   }
 
-  /* Disable heavy animations on mobile for better performance */
-  .customer-code-element {
-    animation: none;
-    opacity: 0.1;
-  }
-
-  .customer-projects-main::after {
-    animation: none;
-  }
-
-  /* Optimize project items for mobile scrolling - less aggressive */
-  .customer-project-bg-effects,
-  .customer-project-particles,
-  .customer-project-glow-effect,
-  .customer-project-scan-line {
-    display: none;
-  }
-
-  /* Reduce animation complexity but don't disable everything */
-  .customer-project-item {
-    transition: transform 0.3s ease;
-  }
-
-  .customer-project-item:hover {
-    transform: translateY(-5px);
-  }
+  /* Keep all animations on mobile */
 
   .customer-projects-container {
     padding: 0 20px;
@@ -1520,6 +1443,16 @@ html:has(.customer-projects-page) {
 
   .customer-project-description p {
     font-size: 1rem;
+    /* Justified text with proper hyphenation to avoid ugly gaps */
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    word-spacing: normal;
+    text-justify: inter-character;
   }
 }
 
@@ -1590,21 +1523,7 @@ html:has(.customer-projects-page) {
     gap: 16px;
   }
 
-  /* Additional mobile performance optimizations - be specific to avoid breaking loading states */
-  .customer-project-bg-effects,
-  .customer-project-particles,
-  .customer-project-glow-effect,
-  .customer-type-dot,
-  .customer-title-underline {
-    animation: none !important;
-  }
-
-  /* Allow project items to slide in but simplify other animations */
-  .customer-project-item .customer-project-bg-effects,
-  .customer-project-item .customer-project-particles,
-  .customer-project-item .customer-project-glow-effect {
-    display: none !important;
-  }
+  /* Keep all animations on mobile - no performance restrictions */
 
   .customer-project-image-wrapper {
     width: 100%;
@@ -1626,6 +1545,16 @@ html:has(.customer-projects-page) {
     margin: 12px 0;
     color: #ffffff;
     font-weight: 400;
+    /* Justified text with proper hyphenation to avoid ugly gaps */
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    word-spacing: normal;
+    text-justify: inter-character;
   }
 
   .customer-code-element {
@@ -1706,17 +1635,7 @@ html:has(.customer-projects-page) {
     font-size: 0.8rem;
   }
 
-  /* Completely disable floating code elements on small screens */
-  .customer-code-element {
-    display: none;
-  }
-
-  /* Reduce background animation complexity */
-  .customer-projects-main::before,
-  .customer-projects-main::after {
-    animation: none;
-    opacity: 0.3;
-  }
+  /* Keep all floating code elements and background animations on mobile */
 
   .customer-projects-container {
     padding: 0 16px;
@@ -1765,23 +1684,7 @@ html:has(.customer-projects-page) {
     gap: 14px;
   }
 
-  /* Maximum performance optimizations for smallest screens */
-  .customer-project-item .customer-p-particle,
-  .customer-project-item .customer-project-glow-effect,
-  .customer-project-item .customer-project-scan-line,
-  .customer-project-item .customer-type-dot {
-    display: none !important;
-  }
-
-  /* Remove all hover effects for better touch performance */
-  .customer-project-item:hover {
-    transform: none !important;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4) !important;
-  }
-
-  .customer-project-item:hover .customer-project-image {
-    transform: none !important;
-  }
+  /* Keep ALL effects and animations even on smallest screens */
 
   .customer-project-image-wrapper {
     width: 100%;
@@ -1801,6 +1704,16 @@ html:has(.customer-projects-page) {
     font-size: 0.85rem;
     line-height: 1.4;
     margin: 8px 0;
+    /* Justified text with proper hyphenation to avoid ugly gaps */
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    word-spacing: normal;
+    text-justify: inter-character;
   }
 
   .customer-btn-inner {
@@ -1825,6 +1738,16 @@ html:has(.customer-projects-page) {
     margin: 10px 0;
     color: #ffffff;
     font-weight: 400;
+    /* Justified text with proper hyphenation to avoid ugly gaps */
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    word-spacing: normal;
+    text-justify: inter-character;
   }
 
   .customer-project-number {

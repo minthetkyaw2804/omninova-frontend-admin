@@ -178,9 +178,8 @@
   border: 2px solid transparent;
 }
 
-.customer-social-icon svg {
-  width: 20px;
-  height: 20px;
+.customer-social-icon i {
+  font-size: 20px;
 }
 
 .customer-social-icon:hover {
@@ -188,7 +187,7 @@
   transform: translateY(-2px) scale(1.05);
 }
 
-.customer-social-icon:hover svg {
+.customer-social-icon:hover i {
   background: linear-gradient(90deg, #ef4444, #f97316);
   -webkit-background-clip: text;
   background-clip: text;
@@ -361,9 +360,8 @@
   border: 2px solid transparent;
 }
 
-.customer-mobile-social-icon svg {
-  width: 24px;
-  height: 24px;
+.customer-mobile-social-icon i {
+  font-size: 24px;
 }
 
 .customer-mobile-social-icon:hover {
@@ -371,7 +369,7 @@
   transform: translateY(-2px) scale(1.05);
 }
 
-.customer-mobile-social-icon:hover svg {
+.customer-mobile-social-icon:hover i {
   background: linear-gradient(90deg, #ef4444, #f97316);
   -webkit-background-clip: text;
   background-clip: text;
@@ -411,9 +409,8 @@
     height: 36px !important;
   }
 
-  .customer-social-icon svg {
-    width: 18px !important;
-    height: 18px !important;
+  .customer-social-icon i {
+    font-size: 18px !important;
   }
 
   .customer-logo-image {
@@ -457,9 +454,8 @@
     height: 32px !important;
   }
 
-  .customer-social-icon svg {
-    width: 16px !important;
-    height: 16px !important;
+  .customer-social-icon i {
+    font-size: 16px !important;
   }
 
   .customer-logo-image {

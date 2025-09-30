@@ -398,6 +398,8 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
+  /* Add tab indentation to first line of paragraphs */
+  text-indent: 3em;
 }
 
 /* ========== ARTICLE FOOTER ========== */
@@ -732,6 +734,8 @@
   .blog-details-content p {
     font-size: 16px;
     line-height: 1.7;
+    /* Add tab indentation for tablet */
+    text-indent: 2.8em;
   }
 
   .blog-details-article-footer {
@@ -797,6 +801,8 @@
 
   .blog-details-content p {
     font-size: 15px;
+    /* Add tab indentation for mobile */
+    text-indent: 2.5em;
   }
 
   .blog-details-article-footer {
@@ -870,6 +876,8 @@
   .blog-details-content p {
     font-size: 14px;
     line-height: 1.7;
+    /* Add tab indentation for small mobile */
+    text-indent: 2em;
   }
 
   .blog-details-back-button {
@@ -909,13 +917,6 @@
   outline-offset: 2px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .blog-details-page * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
 
 /* ========== HIGH CONTRAST MODE ========== */
 @media (prefers-contrast: high) {
