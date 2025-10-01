@@ -105,8 +105,16 @@ const Layout = ({ children }) => {
   if (loading) {
     return (
       <div className="customer-loading-container">
-        <div className="customer-loading-spinner"></div>
-        <p>Loading company information...</p>
+        <div className="tech-loading-spinner">
+          <div className="spinner-ring"></div>
+          <div className="spinner-ring"></div>
+          <div className="spinner-ring"></div>
+          <div className="spinner-core">
+            <div className="core-pulse"></div>
+          </div>
+        </div>
+        <h2 className="loading-title">Welcome to Omninova</h2>
+        <p className="loading-subtitle">Initializing digital experience...</p>
       </div>
     );
   }

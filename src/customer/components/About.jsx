@@ -29,7 +29,12 @@ const About = () => {
 
   // Check if device is mobile for performance optimization
   const isMobile = useCallback(() => {
-    return window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    return (
+      window.innerWidth <= 768 ||
+      /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    );
   }, []);
 
   useEffect(() => {
@@ -37,10 +42,10 @@ const About = () => {
     if (!companyData) return;
 
     // Use Intersection Observer for better performance - SAME for ALL devices
-    if ('IntersectionObserver' in window && !isMobile()) {
+    if ("IntersectionObserver" in window && !isMobile()) {
       const observerOptions = {
         threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: "0px 0px -50px 0px",
       };
 
       observerRef.current = new IntersectionObserver((entries) => {
@@ -55,24 +60,27 @@ const About = () => {
 
       // Observe all animate elements
       const elements = document.querySelectorAll(".about-animate");
-      elements.forEach(element => {
+      elements.forEach((element) => {
         observerRef.current?.observe(element);
       });
     } else {
       // Fallback for older browsers or mobile with throttled scroll - SAME behavior as before
-      const handleScroll = throttle(() => {
-        const elements = document.querySelectorAll(".about-animate");
-        elements.forEach((element) => {
-          if (!element.classList.contains("about-animated")) {
-            const elementTop = element.getBoundingClientRect().top;
-            const elementVisible = 150;
+      const handleScroll = throttle(
+        () => {
+          const elements = document.querySelectorAll(".about-animate");
+          elements.forEach((element) => {
+            if (!element.classList.contains("about-animated")) {
+              const elementTop = element.getBoundingClientRect().top;
+              const elementVisible = 150;
 
-            if (elementTop < window.innerHeight - elementVisible) {
-              element.classList.add("about-animated");
+              if (elementTop < window.innerHeight - elementVisible) {
+                element.classList.add("about-animated");
+              }
             }
-          }
-        });
-      }, isMobile() ? 100 : 50); // Same throttle delay as before
+          });
+        },
+        isMobile() ? 100 : 50
+      ); // Same throttle delay as before
 
       window.addEventListener("scroll", handleScroll, { passive: true });
       handleScroll(); // Check on initial load
@@ -93,9 +101,17 @@ const About = () => {
 
   if (!companyData) {
     return (
-      <div className="customer-loading-container">
-        <div className="customer-loading-spinner"></div>
-        <p>Loading company information...</p>
+      <div className="about-loading-container">
+        <div className="tech-loading-spinner">
+          <div className="spinner-ring"></div>
+          <div className="spinner-ring"></div>
+          <div className="spinner-ring"></div>
+          <div className="spinner-core">
+            <div className="core-pulse"></div>
+          </div>
+        </div>
+        <h2 className="loading-title">Welcome to Omninova</h2>
+        <p className="loading-subtitle">Initializing digital experience...</p>
       </div>
     );
   }
@@ -112,13 +128,14 @@ const About = () => {
           <div className="cube"></div>
         </div>
         <div className="about-hero-container">
-          <div className={`about-hero-content ${isVisible ? 'visible' : ''}`}>
+          <div className={`about-hero-content ${isVisible ? "visible" : ""}`}>
             <h1 className="about-hero-title">
               Transforming Ideas Into <br />
               <span className="gradient-text">Digital Reality</span>
             </h1>
             <p className="about-hero-subtitle">
-              We are {companyData.name} - where innovation meets expertise to create exceptional digital experiences
+              We are {companyData.name} - where innovation meets expertise to
+              create exceptional digital experiences
             </p>
             <div className="tech-stats">
               <div className="stat-item">
@@ -172,20 +189,38 @@ const About = () => {
             <div className="shape shape-2"></div>
             <div className="shape shape-3"></div>
           </div>
-          <div className="liquid-shape" style={{top: '20%', left: '80%'}}></div>
-          <div className="liquid-shape" style={{bottom: '30%', right: '85%', animationDelay: '3s'}}></div>
+          <div
+            className="liquid-shape"
+            style={{ top: "20%", left: "80%" }}
+          ></div>
+          <div
+            className="liquid-shape"
+            style={{ bottom: "30%", right: "85%", animationDelay: "3s" }}
+          ></div>
         </div>
         <div className="vision-container">
           <div className="vision-content about-animate tilt-3d">
             <div className="vision-header">
               <div className="vision-icon-large">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                  />
                 </svg>
               </div>
               <h2 className="vision-title">Our Vision</h2>
-              <div className="vision-subtitle">Where we see ourselves in the future</div>
+              <div className="vision-subtitle">
+                Where we see ourselves in the future
+              </div>
             </div>
             <div className="vision-text-container">
               <div className="vision-decorative-line"></div>
@@ -212,7 +247,9 @@ const About = () => {
                 <div className="goal-header">
                   <span className="goal-badge">Mission</span>
                   <h2 className="goal-title">Our Mission</h2>
-                  <p className="goal-subtitle">The driving force behind everything we do</p>
+                  <p className="goal-subtitle">
+                    The driving force behind everything we do
+                  </p>
                 </div>
                 <div className="goal-text-wrapper">
                   <p className="goal-text">{companyData.goal}</p>
@@ -223,7 +260,12 @@ const About = () => {
                 <div className="goal-visual-container">
                   <div className="goal-icon-main">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                      />
                     </svg>
                   </div>
                   <div className="goal-orbit-rings">
@@ -246,15 +288,28 @@ const About = () => {
         </div>
         <div className="about-cta-container">
           <div className="cta-content">
-            <h2 className="about-cta-title">Ready to Build Something Amazing?</h2>
+            <h2 className="about-cta-title">
+              Ready to Build Something Amazing?
+            </h2>
             <p className="about-cta-subtitle">
-              Let's turn your vision into reality with innovative solutions tailored to your needs
+              Let's turn your vision into reality with innovative solutions
+              tailored to your needs
             </p>
             <div className="about-cta-buttons">
               <button className="customer-btn customer-btn-primary">
                 <span>Start Your Project</span>
-                <svg className="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <svg
+                  className="btn-icon"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
                 </svg>
               </button>
               <button className="customer-btn customer-btn-secondary">
