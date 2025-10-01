@@ -995,13 +995,15 @@
 
 /* Customer Project Visual */
 .customer-project-visual {
-  flex: 0 0 520px;
+  flex: 0 0 auto;
   position: relative;
+  max-width: 520px;
 }
 
 .customer-project-image-wrapper {
   position: relative;
-  width: 520px;
+  width: 100%;
+  max-width: 520px;
   height: 320px;
   border-radius: 20px;
   overflow: hidden;
@@ -1687,6 +1689,46 @@
   .customer-project-scan-line {
     animation: none !important;
   }
+
+  /* Additional mobile performance optimizations */
+  .customer-projects-page {
+    overflow-x: hidden;
+  }
+
+  .customer-projects-container {
+    overflow-x: hidden;
+  }
+
+  .customer-project-item {
+    overflow-x: hidden;
+  }
+
+  /* Disable all transform animations on mobile - Projects page only */
+  .customer-projects-page *,
+  .customer-projects-page *::before,
+  .customer-projects-page *::after {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Keep only essential transitions - Projects page only */
+  .customer-projects-page .customer-btn,
+  .customer-projects-page .customer-explore-btn,
+  .customer-projects-page .customer-clear-filters-btn {
+    transition: background-color 0.2s ease, color 0.2s ease !important;
+  }
+
+  /* Disable all hover effects on mobile - Projects page only */
+  .customer-projects-page .customer-project-item:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .customer-projects-page .customer-btn:hover,
+  .customer-projects-page .customer-explore-btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1891,6 +1933,46 @@
 
   .customer-project-scan-line {
     animation: none !important;
+  }
+
+  /* Additional small mobile performance optimizations */
+  .customer-projects-page {
+    overflow-x: hidden;
+  }
+
+  .customer-projects-container {
+    overflow-x: hidden;
+  }
+
+  .customer-project-item {
+    overflow-x: hidden;
+  }
+
+  /* Disable all transform animations on small mobile - Projects page only */
+  .customer-projects-page *,
+  .customer-projects-page *::before,
+  .customer-projects-page *::after {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Keep only essential transitions - Projects page only */
+  .customer-projects-page .customer-btn,
+  .customer-projects-page .customer-explore-btn,
+  .customer-projects-page .customer-clear-filters-btn {
+    transition: background-color 0.2s ease, color 0.2s ease !important;
+  }
+
+  /* Disable all hover effects on small mobile - Projects page only */
+  .customer-projects-page .customer-project-item:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .customer-projects-page .customer-btn:hover,
+  .customer-projects-page .customer-explore-btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
   }
 }
 
