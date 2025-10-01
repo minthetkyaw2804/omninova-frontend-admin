@@ -1567,6 +1567,11 @@
     animation: none !important;
   }
 
+  /* Disable stat line moving animation on mobile */
+  .customer-stat-line::after {
+    animation: none !important;
+  }
+
   /* Disable project card hover animations on mobile */
   .customer-project-item:hover {
     transform: none !important;
@@ -1621,6 +1626,87 @@
   .customer-animate.customer-animated {
     opacity: 1 !important;
     transform: translateY(0) !important;
+  }
+
+  /* Disable search and filter background animations on mobile */
+  .customer-filters-bg-effect {
+    animation: none !important;
+  }
+
+  .customer-filter-particles {
+    animation: none !important;
+  }
+
+  .customer-filter-particles .customer-particle {
+    animation: none !important;
+  }
+
+  .customer-filter-glow-lines {
+    animation: none !important;
+  }
+
+  .customer-filter-glow-lines .customer-glow-line {
+    animation: none !important;
+  }
+
+  .customer-search-glow {
+    animation: none !important;
+  }
+
+  /* Disable project card background animations on mobile */
+  .customer-project-item::before {
+    animation: none !important;
+  }
+
+  .customer-project-item::after {
+    animation: none !important;
+  }
+
+  .customer-project-item .customer-project-particle {
+    animation: none !important;
+  }
+
+  .customer-project-item .customer-glow-pulse {
+    animation: none !important;
+  }
+
+  .customer-project-item .customer-scan-line {
+    animation: none !important;
+  }
+
+  .customer-project-item .customer-corner-glow {
+    animation: none !important;
+  }
+
+  /* Disable project card particle animations on mobile */
+  .customer-project-particles {
+    animation: none !important;
+  }
+
+  .customer-project-particles .customer-p-particle {
+    animation: none !important;
+  }
+
+  .customer-p1,
+  .customer-p2,
+  .customer-p3 {
+    animation: none !important;
+  }
+
+  /* Disable project card horizontal line animations on mobile */
+  .customer-glow-line {
+    animation: none !important;
+  }
+
+  .customer-line-1,
+  .customer-line-2,
+  .customer-line-3 {
+    animation: none !important;
+  }
+
+  /* Disable project card scan line animations on mobile */
+  .customer-project-scan-line {
+    animation: none !important;
   }
 }
 
@@ -1698,6 +1784,11 @@
     animation: none !important;
   }
 
+  /* Disable stat line moving animation on small mobile */
+  .customer-stat-line::after {
+    animation: none !important;
+  }
+
   .customer-project-item:hover {
     transform: none !important;
   }
@@ -1747,6 +1838,87 @@
   .customer-animate.customer-animated {
     opacity: 1 !important;
     transform: translateY(0) !important;
+  }
+
+  /* Disable search and filter background animations on small mobile */
+  .customer-filters-bg-effect {
+    animation: none !important;
+  }
+
+  .customer-filter-particles {
+    animation: none !important;
+  }
+
+  .customer-filter-particles .customer-particle {
+    animation: none !important;
+  }
+
+  .customer-filter-glow-lines {
+    animation: none !important;
+  }
+
+  .customer-filter-glow-lines .customer-glow-line {
+    animation: none !important;
+  }
+
+  .customer-search-glow {
+    animation: none !important;
+  }
+
+  /* Disable project card background animations on small mobile */
+  .customer-project-item::before {
+    animation: none !important;
+  }
+
+  .customer-project-item::after {
+    animation: none !important;
+  }
+
+  .customer-project-item .customer-project-particle {
+    animation: none !important;
+  }
+
+  .customer-project-item .customer-glow-pulse {
+    animation: none !important;
+  }
+
+  .customer-project-item .customer-scan-line {
+    animation: none !important;
+  }
+
+  .customer-project-item .customer-corner-glow {
+    animation: none !important;
+  }
+
+  /* Disable project card particle animations on small mobile */
+  .customer-project-particles {
+    animation: none !important;
+  }
+
+  .customer-project-particles .customer-p-particle {
+    animation: none !important;
+  }
+
+  .customer-p1,
+  .customer-p2,
+  .customer-p3 {
+    animation: none !important;
+  }
+
+  /* Disable project card horizontal line animations on small mobile */
+  .customer-glow-line {
+    animation: none !important;
+  }
+
+  .customer-line-1,
+  .customer-line-2,
+  .customer-line-3 {
+    animation: none !important;
+  }
+
+  /* Disable project card scan line animations on small mobile */
+  .customer-project-scan-line {
+    animation: none !important;
   }
 }
 
