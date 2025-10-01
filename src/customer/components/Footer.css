@@ -1,4 +1,4 @@
-/* Customer Footer - Independent Styling */
+/* Footer Styles */
 .customer-footer {
   background: rgba(99, 102, 241, 0.02) !important;
   color: #6366f1;
@@ -379,7 +379,6 @@
     padding: 16px 16px 16px;
   }
 
-  /* Fix contact cards positioning and layout */
   .customer-contact-list {
     width: 100%;
     margin: 0;
@@ -436,7 +435,6 @@
     text-align: left;
   }
 
-  /* Ensure footer section has proper spacing */
   .customer-footer-section {
     width: 100%;
     padding: 0;

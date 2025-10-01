@@ -1,15 +1,12 @@
-/* CUSTOMER PROJECT DETAILS PAGE - COMPLETELY INDEPENDENT CSS */
-
-/* Ensure no double scrollbars - Reset nested height conflicts */
+/* Project Details Page */
 .customer-project-details-page {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   width: 100%;
   background: linear-gradient(135deg, #0f0f23 0%, #1a1a3a 50%, #2d2d5f 100%);
   position: relative;
-  /* Remove all height constraints that could conflict with parent Layout */
   height: auto;
   min-height: unset;
-  overflow: visible; /* Let the Layout handle scrolling */
+  overflow: visible;
 }
 
 .customer-project-details-page * {
@@ -172,16 +169,23 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image:
-    linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+  background-image: linear-gradient(
+      rgba(139, 92, 246, 0.1) 1px,
+      transparent 1px
+    ),
     linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
   background-size: 60px 60px;
   animation: customerProjectHeroGridPulse 8s ease-in-out infinite;
 }
 
 @keyframes customerProjectHeroGridPulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.7; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 .customer-project-hero-particles {
@@ -200,16 +204,42 @@
   opacity: 0.6;
 }
 
-.customer-hero-p1 { top: 20%; left: 10%; animation-delay: 0s; }
-.customer-hero-p2 { top: 60%; left: 80%; animation-delay: -5s; }
-.customer-hero-p3 { top: 80%; left: 30%; animation-delay: -10s; }
-.customer-hero-p4 { top: 40%; left: 70%; animation-delay: -15s; }
+.customer-hero-p1 {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+.customer-hero-p2 {
+  top: 60%;
+  left: 80%;
+  animation-delay: -5s;
+}
+.customer-hero-p3 {
+  top: 80%;
+  left: 30%;
+  animation-delay: -10s;
+}
+.customer-hero-p4 {
+  top: 40%;
+  left: 70%;
+  animation-delay: -15s;
+}
 
 @keyframes customerProjectHeroParticleFloat {
-  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-  10% { opacity: 0.6; }
-  90% { opacity: 0.6; }
-  100% { transform: translateY(-200px) rotate(360deg); opacity: 0; }
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-200px) rotate(360deg);
+    opacity: 0;
+  }
 }
 
 .customer-project-details-hero-container {
@@ -244,14 +274,25 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(139, 92, 246, 0.2),
+    transparent
+  );
   animation: customerBadgeGlow 3s ease-in-out infinite;
 }
 
 @keyframes customerBadgeGlow {
-  0% { left: -100%; }
-  50% { left: 100%; }
-  100% { left: -100%; }
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: -100%;
+  }
 }
 
 .customer-project-type-badge span {
@@ -292,7 +333,9 @@
 }
 
 @keyframes customerTitleUnderlineGrow {
-  to { width: 200px; }
+  to {
+    width: 200px;
+  }
 }
 
 .customer-project-details-stats {
@@ -310,7 +353,7 @@
 }
 
 .customer-project-details-stat-item::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -10px;
   left: 50%;
@@ -322,8 +365,13 @@
 }
 
 @keyframes customerProjectStatGlow {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .customer-project-details-stat-icon {
@@ -377,20 +425,33 @@
 /* ========== CUSTOMER PROJECT DETAILS DESCRIPTION SECTION ========== */
 .customer-project-details-description-section {
   padding: 100px 0;
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a3a 30%, #2d2d5f 70%, #3a3a7a 100%);
+  background: linear-gradient(
+    135deg,
+    #0f0f23 0%,
+    #1a1a3a 30%,
+    #2d2d5f 70%,
+    #3a3a7a 100%
+  );
   position: relative;
 }
 
 .customer-project-details-description-section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background:
-    radial-gradient(circle at 30% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 60%),
-    radial-gradient(circle at 70% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
+  background: radial-gradient(
+      circle at 30% 20%,
+      rgba(139, 92, 246, 0.15) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 70% 80%,
+      rgba(59, 130, 246, 0.1) 0%,
+      transparent 60%
+    );
   pointer-events: none;
 }
 
@@ -434,7 +495,9 @@
 }
 
 @keyframes customerDescriptionTitleLine {
-  to { width: 180px; }
+  to {
+    width: 180px;
+  }
 }
 
 .customer-description-content {
@@ -449,20 +512,31 @@
 }
 
 .customer-description-content::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.05), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(139, 92, 246, 0.05),
+    transparent
+  );
   animation: customerDescriptionGlow 4s ease-in-out infinite;
 }
 
 @keyframes customerDescriptionGlow {
-  0% { left: -100%; }
-  50% { left: 100%; }
-  100% { left: -100%; }
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: -100%;
+  }
 }
 
 .customer-project-description-text {
@@ -474,7 +548,6 @@
   position: relative;
   z-index: 1;
   margin: 0;
-  /* Justified text with proper hyphenation to avoid ugly gaps */
   text-align-last: left;
   hyphens: auto;
   -webkit-hyphens: auto;
@@ -493,7 +566,6 @@
   font-weight: 500;
   margin: 0 0 20px 0;
   text-align: justify;
-  /* Justified text with proper hyphenation to avoid ugly gaps */
   text-align-last: left;
   hyphens: auto;
   -webkit-hyphens: auto;
@@ -545,15 +617,22 @@
 }
 
 .customer-project-details-features::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background:
-    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 60%),
-    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
+  background: radial-gradient(
+      circle at 80% 20%,
+      rgba(139, 92, 246, 0.15) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 20% 80%,
+      rgba(59, 130, 246, 0.1) 0%,
+      transparent 60%
+    );
   pointer-events: none;
 }
 
@@ -597,7 +676,9 @@
 }
 
 @keyframes customerFeaturesTitleLine {
-  to { width: 200px; }
+  to {
+    width: 200px;
+  }
 }
 
 /* ========== PROJECT DETAILS FEATURES LIST ========== */
@@ -638,8 +719,13 @@
 }
 
 @keyframes customerProjectDetailsFeatureTitleGlow {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* Feature Images Section */
@@ -684,7 +770,8 @@
   transition: transform 0.3s ease;
 }
 
-.customer-project-details-feature-image-container:hover .customer-project-details-feature-image {
+.customer-project-details-feature-image-container:hover
+  .customer-project-details-feature-image {
   transform: scale(1.05);
 }
 
@@ -695,7 +782,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.1),
+    rgba(29, 78, 216, 0.1)
+  );
   color: #3b82f6;
   font-size: 1.1rem;
   font-weight: 500;
@@ -709,7 +800,11 @@
 }
 
 .customer-project-details-feature-image-placeholder:hover {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(29, 78, 216, 0.15));
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.15),
+    rgba(29, 78, 216, 0.15)
+  );
   border-color: rgba(59, 130, 246, 0.5);
   transform: scale(1.02);
 }
@@ -798,10 +893,9 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
-  /* Full width without extra padding wrapper */
   max-width: 1200px;
   margin: 0 auto;
-  width: calc(100% - 120px); /* Account for outer margins on desktop */
+  width: calc(100% - 120px);
 }
 
 .customer-project-details-feature-content::before {
@@ -811,7 +905,12 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.05), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(139, 92, 246, 0.05),
+    transparent
+  );
   animation: customerProjectDetailsFeatureGlow 4s ease-in-out infinite;
 }
 
@@ -839,7 +938,6 @@
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
-  /* Justified text with proper hyphenation to avoid ugly gaps */
   text-align-last: left;
   hyphens: auto;
   -webkit-hyphens: auto;
@@ -858,7 +956,6 @@
   font-weight: 500;
   margin: 0 0 20px 0;
   text-align: justify;
-  /* Justified text with proper hyphenation to avoid ugly gaps */
   text-align-last: left;
   hyphens: auto;
   -webkit-hyphens: auto;
@@ -886,7 +983,6 @@
 .customer-project-details-feature-text ol li {
   margin-bottom: 12px;
   text-align: justify;
-  /* Justified text with proper hyphenation to avoid ugly gaps */
   text-align-last: left;
   hyphens: auto;
   -webkit-hyphens: auto;
@@ -912,7 +1008,6 @@
   font-style: italic;
 }
 
-/* Override to ensure feature description has same width as project description */
 .customer-project-details-feature-text {
   max-width: none !important;
   width: 100% !important;
@@ -926,14 +1021,17 @@
 }
 
 .customer-project-demo-section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 60%);
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(139, 92, 246, 0.15) 0%,
+    transparent 60%
+  );
   pointer-events: none;
 }
 
@@ -958,20 +1056,31 @@
 }
 
 .customer-demo-content::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.05), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(139, 92, 246, 0.05),
+    transparent
+  );
   animation: customerDemoGlow 4s ease-in-out infinite;
 }
 
 @keyframes customerDemoGlow {
-  0% { left: -100%; }
-  50% { left: 100%; }
-  100% { left: -100%; }
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: -100%;
+  }
 }
 
 .customer-demo-header {
@@ -1071,7 +1180,11 @@
   left: 50%;
   width: 0;
   height: 0;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 70%
+  );
   border-radius: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
@@ -1082,8 +1195,16 @@
 }
 
 @keyframes customerDemoRipple {
-  0% { width: 0; height: 0; opacity: 1; }
-  100% { width: 400px; height: 400px; opacity: 0; }
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    width: 400px;
+    height: 400px;
+    opacity: 0;
+  }
 }
 
 /* ========== CUSTOMER LOADING, ERROR, EMPTY STATES ========== */
@@ -1110,8 +1231,12 @@
 }
 
 @keyframes customerProjectDetailsSpinSmooth {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .customer-project-details-loading-container p,
@@ -1128,8 +1253,13 @@
 }
 
 @keyframes customerProjectDetailsIconFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
 }
 
 .customer-project-details-error-container h3 {
@@ -1207,7 +1337,6 @@
   .customer-project-details-feature-text {
     font-size: 1.15rem;
     line-height: 1.7;
-    /* Justified text with proper hyphenation to avoid ugly gaps */
     text-align: justify;
     text-align-last: left;
     hyphens: auto;
@@ -1222,7 +1351,6 @@
   .customer-project-description-text {
     font-size: 1.15rem;
     line-height: 1.7;
-    /* Justified text with proper hyphenation to avoid ugly gaps */
     text-align: justify;
     text-align-last: left;
     hyphens: auto;
@@ -1304,7 +1432,6 @@
   .customer-project-details-feature-text {
     font-size: 1.05rem;
     line-height: 1.65;
-    /* Justified text with proper hyphenation to avoid ugly gaps */
     text-align: justify;
     text-align-last: left;
     hyphens: auto;
@@ -1319,7 +1446,6 @@
   .customer-project-description-text {
     font-size: 1.05rem;
     line-height: 1.65;
-    /* Justified text with proper hyphenation to avoid ugly gaps */
     text-align: justify;
     text-align-last: left;
     hyphens: auto;
@@ -1444,7 +1570,6 @@
   .customer-project-details-feature-text {
     font-size: 0.85rem;
     line-height: 1.6;
-    /* Justified text with proper hyphenation to avoid ugly gaps */
     text-align: justify;
     text-align-last: left;
     hyphens: auto;
@@ -1460,7 +1585,6 @@
   .customer-project-description-text {
     font-size: 0.85rem;
     line-height: 1.6;
-    /* Justified text with proper hyphenation to avoid ugly gaps */
     text-align: justify;
     text-align-last: left;
     hyphens: auto;
@@ -1637,7 +1761,6 @@
   .customer-project-details-feature-text {
     font-size: 0.8rem;
     line-height: 1.55;
-    /* Justified text with proper hyphenation to avoid ugly gaps */
     text-align: justify;
     text-align-last: left;
     hyphens: auto;
@@ -1655,7 +1778,6 @@
     line-height: 1.6;
     color: #e2e8f0;
     font-weight: 400;
-    /* Justified text with proper hyphenation to avoid ugly gaps */
     text-align: justify;
     text-align-last: left;
     hyphens: auto;

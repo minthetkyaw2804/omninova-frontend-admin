@@ -1,15 +1,13 @@
-/* Customer Blogs Page - Light Theme Design */
+/* Blogs Page */
 .customer-customer-blogs-page {
   min-height: 100vh;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   width: 100%;
   background: #ffffff;
   color: #1f2937;
   position: relative;
   overflow-x: hidden;
 }
-
-/* Floating elements removed to prevent overlap with footer */
 
 /* ========== HERO SECTION ========== */
 .customer-blogs-hero {
@@ -23,32 +21,41 @@
   z-index: 2;
 }
 
-/* Floating Tech Elements - Light Theme Version */
 .customer-blogs-hero::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 40% 90%, rgba(168, 85, 247, 0.06) 0%, transparent 50%);
+  background-image: radial-gradient(
+      circle at 20% 20%,
+      rgba(99, 102, 241, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(139, 92, 246, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 90%,
+      rgba(168, 85, 247, 0.06) 0%,
+      transparent 50%
+    );
   animation: customerBlogsHeroPulse 20s ease-in-out infinite;
   pointer-events: none;
   z-index: 1;
 }
 
 .customer-blogs-hero::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-image:
-    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="60" fill="%236366f1" opacity="0.08">&lt;/&gt;</text></svg>'),
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="60" fill="%236366f1" opacity="0.08">&lt;/&gt;</text></svg>'),
     url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="50" fill="%238b5cf6" opacity="0.06">{}</text></svg>');
   background-size: 140px 140px, 110px 110px;
   background-position: 15% 25%, 85% 75%;
@@ -58,7 +65,8 @@
 }
 
 @keyframes customerBlogsHeroPulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.6;
   }
@@ -69,7 +77,8 @@
 }
 
 @keyframes customerBlogsCodeFloat {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
     opacity: 1;
   }
@@ -167,7 +176,8 @@
   background: #ffffff;
   border: 2px solid #e5e7eb;
   border-radius: 16px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   overflow: hidden;
   transition: all 0.3s ease;
 }
@@ -322,7 +332,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.05),
+    rgba(139, 92, 246, 0.05)
+  );
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
@@ -386,14 +400,14 @@
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  min-height: 0; /* Important for flex overflow handling */
+  min-height: 0;
 }
 
 .customer-blogs-card-header {
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 0; /* Allow shrinking */
+  min-height: 0;
 }
 
 .customer-blogs-card-title {
@@ -468,13 +482,18 @@
 }
 
 .customer-blogs-read-more-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
   transition: left 0.6s ease;
 }
 
@@ -710,7 +729,6 @@
   outline: 2px solid #6366f1;
   outline-offset: 2px;
 }
-
 
 /* ========== HIGH CONTRAST MODE ========== */
 @media (prefers-contrast: high) {

@@ -1,4 +1,4 @@
-/* About Page Styles - Cool & Professional Design */
+/* About Page Styles */
 .about-page {
   min-height: 100vh;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
@@ -7,7 +7,7 @@
   color: #ffffff;
 }
 
-/* ========== TECH LOADING SPINNER ========== */
+/* ========== LOADING SPINNER ========== */
 .about-loading-container {
   display: flex;
   flex-direction: column;
@@ -26,7 +26,6 @@
   overflow: hidden;
 }
 
-/* Tech Grid Background for Loading */
 .about-loading-container::before {
   content: "";
   position: absolute;
@@ -171,7 +170,6 @@
   }
 }
 
-/* Mobile Responsive for Loading */
 @media (max-width: 768px) {
   .tech-loading-spinner {
     width: 100px;
@@ -367,14 +365,13 @@
   opacity: 0;
   transform: translateY(50px);
   transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-  /* Fallback animation if .visible class isn't added */
   animation: heroContentFadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
 }
 
 .about-hero-content.visible {
   opacity: 1;
   transform: translateY(0);
-  animation: none; /* Disable fallback animation when visible class is applied */
+  animation: none;
 }
 
 @keyframes heroContentFadeIn {
@@ -1433,9 +1430,7 @@
     display: block !important;
   }
 
-  /* ========== MOBILE ANIMATION OPTIMIZATIONS ========== */
-
-  /* Disable scroll-triggered animations (come-in effects) on mobile */
+  /* ========== MOBILE OPTIMIZATIONS ========== */
   .about-animate {
     opacity: 1 !important;
     transform: translateY(0) !important;
@@ -1447,7 +1442,6 @@
     transform: translateY(0) !important;
   }
 
-  /* Disable hero section moving background elements on mobile */
   .about-hero::after {
     animation: none !important;
     background-image: none !important;
@@ -1465,7 +1459,6 @@
     animation: none !important;
   }
 
-  /* Disable heavy animations for Who We Are section on mobile */
   .about-section .about-content-card::after {
     animation: none;
   }
@@ -1502,7 +1495,6 @@
     animation: none;
   }
 
-  /* Disable heavy animations for Vision section on mobile */
   .vision-section .floating-shapes::before {
     animation: none;
   }
@@ -1527,7 +1519,6 @@
     opacity: 0;
   }
 
-  /* Disable heavy animations for Mission section on mobile */
   .goal-section .pattern-grid {
     animation: none;
   }
@@ -1552,7 +1543,6 @@
     animation: none;
   }
 
-  /* Disable 3D tilt effects on mobile */
   .tilt-3d {
     transform: none !important;
   }
@@ -1788,9 +1778,7 @@
     padding: 60px 0;
   }
 
-  /* ========== MOBILE ANIMATION OPTIMIZATIONS FOR SMALL SCREENS ========== */
-
-  /* Disable scroll-triggered animations (come-in effects) on small mobile */
+  /* ========== SMALL MOBILE OPTIMIZATIONS ========== */
   .about-animate {
     opacity: 1 !important;
     transform: translateY(0) !important;
@@ -1802,7 +1790,6 @@
     transform: translateY(0) !important;
   }
 
-  /* Disable hero section moving background elements on small mobile */
   .about-hero::after {
     animation: none !important;
     background-image: none !important;
@@ -1820,7 +1807,6 @@
     animation: none !important;
   }
 
-  /* Disable heavy animations for Who We Are section on small mobile */
   .about-section .about-content-card::after {
     animation: none;
   }
@@ -1857,7 +1843,6 @@
     animation: none;
   }
 
-  /* Disable heavy animations for Vision section on small mobile */
   .vision-section .floating-shapes::before {
     animation: none;
   }
@@ -1882,7 +1867,6 @@
     opacity: 0;
   }
 
-  /* Disable heavy animations for Mission section on small mobile */
   .goal-section .pattern-grid {
     animation: none;
   }
@@ -1907,7 +1891,6 @@
     animation: none;
   }
 
-  /* Disable 3D tilt effects on small mobile */
   .tilt-3d {
     transform: none !important;
   }

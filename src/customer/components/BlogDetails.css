@@ -1,7 +1,7 @@
-/* Blog Details Page - Professional Tech Theme */
+/* Blog Details Page */
 .blog-details-page {
   min-height: 100vh;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   width: 100%;
   background: #ffffff;
   color: #1f2937;
@@ -23,30 +23,40 @@
 
 /* Enhanced floating tech elements for blog details */
 .blog-details-hero::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image:
-    radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 85% 85%, rgba(139, 92, 246, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 50% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 50%);
+  background-image: radial-gradient(
+      circle at 15% 15%,
+      rgba(99, 102, 241, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 85% 85%,
+      rgba(139, 92, 246, 0.12) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(168, 85, 247, 0.08) 0%,
+      transparent 50%
+    );
   animation: blogDetailsHeroPulse 18s ease-in-out infinite;
   pointer-events: none;
   z-index: 1;
 }
 
 .blog-details-hero::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-image:
-    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="70" fill="%236366f1" opacity="0.1">📚</text></svg>'),
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="70" fill="%236366f1" opacity="0.1">📚</text></svg>'),
     url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="50" fill="%238b5cf6" opacity="0.08">💻</text></svg>'),
     url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="60" fill="%23a855f7" opacity="0.06">⚡</text></svg>');
   background-size: 160px 160px, 120px 120px, 140px 140px;
@@ -57,7 +67,8 @@
 }
 
 @keyframes blogDetailsHeroPulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.7;
   }
@@ -68,7 +79,8 @@
 }
 
 @keyframes blogDetailsCodeFloat {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
     opacity: 1;
   }
@@ -378,7 +390,7 @@
 }
 
 .blog-details-content::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -398,7 +410,6 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
-  /* Add tab indentation to first line of paragraphs */
   text-indent: 3em;
 }
 
@@ -460,13 +471,18 @@
 }
 
 .blog-details-copy-link-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
   transition: left 0.6s ease;
 }
 
@@ -494,7 +510,7 @@
 }
 
 .blog-details-copy-message::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 100%;
   left: 50%;
@@ -734,7 +750,6 @@
   .blog-details-content p {
     font-size: 16px;
     line-height: 1.7;
-    /* Add tab indentation for tablet */
     text-indent: 2.8em;
   }
 
@@ -801,7 +816,6 @@
 
   .blog-details-content p {
     font-size: 15px;
-    /* Add tab indentation for mobile */
     text-indent: 2.5em;
   }
 
@@ -876,7 +890,6 @@
   .blog-details-content p {
     font-size: 14px;
     line-height: 1.7;
-    /* Add tab indentation for small mobile */
     text-indent: 2em;
   }
 
@@ -916,7 +929,6 @@
   outline: 2px solid #6366f1;
   outline-offset: 2px;
 }
-
 
 /* ========== HIGH CONTRAST MODE ========== */
 @media (prefers-contrast: high) {

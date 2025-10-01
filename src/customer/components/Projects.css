@@ -1,15 +1,12 @@
-/* CUSTOMER PROJECTS PAGE - COMPLETELY INDEPENDENT CSS */
-
-/* Ensure no double scrollbars - Reset nested height conflicts */
+/* CUSTOMER PROJECTS PAGE */
 .customer-projects-page {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   width: 100%;
   background: linear-gradient(135deg, #0f0f23 0%, #1a1a3a 50%, #2d2d5f 100%);
   position: relative;
-  /* Remove all height constraints that could conflict with parent Layout */
   height: auto;
   min-height: unset;
-  overflow: visible; /* Let the Layout handle scrolling */
+  overflow: visible;
 }
 
 .customer-projects-page * {
@@ -1205,7 +1202,6 @@
   line-height: 1.8;
   font-weight: 500;
   margin: 0;
-  /* Justified text with proper hyphenation to avoid ugly gaps */
   text-align: justify;
   text-align-last: left;
   hyphens: auto;
@@ -1487,9 +1483,8 @@
   box-shadow: 0 12px 35px rgba(59, 130, 246, 0.3);
 }
 
-/* ========== MOBILE ANIMATION OPTIMIZATIONS ========== */
+/* ========== MOBILE OPTIMIZATIONS ========== */
 @media (max-width: 768px) {
-  /* Disable heavy background animations on mobile */
   .customer-projects-hero::before {
     animation: none !important;
   }
@@ -1510,7 +1505,6 @@
     animation: none !important;
   }
 
-  /* Disable particle animations on mobile */
   .customer-particle {
     animation: none !important;
   }
@@ -1519,7 +1513,6 @@
     animation: none !important;
   }
 
-  /* Disable floating elements on mobile */
   .customer-floating-element {
     animation: none !important;
   }
@@ -1528,12 +1521,10 @@
     animation: none !important;
   }
 
-  /* Disable gradient wave animations on mobile */
   .customer-gradient-wave {
     animation: none !important;
   }
 
-  /* Disable glow and pulse animations on mobile */
   .customer-stat-glow {
     animation: none !important;
   }
@@ -1554,7 +1545,6 @@
     animation: none !important;
   }
 
-  /* Disable scan line animations on mobile */
   .customer-scan-line {
     animation: none !important;
   }
@@ -1567,12 +1557,10 @@
     animation: none !important;
   }
 
-  /* Disable stat line moving animation on mobile */
   .customer-stat-line::after {
     animation: none !important;
   }
 
-  /* Disable project card hover animations on mobile */
   .customer-project-item:hover {
     transform: none !important;
   }
@@ -1581,7 +1569,6 @@
     transform: none !important;
   }
 
-  /* Disable button hover animations on mobile */
   .customer-btn:hover {
     transform: none !important;
   }
@@ -1590,7 +1577,6 @@
     transform: none !important;
   }
 
-  /* Disable ripple animations on mobile */
   .customer-search-ripple {
     animation: none !important;
   }
@@ -1603,7 +1589,6 @@
     animation: none !important;
   }
 
-  /* Disable slide-in animations on mobile */
   .customer-slide-in-left {
     animation: none !important;
     transform: translateX(0) !important;
@@ -1616,7 +1601,6 @@
     opacity: 1 !important;
   }
 
-  /* Disable scroll-triggered animations on mobile */
   .customer-animate {
     opacity: 1 !important;
     transform: translateY(0) !important;
@@ -1628,7 +1612,6 @@
     transform: translateY(0) !important;
   }
 
-  /* Disable search and filter background animations on mobile */
   .customer-filters-bg-effect {
     animation: none !important;
   }
@@ -1653,7 +1636,6 @@
     animation: none !important;
   }
 
-  /* Disable project card background animations on mobile */
   .customer-project-item::before {
     animation: none !important;
   }
@@ -1678,7 +1660,6 @@
     animation: none !important;
   }
 
-  /* Disable project card particle animations on mobile */
   .customer-project-particles {
     animation: none !important;
   }
@@ -1693,7 +1674,6 @@
     animation: none !important;
   }
 
-  /* Disable project card horizontal line animations on mobile */
   .customer-glow-line {
     animation: none !important;
   }
@@ -1704,14 +1684,12 @@
     animation: none !important;
   }
 
-  /* Disable project card scan line animations on mobile */
   .customer-project-scan-line {
     animation: none !important;
   }
 }
 
 @media (max-width: 480px) {
-  /* Additional optimizations for small mobile screens */
   .customer-projects-hero::before {
     animation: none !important;
   }
@@ -1784,7 +1762,6 @@
     animation: none !important;
   }
 
-  /* Disable stat line moving animation on small mobile */
   .customer-stat-line::after {
     animation: none !important;
   }
@@ -1840,7 +1817,6 @@
     transform: translateY(0) !important;
   }
 
-  /* Disable search and filter background animations on small mobile */
   .customer-filters-bg-effect {
     animation: none !important;
   }
@@ -1865,7 +1841,6 @@
     animation: none !important;
   }
 
-  /* Disable project card background animations on small mobile */
   .customer-project-item::before {
     animation: none !important;
   }
@@ -1890,7 +1865,6 @@
     animation: none !important;
   }
 
-  /* Disable project card particle animations on small mobile */
   .customer-project-particles {
     animation: none !important;
   }
@@ -1905,7 +1879,6 @@
     animation: none !important;
   }
 
-  /* Disable project card horizontal line animations on small mobile */
   .customer-glow-line {
     animation: none !important;
   }
@@ -1916,7 +1889,6 @@
     animation: none !important;
   }
 
-  /* Disable project card scan line animations on small mobile */
   .customer-project-scan-line {
     animation: none !important;
   }
@@ -2070,8 +2042,6 @@
     margin-top: 40px;
   }
 
-  /* Keep all animations on mobile */
-
   .customer-projects-container {
     padding: 0 20px;
   }
@@ -2120,7 +2090,6 @@
 
   .customer-project-description p {
     font-size: 1rem;
-    /* Justified text with proper hyphenation to avoid ugly gaps */
     text-align: justify;
     text-align-last: left;
     hyphens: auto;
@@ -2222,7 +2191,6 @@
     margin: 12px 0;
     color: #ffffff;
     font-weight: 400;
-    /* Justified text with proper hyphenation to avoid ugly gaps */
     text-align: justify;
     text-align-last: left;
     hyphens: auto;
@@ -2312,8 +2280,6 @@
     font-size: 0.8rem;
   }
 
-  /* Keep all floating code elements and background animations on mobile */
-
   .customer-projects-container {
     padding: 0 16px;
   }
@@ -2361,8 +2327,6 @@
     gap: 14px;
   }
 
-  /* Keep ALL effects and animations even on smallest screens */
-
   .customer-project-image-wrapper {
     width: 100%;
     max-width: 220px;
@@ -2381,7 +2345,6 @@
     font-size: 0.85rem;
     line-height: 1.4;
     margin: 8px 0;
-    /* Justified text with proper hyphenation to avoid ugly gaps */
     text-align: justify;
     text-align-last: left;
     hyphens: auto;
@@ -2415,7 +2378,6 @@
     margin: 10px 0;
     color: #ffffff;
     font-weight: 400;
-    /* Justified text with proper hyphenation to avoid ugly gaps */
     text-align: justify;
     text-align-last: left;
     hyphens: auto;
