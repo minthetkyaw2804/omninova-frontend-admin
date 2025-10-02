@@ -18,6 +18,7 @@ const Projects = () => {
   const [isFullyLoaded, setIsFullyLoaded] = useState(false);
   const [componentsReady, setComponentsReady] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [mobileReady, setMobileReady] = useState(false);
 
   // Fetch projects and project types from API
   useEffect(() => {
@@ -54,9 +55,14 @@ const Projects = () => {
             if (window.innerWidth <= 768) {
               setTimeout(() => {
                 setImagesLoaded(true);
+                // Extra delay for mobile deployment to ensure all components render
+                setTimeout(() => {
+                  setMobileReady(true);
+                }, 500);
               }, 300);
             } else {
               setImagesLoaded(true);
+              setMobileReady(true);
             }
           }, 200);
         }, 100);
@@ -92,10 +98,12 @@ const Projects = () => {
 
   // Trigger animation only when components are ready
   useEffect(() => {
-    if (componentsReady) {
-      setTimeout(() => setIsVisible(true), 100);
+    if (componentsReady && mobileReady) {
+      // Extra delay for mobile to ensure all DOM elements are rendered
+      const delay = window.innerWidth <= 768 ? 300 : 100;
+      setTimeout(() => setIsVisible(true), delay);
     }
-  }, [componentsReady]);
+  }, [componentsReady, mobileReady]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -134,7 +142,13 @@ const Projects = () => {
       : textOnly;
   };
 
-  if (!companyData || !isFullyLoaded || !componentsReady || !imagesLoaded) {
+  if (
+    !companyData ||
+    !isFullyLoaded ||
+    !componentsReady ||
+    !imagesLoaded ||
+    !mobileReady
+  ) {
     return (
       <div className="customer-loading-container">
         <div className="customer-loading-spinner"></div>
@@ -327,7 +341,11 @@ const Projects = () => {
           </div>
 
           {/* Projects Grid */}
-          {loading || !isFullyLoaded || !componentsReady || !imagesLoaded ? (
+          {loading ||
+          !isFullyLoaded ||
+          !componentsReady ||
+          !imagesLoaded ||
+          !mobileReady ? (
             <div className="customer-projects-loading">
               <div className="customer-loading-spinner"></div>
               <p>Loading amazing projects...</p>
