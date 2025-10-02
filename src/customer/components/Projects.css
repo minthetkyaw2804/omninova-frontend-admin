@@ -1487,220 +1487,52 @@
 
 /* ========== MOBILE OPTIMIZATIONS ========== */
 @media (max-width: 768px) {
-  .customer-projects-hero::before {
-    animation: none !important;
-  }
-
-  .customer-projects-hero::after {
-    animation: none !important;
-  }
-
-  .customer-grid-bg {
-    animation: none !important;
-  }
-
-  .customer-code-float {
-    animation: none !important;
-  }
-
-  .customer-code-pulse {
-    animation: none !important;
-  }
-
-  .customer-particle {
-    animation: none !important;
-  }
-
-  .customer-project-particle {
-    animation: none !important;
-  }
-
-  .customer-floating-element {
-    animation: none !important;
-  }
-
-  .customer-background-drift {
-    animation: none !important;
-  }
-
-  .customer-gradient-wave {
-    animation: none !important;
-  }
-
-  .customer-stat-glow {
-    animation: none !important;
-  }
-
-  .customer-glow-pulse {
-    animation: none !important;
-  }
-
-  .customer-corner-glow {
-    animation: none !important;
-  }
-
-  .customer-dot-pulse {
-    animation: none !important;
-  }
-
-  .customer-live-pulse {
-    animation: none !important;
-  }
-
-  .customer-scan-line {
-    animation: none !important;
-  }
-
-  .customer-line-scroll {
-    animation: none !important;
-  }
-
-  .customer-line-move {
-    animation: none !important;
-  }
-
-  .customer-stat-line::after {
-    animation: none !important;
-  }
-
-  .customer-project-item:hover {
-    transform: none !important;
-  }
-
-  .customer-project-item:hover .customer-project-image {
-    transform: none !important;
-  }
-
-  .customer-btn:hover {
-    transform: none !important;
-  }
-
-  .customer-explore-btn:hover {
-    transform: none !important;
-  }
-
-  .customer-search-ripple {
-    animation: none !important;
-  }
-
-  .customer-btn-ripple {
-    animation: none !important;
-  }
-
-  .customer-explore-ripple {
-    animation: none !important;
-  }
-
-  .customer-slide-in-left {
-    animation: none !important;
-    transform: translateX(0) !important;
-    opacity: 1 !important;
-  }
-
-  .customer-slide-in-right {
-    animation: none !important;
-    transform: translateX(0) !important;
-    opacity: 1 !important;
-  }
-
-  .customer-animate {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-    transition: none !important;
-  }
-
-  .customer-animate.customer-animated {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-  }
-
-  .customer-filters-bg-effect {
-    animation: none !important;
-  }
-
-  .customer-filter-particles {
-    animation: none !important;
-  }
-
-  .customer-filter-particles .customer-particle {
-    animation: none !important;
-  }
-
-  .customer-filter-glow-lines {
-    animation: none !important;
-  }
-
-  .customer-filter-glow-lines .customer-glow-line {
-    animation: none !important;
-  }
-
-  .customer-search-glow {
-    animation: none !important;
-  }
-
-  .customer-project-item::before {
-    animation: none !important;
-  }
-
-  .customer-project-item::after {
-    animation: none !important;
-  }
-
-  .customer-project-item .customer-project-particle {
-    animation: none !important;
-  }
-
-  .customer-project-item .customer-glow-pulse {
-    animation: none !important;
-  }
-
-  .customer-project-item .customer-scan-line {
-    animation: none !important;
-  }
-
-  .customer-project-item .customer-corner-glow {
-    animation: none !important;
-  }
-
-  .customer-project-particles {
-    animation: none !important;
-  }
-
-  .customer-project-particles .customer-p-particle {
-    animation: none !important;
-  }
-
+  /* Disable all heavy animations on mobile for better performance */
+  .customer-projects-hero::before,
+  .customer-projects-hero::after,
+  .customer-grid-bg,
+  .customer-code-float,
+  .customer-code-pulse,
+  .customer-particle,
+  .customer-project-particle,
+  .customer-floating-element,
+  .customer-background-drift,
+  .customer-gradient-wave,
+  .customer-stat-glow,
+  .customer-glow-pulse,
+  .customer-corner-glow,
+  .customer-dot-pulse,
+  .customer-live-pulse,
+  .customer-scan-line,
+  .customer-line-scroll,
+  .customer-line-move,
+  .customer-stat-line::after,
+  .customer-search-ripple,
+  .customer-btn-ripple,
+  .customer-explore-ripple,
+  .customer-filters-bg-effect,
+  .customer-filter-particles,
+  .customer-filter-particles .customer-particle,
+  .customer-filter-glow-lines,
+  .customer-filter-glow-lines .customer-glow-line,
+  .customer-search-glow,
+  .customer-project-item::before,
+  .customer-project-item::after,
+  .customer-project-item .customer-project-particle,
+  .customer-project-item .customer-glow-pulse,
+  .customer-project-item .customer-scan-line,
+  .customer-project-item .customer-corner-glow,
+  .customer-project-particles,
+  .customer-project-particles .customer-p-particle,
   .customer-p1,
   .customer-p2,
-  .customer-p3 {
-    animation: none !important;
-  }
-
-  .customer-glow-line {
-    animation: none !important;
-  }
-
+  .customer-p3,
+  .customer-glow-line,
   .customer-line-1,
   .customer-line-2,
-  .customer-line-3 {
-    animation: none !important;
-  }
-
+  .customer-line-3,
   .customer-project-scan-line {
     animation: none !important;
-  }
-
-  /* Additional mobile performance optimizations */
-  .customer-projects-page {
-    overflow-x: hidden;
-  }
-
-  .customer-projects-container {
-    overflow-x: hidden;
-  }
-
-  .customer-project-item {
-    overflow-x: hidden;
   }
 
   /* Disable all transform animations on mobile - Projects page only */
@@ -1728,6 +1560,65 @@
   .customer-projects-page .customer-explore-btn:hover {
     transform: none !important;
     box-shadow: none !important;
+  }
+
+  /* Ensure all project items are visible immediately on mobile */
+  .customer-project-item {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+    animation: none !important;
+  }
+
+  .customer-slide-in-left,
+  .customer-slide-in-right {
+    animation: none !important;
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+  }
+
+  .customer-animate {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: none !important;
+  }
+
+  .customer-animate.customer-animated {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  /* Additional mobile performance optimizations */
+  .customer-projects-page {
+    overflow-x: hidden;
+  }
+
+  .customer-projects-container {
+    overflow-x: hidden;
+  }
+
+  .customer-project-item {
+    overflow-x: hidden;
+  }
+
+  /* Reduce backdrop-filter usage on mobile for better performance */
+  .customer-projects-filters {
+    backdrop-filter: none;
+    background: rgba(30, 41, 59, 0.95);
+  }
+
+  .customer-search-input {
+    backdrop-filter: none;
+    background: rgba(45, 55, 72, 0.95);
+  }
+
+  .customer-filter-select {
+    backdrop-filter: none;
+    background: rgba(45, 55, 72, 0.95);
+  }
+
+  .customer-clear-filters-btn {
+    backdrop-filter: none;
+    background: rgba(45, 55, 72, 0.95);
   }
 }
 

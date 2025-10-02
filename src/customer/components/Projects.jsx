@@ -15,6 +15,9 @@ const Projects = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [isVisible, setIsVisible] = useState(false);
+  const [isFullyLoaded, setIsFullyLoaded] = useState(false);
+  const [componentsReady, setComponentsReady] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
 
   // Fetch projects and project types from API
   useEffect(() => {
@@ -23,7 +26,7 @@ const Projects = () => {
         setLoading(true);
         const [projectsResult, typesResult] = await Promise.all([
           fetchProjects(),
-          fetchProjectTypes()
+          fetchProjectTypes(),
         ]);
 
         if (projectsResult.data) {
@@ -41,6 +44,22 @@ const Projects = () => {
         setError("Failed to load projects. Please try again later.");
       } finally {
         setLoading(false);
+        // Add a small delay to ensure all components are ready
+        setTimeout(() => {
+          setIsFullyLoaded(true);
+          // Additional delay for mobile to ensure everything is rendered
+          setTimeout(() => {
+            setComponentsReady(true);
+            // Wait for images to load on mobile
+            if (window.innerWidth <= 768) {
+              setTimeout(() => {
+                setImagesLoaded(true);
+              }, 300);
+            } else {
+              setImagesLoaded(true);
+            }
+          }, 200);
+        }, 100);
       }
     };
 
@@ -52,26 +71,31 @@ const Projects = () => {
     let filtered = projects;
 
     if (searchTerm.trim() !== "") {
-      filtered = filtered.filter((project) =>
-        project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        project.project_type.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter(
+        (project) =>
+          project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          project.description
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          project.project_type.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     if (selectedType !== "") {
-      filtered = filtered.filter((project) =>
-        project.project_type === selectedType
+      filtered = filtered.filter(
+        (project) => project.project_type === selectedType
       );
     }
 
     setFilteredProjects(filtered);
   }, [searchTerm, selectedType, projects]);
 
-  // Trigger animation - SAME for ALL devices
+  // Trigger animation only when components are ready
   useEffect(() => {
-    setTimeout(() => setIsVisible(true), 100);
-  }, []);
+    if (componentsReady) {
+      setTimeout(() => setIsVisible(true), 100);
+    }
+  }, [componentsReady]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -92,10 +116,10 @@ const Projects = () => {
 
   // Function to extract first sentence from HTML description
   const getFirstSentence = (htmlDescription) => {
-    if (!htmlDescription) return '';
+    if (!htmlDescription) return "";
 
     // Remove HTML tags
-    const textOnly = htmlDescription.replace(/<[^>]*>/g, '');
+    const textOnly = htmlDescription.replace(/<[^>]*>/g, "");
 
     // Find first sentence (ending with . ! or ?)
     const sentences = textOnly.match(/[^\.!?]*[\.!?]/);
@@ -105,14 +129,16 @@ const Projects = () => {
     }
 
     // If no sentence ending found, return first 100 characters
-    return textOnly.length > 100 ? textOnly.substring(0, 100) + '...' : textOnly;
+    return textOnly.length > 100
+      ? textOnly.substring(0, 100) + "..."
+      : textOnly;
   };
 
-  if (!companyData) {
+  if (!companyData || !isFullyLoaded || !componentsReady || !imagesLoaded) {
     return (
       <div className="customer-loading-container">
         <div className="customer-loading-spinner"></div>
-        <p>Loading company information...</p>
+        <p>Loading amazing projects...</p>
       </div>
     );
   }
@@ -145,12 +171,17 @@ const Projects = () => {
           </div>
         </div>
         <div className="customer-projects-hero-container">
-          <div className={`customer-projects-hero-content ${isVisible ? 'customer-visible' : ''}`}>
+          <div
+            className={`customer-projects-hero-content ${
+              isVisible ? "customer-visible" : ""
+            }`}
+          >
             <h1 className="customer-projects-hero-title">
               Our <span className="customer-gradient-text">Portfolio</span>
             </h1>
             <p className="customer-projects-hero-subtitle">
-              Showcasing our expertise through innovative digital solutions that drive success
+              Showcasing our expertise through innovative digital solutions that
+              drive success
             </p>
             <div className="customer-hero-stats">
               <div className="customer-stat-item">
@@ -158,7 +189,9 @@ const Projects = () => {
                 <span className="customer-stat-label">Projects</span>
               </div>
               <div className="customer-stat-item">
-                <span className="customer-stat-number">{projectTypes.length}+</span>
+                <span className="customer-stat-number">
+                  {projectTypes.length}+
+                </span>
                 <span className="customer-stat-label">Categories</span>
               </div>
             </div>
@@ -189,8 +222,18 @@ const Projects = () => {
             <div className="customer-filters-content">
               <div className="customer-filter-section customer-search-section">
                 <div className="customer-filter-label">
-                  <svg className="customer-filter-icon" viewBox="0 0 24 24" fill="none">
-                    <path d="M21 21L15.803 15.803M15.803 15.803A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <svg
+                    className="customer-filter-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M21 21L15.803 15.803M15.803 15.803A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                   <span>Search Projects</span>
                 </div>
@@ -211,8 +254,18 @@ const Projects = () => {
 
               <div className="customer-filter-section customer-type-section">
                 <div className="customer-filter-label">
-                  <svg className="customer-filter-icon" viewBox="0 0 24 24" fill="none">
-                    <path d="M3 6H21M9 1V6M15 1V6M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <svg
+                    className="customer-filter-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M3 6H21M9 1V6M15 1V6M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                   <span>Filter by Type</span>
                 </div>
@@ -232,7 +285,13 @@ const Projects = () => {
                     </select>
                     <div className="customer-select-arrow">
                       <svg viewBox="0 0 24 24" fill="none">
-                        <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path
+                          d="M6 9L12 15L18 9"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     </div>
                   </div>
@@ -241,10 +300,23 @@ const Projects = () => {
 
               {(searchTerm || selectedType) && (
                 <div className="customer-filter-section customer-clear-section">
-                  <button className="customer-clear-filters-btn" onClick={clearFilters}>
+                  <button
+                    className="customer-clear-filters-btn"
+                    onClick={clearFilters}
+                  >
                     <div className="customer-btn-bg-effect"></div>
-                    <svg className="customer-clear-icon" viewBox="0 0 24 24" fill="none">
-                      <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <svg
+                      className="customer-clear-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <path
+                        d="M18 6L6 18M6 6L18 18"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                     <span>Reset</span>
                     <div className="customer-btn-ripple"></div>
@@ -255,7 +327,7 @@ const Projects = () => {
           </div>
 
           {/* Projects Grid */}
-          {loading ? (
+          {loading || !isFullyLoaded || !componentsReady || !imagesLoaded ? (
             <div className="customer-projects-loading">
               <div className="customer-loading-spinner"></div>
               <p>Loading amazing projects...</p>
@@ -278,8 +350,14 @@ const Projects = () => {
                 <>
                   <div className="customer-empty-icon">🔍</div>
                   <h3>No projects found</h3>
-                  <p>No projects match your search criteria. Try different keywords or filters.</p>
-                  <button className="customer-clear-filters-btn" onClick={clearFilters}>
+                  <p>
+                    No projects match your search criteria. Try different
+                    keywords or filters.
+                  </p>
+                  <button
+                    className="customer-clear-filters-btn"
+                    onClick={clearFilters}
+                  >
                     Clear Filters
                   </button>
                 </>
@@ -322,14 +400,17 @@ const Projects = () => {
                         alt={project.name}
                         className="customer-project-image"
                         onError={(e) => {
-                          e.target.style.display = 'none';
-                          e.target.nextSibling.style.display = 'flex';
+                          e.target.style.display = "none";
+                          e.target.nextSibling.style.display = "flex";
                         }}
                       />
-                      <div className="customer-project-image-placeholder" style={{ display: 'none' }}>
+                      <div
+                        className="customer-project-image-placeholder"
+                        style={{ display: "none" }}
+                      >
                         <div className="customer-placeholder-icon">
                           <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
                           </svg>
                         </div>
                       </div>
@@ -348,10 +429,14 @@ const Projects = () => {
                     <div className="customer-project-header">
                       <div className="customer-project-type-indicator">
                         <div className="customer-type-dot"></div>
-                        <span className="customer-project-type">{project.project_type}</span>
+                        <span className="customer-project-type">
+                          {project.project_type}
+                        </span>
                       </div>
                       <h3 className="customer-project-title">
-                        <span className="customer-title-text">{project.name}</span>
+                        <span className="customer-title-text">
+                          {project.name}
+                        </span>
                         <div className="customer-title-underline"></div>
                       </h3>
                     </div>
@@ -368,14 +453,28 @@ const Projects = () => {
                         <div className="customer-btn-inner">
                           <div className="customer-btn-icon">
                             <svg viewBox="0 0 24 24" fill="none">
-                              <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor" strokeWidth="2"/>
-                              <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke="currentColor" strokeWidth="2"/>
+                              <path
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                              />
+                              <path
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                              />
                             </svg>
                           </div>
                           <span>Explore Project</span>
                           <div className="customer-btn-arrow">
                             <svg viewBox="0 0 24 24" fill="none">
-                              <path d="M7 17l10-10M17 7H7m10 0v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                              <path
+                                d="M7 17l10-10M17 7H7m10 0v10"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
                             </svg>
                           </div>
                         </div>
@@ -394,7 +493,7 @@ const Projects = () => {
                   </div>
 
                   <div className="customer-project-number">
-                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
                   </div>
                 </div>
               ))}

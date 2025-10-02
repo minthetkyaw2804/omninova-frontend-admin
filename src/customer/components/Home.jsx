@@ -251,7 +251,8 @@ const Home = () => {
                 className="types-nav-btn types-prev"
                 onClick={() =>
                   setCurrentTypeIndex(
-                    (prev) => (prev - 1 + projectTypes.length) % projectTypes.length
+                    (prev) =>
+                      (prev - 1 + projectTypes.length) % projectTypes.length
                   )
                 }
                 aria-label="Previous"
@@ -264,15 +265,21 @@ const Home = () => {
                   <div className="types-icon-box">
                     <i className="fas fa-code"></i>
                   </div>
-                  <h3 className="types-card-title">{projectTypes[currentTypeIndex].type_name}</h3>
-                  <p className="types-card-desc">{projectTypes[currentTypeIndex].description}</p>
+                  <h3 className="types-card-title">
+                    {projectTypes[currentTypeIndex].type_name}
+                  </h3>
+                  <p className="types-card-desc">
+                    {projectTypes[currentTypeIndex].description}
+                  </p>
                 </div>
               </div>
 
               <button
                 className="types-nav-btn types-next"
                 onClick={() =>
-                  setCurrentTypeIndex((prev) => (prev + 1) % projectTypes.length)
+                  setCurrentTypeIndex(
+                    (prev) => (prev + 1) % projectTypes.length
+                  )
                 }
                 aria-label="Next"
               >
@@ -284,7 +291,9 @@ const Home = () => {
               {projectTypes.map((_, index) => (
                 <button
                   key={index}
-                  className={`types-dot ${index === currentTypeIndex ? 'active' : ''}`}
+                  className={`types-dot ${
+                    index === currentTypeIndex ? "active" : ""
+                  }`}
                   onClick={() => setCurrentTypeIndex(index)}
                   aria-label={`Slide ${index + 1}`}
                 />
@@ -304,34 +313,95 @@ const Home = () => {
           </p>
           <div className="tech-grid">
             <div className="tech-card">
-              <div className="tech-icon">⚛️</div>
+              <div className="tech-icon">
+                <img
+                  src="React-icon.svg.png"
+                  alt="React"
+                  className="tech-logo"
+                />
+              </div>
               <h3>React</h3>
               <p>Modern frontend development</p>
             </div>
             <div className="tech-card">
-              <div className="tech-icon">🐘</div>
-              <h3>PHP</h3>
-              <p>Robust server-side scripting</p>
-            </div>
-            <div className="tech-card">
-              <div className="tech-icon">🐍</div>
-              <h3>Python</h3>
-              <p>Versatile programming language</p>
-            </div>
-            <div className="tech-card">
-              <div className="tech-icon">🔷</div>
-              <h3>.NET</h3>
-              <p>Enterprise solutions</p>
-            </div>
-            <div className="tech-card">
-              <div className="tech-icon">🎨</div>
+              <div className="tech-icon">
+                <img
+                  src="Laravel-Logo.wine.png"
+                  alt="Laravel"
+                  className="tech-logo"
+                />
+              </div>
               <h3>Laravel</h3>
               <p>Elegant PHP framework</p>
             </div>
             <div className="tech-card">
-              <div className="tech-icon">🔗</div>
-              <h3>APIs</h3>
-              <p>Seamless integrations</p>
+              <div className="tech-icon">
+                <img
+                  src="mariadb-logo-vert_blue-transparent.png"
+                  alt="MariaDB"
+                  className="tech-logo"
+                />
+              </div>
+              <h3>MariaDB</h3>
+              <p>Open-source database solution</p>
+            </div>
+            <div className="tech-card">
+              <div className="tech-icon">
+                <img
+                  src="Python-logo-notext.svg.png"
+                  alt="Python"
+                  className="tech-logo"
+                />
+              </div>
+              <h3>Python</h3>
+              <p>Versatile programming language</p>
+            </div>
+            <div className="tech-card">
+              <div className="tech-icon">
+                <img
+                  src="pngimg.com - php_PNG34.png"
+                  alt="PHP"
+                  className="tech-logo"
+                />
+              </div>
+              <h3>PHP</h3>
+              <p>Robust server-side scripting</p>
+            </div>
+            <div className="tech-card">
+              <div className="tech-icon">
+                <img
+                  src="mysql-5-logo-png-transparent.png"
+                  alt="MySQL"
+                  className="tech-logo"
+                />
+              </div>
+              <h3>MySQL</h3>
+              <p>Reliable database management</p>
+            </div>
+            <div className="tech-card">
+              <div className="tech-icon">
+                <img
+                  src="NET_Core_Logo.svg.png"
+                  alt=".NET"
+                  className="tech-logo"
+                />
+              </div>
+              <h3>.NET</h3>
+              <p>Enterprise solutions</p>
+            </div>
+            <div className="tech-card">
+              <div className="tech-icon">
+                <img src="MSSQL Server.png" alt="MSSQL" className="tech-logo" />
+              </div>
+              <h3>MSSQL</h3>
+              <p>Enterprise database platform</p>
+            </div>
+            <div className="tech-card">
+              <div className="tech-icon">
+                <img src="Blazor.png" alt="Blazor" className="tech-logo" />
+              </div>
+              <h3>Blazor</h3>
+              <p>Modern web framework</p>
             </div>
             <div className="tech-card">
               <div className="tech-icon">📱</div>

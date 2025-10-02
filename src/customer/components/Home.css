@@ -532,9 +532,22 @@
   animation: iconFloat 3s ease-in-out infinite;
 }
 
+.tech-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+
 .tech-card:hover .tech-icon {
   transform: translateY(-8px) scale(1.1);
   animation-play-state: paused;
+}
+
+.tech-card:hover .tech-logo {
+  transform: translateY(-8px) scale(1.1);
 }
 
 .tech-card h3 {
@@ -1216,6 +1229,11 @@
     padding: 32px 24px;
   }
 
+  .tech-logo {
+    width: 65px;
+    height: 65px;
+  }
+
   .cta-title {
     font-size: 2.5rem;
   }
@@ -1332,6 +1350,11 @@
   .tech-card,
   .service-card {
     padding: 24px 16px;
+  }
+
+  .tech-logo {
+    width: 55px;
+    height: 55px;
   }
 
   .cta-title {
