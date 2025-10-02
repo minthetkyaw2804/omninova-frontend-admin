@@ -15,10 +15,6 @@ const Projects = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [isVisible, setIsVisible] = useState(false);
-  const [isFullyLoaded, setIsFullyLoaded] = useState(false);
-  const [componentsReady, setComponentsReady] = useState(false);
-  const [imagesLoaded, setImagesLoaded] = useState(false);
-  const [mobileReady, setMobileReady] = useState(false);
 
   // Fetch projects and project types from API
   useEffect(() => {
@@ -45,27 +41,6 @@ const Projects = () => {
         setError("Failed to load projects. Please try again later.");
       } finally {
         setLoading(false);
-        // Add a small delay to ensure all components are ready
-        setTimeout(() => {
-          setIsFullyLoaded(true);
-          // Additional delay for mobile to ensure everything is rendered
-          setTimeout(() => {
-            setComponentsReady(true);
-            // Wait for images to load on mobile
-            if (window.innerWidth <= 768) {
-              setTimeout(() => {
-                setImagesLoaded(true);
-                // Extra delay for mobile deployment to ensure all components render
-                setTimeout(() => {
-                  setMobileReady(true);
-                }, 500);
-              }, 300);
-            } else {
-              setImagesLoaded(true);
-              setMobileReady(true);
-            }
-          }, 200);
-        }, 100);
       }
     };
 
@@ -96,14 +71,10 @@ const Projects = () => {
     setFilteredProjects(filtered);
   }, [searchTerm, selectedType, projects]);
 
-  // Trigger animation only when components are ready
+  // Trigger animation - SAME for ALL devices
   useEffect(() => {
-    if (componentsReady && mobileReady) {
-      // Extra delay for mobile to ensure all DOM elements are rendered
-      const delay = window.innerWidth <= 768 ? 300 : 100;
-      setTimeout(() => setIsVisible(true), delay);
-    }
-  }, [componentsReady, mobileReady]);
+    setTimeout(() => setIsVisible(true), 100);
+  }, []);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -142,17 +113,11 @@ const Projects = () => {
       : textOnly;
   };
 
-  if (
-    !companyData ||
-    !isFullyLoaded ||
-    !componentsReady ||
-    !imagesLoaded ||
-    !mobileReady
-  ) {
+  if (!companyData) {
     return (
       <div className="customer-loading-container">
         <div className="customer-loading-spinner"></div>
-        <p>Loading amazing projects...</p>
+        <p>Loading company information...</p>
       </div>
     );
   }
@@ -341,11 +306,7 @@ const Projects = () => {
           </div>
 
           {/* Projects Grid */}
-          {loading ||
-          !isFullyLoaded ||
-          !componentsReady ||
-          !imagesLoaded ||
-          !mobileReady ? (
+          {loading ? (
             <div className="customer-projects-loading">
               <div className="customer-loading-spinner"></div>
               <p>Loading amazing projects...</p>

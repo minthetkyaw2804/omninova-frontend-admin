@@ -1562,38 +1562,6 @@
     box-shadow: none !important;
   }
 
-  /* Ensure all project items are visible immediately on mobile */
-  .customer-project-item {
-    opacity: 1 !important;
-    transform: translateX(0) !important;
-    animation: none !important;
-  }
-
-  /* Force all buttons and text to be visible on mobile */
-  .customer-project-explore-btn,
-  .customer-clear-filters-btn,
-  .customer-retry-btn,
-  .customer-project-title,
-  .customer-project-description,
-  .customer-project-type,
-  .customer-stat-indicator {
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-  }
-
-  .customer-project-explore-btn {
-    display: inline-flex !important;
-  }
-
-  .customer-clear-filters-btn {
-    display: inline-flex !important;
-  }
-
-  .customer-retry-btn {
-    display: inline-block !important;
-  }
-
   .customer-slide-in-left,
   .customer-slide-in-right {
     animation: none !important;
